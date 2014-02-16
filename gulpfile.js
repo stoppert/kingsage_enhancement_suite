@@ -7,7 +7,7 @@ var base_path = 'src/';
 
 var target = {
 	files : [						// all js files that should not be concatinated
-		base_path + 'kingsage_enhancement_sui.user.js',
+		base_path + 'common.js',
 		base_path + 'loca/de.js',
 		base_path + 'loca/br.js',
 		base_path + 'loca/en.js',
