@@ -7,7 +7,24 @@ var base_path = 'src/';
 
 var target = {
 	files : [						// all js files that should not be concatinated
+		base_path + 'header.js',
 		base_path + 'common.js',
+		base_path + 'overview.js',
+		base_path + 'main.js',
+		base_path + 'barracks.js',
+		base_path + 'attackplaner.js',
+		base_path + 'map.js',
+		base_path + 'attacks.js',
+		base_path + 'runtimecalculator.js',
+		base_path + 'market.js',
+		base_path + 'overviewvillages.js',
+		base_path + 'infovillages.js',
+		base_path + 'infoplayer.js',
+		base_path + 'forum.js',
+		base_path + 'messages.js',
+		base_path + 'infoally.js',
+		base_path + 'css.js',
+		base_path + 'matcher.js',
 		base_path + 'loca/de.js',
 		base_path + 'loca/br.js',
 		base_path + 'loca/en.js',
@@ -24,7 +41,7 @@ gulp.task('js', function() {
 	/*	.pipe(uglify({ 
 			global_defs: { 
 				DEBUG: false 
-			}
+			},
 		}))*/
 		.pipe(gulp.dest(target.dest));
 });

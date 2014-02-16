@@ -161,7 +161,7 @@ var en = {
 		showAttacksOnMap: 'Save attacks/show attacks on map',
 		insertIntoRuntimeCalc: 'Insert attacks into runtimecalculator',
 		highlightgroups: 'Highlight groups',
-		massdisband: 'Angepasste Massenentlassung', //TODO
+		massdisband: 'Customize Massenentlassung', //TODO
 		simulator: 'Customize simulator',
 		filterOverview: 'Filter troops by time of arrival',
 		bbCodeExport: 'Export settlements as bb-code',

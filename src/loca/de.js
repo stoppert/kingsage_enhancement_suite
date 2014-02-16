@@ -195,7 +195,7 @@ var de = {
 		wood: 'Sägewerk',
 		iron: 'Erzbergwerk',
 		storage: 'Lagerhaus',
-		hide: 'Versteck'
+		hide: 'Versteck',
 		farm: 'Müller',
 		barracks: 'Kaserne',
 		wall: 'Stadtmauer',
