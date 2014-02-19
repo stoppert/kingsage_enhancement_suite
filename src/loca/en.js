@@ -58,7 +58,7 @@ var en = {
 	iron: 'Ore',
 	arrival: 'Time of Arrival',
 	nameCoords: 'Enter playername or coordinates',
-	cancelAllDestroy: 'Cancel destruction queue',
+	cancelAllDestroy: 'Cancel tear down queue',
 
 	//research
 	researchMissingTroops: 'Research missing troops',
@@ -115,7 +115,6 @@ var en = {
 
 	//posting
 	sortContinent: 'By continent',
-	masscoinFixActive: 'Mengenprägen', // TODO
 	sortCoords: 'By coordinates',
 	sortPoints: 'By points',
 	sortName: 'By name',
@@ -133,7 +132,7 @@ var en = {
 
 	//links
 	goToBarracks: 'Go to barracks',
-	goToMain: 'Go to Castle',
+	goToMain: 'Go to castle',
 	attackWithSpies: 'Attack with %s spies',
 
 	//attacks
@@ -161,14 +160,14 @@ var en = {
 		showAttacksOnMap: 'Save attacks/show attacks on map',
 		insertIntoRuntimeCalc: 'Insert attacks into runtimecalculator',
 		highlightgroups: 'Highlight groups',
-		massdisband: 'Customize Massenentlassung', //TODO
+		massdisband: 'Customize mass discharge',
 		simulator: 'Customize simulator',
 		filterOverview: 'Filter troops by time of arrival',
 		bbCodeExport: 'Export settlements as bb-code',
 		massforward: 'Massforward reports and messages',
 		trooplinks: 'Troop quicklinks in barracks',
 		targetExport: 'Export targets from map',
-		massbuild: 'Massbuild in Castle',
+		massbuild: 'Massbuild in castle',
 		setGroupsOnMap: 'Set groups via map',
 		sortOwnAttacks: 'Sort own attacks'
 	},

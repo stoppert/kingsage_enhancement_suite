@@ -115,7 +115,6 @@ var de = {
 
 	//posting
 	sortContinent: 'Nach Kontinent',
-	masscoinFixActive: 'Mengenprägen',
 	sortCoords: 'Nach Koordinaten',
 	sortPoints: 'Nach Punkten',
 	sortName: 'Nach Name',
