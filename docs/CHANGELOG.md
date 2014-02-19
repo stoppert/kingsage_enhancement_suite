@@ -1,8 +1,24 @@
 # Kingsage Enhancement Suite
 
-## -1.1.4.1
+## -1.2
+
+## -1.1.5.3
++ add - angriffe sortieren übersicht/befehle/angriffe
++ add - generate real bbcode reports that make use of shorter kingsage bbcode instead of [img] bbcodes
++ fix - massbuild in av
++ fix - runtime calc eigene fahne zeigte für unterstützungen angriffssymbol an
+
+## -1.1.5
++ add - trooplinks for overview<combined
++ add - runtimecalc für linke flagge
++ add - ignore atts via overview angriffe > nicht ignorierte
++ add - gruppen zuweisen auch von karte
++ fix - groups highlight was reset with every new version empty presets
++ fix - exporttarget war kaputt, overlay ging nicht
++ fix - gruppeneinteilen auf siedlungsansicht war teilweise in zwei zeilen
 + fix - alle aufträge abbrechen zeigte sich auch wenn abbrechen noch gar nicht erforscht war
 + fix - sekunden anzeigen war fehlerhaft bei angriffen die über 100 stunden entfernt waren
++ fix - gruppen zuteilen in üersicht ging unter chrome nicht
 
 ## -1.1.4
 + add - massenweiterleiten auch für nachrichten (nur ganze nachrichten!)
