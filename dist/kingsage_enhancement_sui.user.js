@@ -7,11 +7,676 @@
 // @grant	none
 // ==/UserScript==
 
-function KESInit($, l, Query){
+var br = {
+	//general
+	turnOn: 'Ativado',
+	turnOff: 'Desativado',
+	all: 'Tudo',
+	none: 'Nenhum',
+	name: 'Nome',
+	amount: 'Quantidade',
+	color: 'Cor',
+	loading: 'Carregando dados',
+	close: 'Clique na área escura para fechar',
+	confirm: 'Confirmar',
+	preview: 'Visualizar',
+	goto: 'Ir para',
+	reset: 'Redefinir',
+	fillIn: 'Preencher',
+	buildOne: '1 Nível',
+	buildMax: 'Níveis',
+	filter: 'Filtro',
+	beingProcessed: 'Está sendo processado',
 
-	var kes = {};
-		kes.module = {};
-// TODO: test in chrome, opera, update-reminder,  show cost for 1 level, save everything apart from user settings in another obj?
+	//settings
+	resetSettings: 'Redefinir as configurações',
+	adoptSettings: 'Suas configurações não puderam ser salvas e foram redefinidas para o padrão',
+	enableDisableModules: 'Ativar/Desativar módulos',
+	buildingTrebuchet: 'Alvo padrão da catapulta',
+	marketSettings: 'Configurações do mercado',
+	linkspy: 'Link espionagem',
+	contentTrebuchet: 'Alvo padrão para ataques de catapulta',
+	contentSpy: 'Criar link para espionagem com %s espiões',
+	marketDefault: 'Padrão',
+
+	//kingsage_terminology
+	player: 'Jogador',
+	settlement: 'Povoação',
+	attacker: 'Atacante',
+	trooppoints: 'Pontos de tropas',
+	allyTrooppoints: 'Calcular pontos de tropas da aliança',
+	troops: 'Tropas',
+	ignore: 'Ignorar',
+	unit: 'Unidade',
+	nick: 'Nome do jogador',
+	ally: 'Aliança',
+	target: 'Alvo',
+	arrival: 'Hora de chegada',
+	defender: 'Defensor',
+	retrieve: 'Refazer tropas',
+	onlyAbandoned: 'Apenas povoações abandonadas',
+	entries: 'Entradas',
+	noMatch: 'Não há povoações disponíveis',
+	abbr: 'Emblema',
+	off: 'Ataque',
+	def: 'Defesa',
+	count: 'Conde',
+	spy: 'Espião',
+	stone: 'Pedra',
+	wood: 'Madeira',
+	iron: 'Ferro',
+	arrival: 'Hora de chegada',
+	nameCoords: 'Digite o nome do jogador ou as coordenadas',
+	cancelAllDestroy: 'Cancelar fila de destruição',
+
+	//research
+	researchMissingTroops: 'Pesquisar tropas faltando',
+	researchStarted: 'Pesquisa foi iniciada',
+	noMissingResearch: 'Nenhuma pesquisa faltando encontrada',
+
+	//selection
+	selectAll: 'Selecionar todos',
+	deselectAll: 'Desmarque todos',
+	selected: 'Selecionado',
+	deselect: 'Desmarcar',
+	markSelection: 'Marcar seleção',
+	selectedGroups: 'Grupos foram selecionados',
+	deleteSelection: 'Excluir seleção',
+	targetExport: 'Exportar alvos',
+
+	//save
+	save: 'Salvar',
+	saved: 'Salvo',
+	saveAttacks: 'Salvar esses ataques',
+	saveThread: 'Salvar tópico',
+	resetSavedAttacks: 'Dispensar ataques salvos',
+
+	//troops
+	highlighttroops: 'Destacar tropas',
+	highlighttroopsLabel: 'Selecione tropas a serem destacadas',
+	highlighttroopsError: 'Você só pode usar a funcionalidade de "Destacar tropas" depois de ter sido pesquisada no alquimista.',
+	highlighttroopsActivate: 'Por favor, ative a funcionalidade de "Mostrar tropas" abaixo do mapa. Isto é necessário para destacar tropas no mapa',
+	trooplinks: 'Links rápidos de tropas',
+	troopFilter: 'Filtrar tropas',
+
+	//group
+	group: 'Grupo',
+	setGroup: 'Definir grupo',
+	switchGroup: 'Clique em "OK" para mudar para o grupo "Todos"',
+	highlightgroups: 'Destacar grupos',
+	highlightGroupslabel: 'Selecione grupos a serem destacados',
+	highlightGroupsReplacementError: 'Não disponível quando em "Ausência"',
+
+	//bbcode
+	bbCode: 'Mostrar com BB-Code',
+	asBBCode: 'Com BB-Code',
+	bbCode: 'Mostrar com BB-Code',
+	report_as_bb_code: 'BB-Code Curto',
+	enableBBCodeExport: 'Ativar exportação de BB-Code',
+	exportBBCode: 'Exportar povoações com BB-Code',
+
+	//messages & reports
+	reports: 'Relatórios',
+	recipient: 'Receptor',
+	forward: 'Encaminhar',
+	forwardSuccess: 'Encaminhado com sucesso',
+	forwardError: 'Não há relatórios e/ou nome de usuário escolhido',
+
+	//posting
+	sortContinent: 'Por continentes',
+	sortCoords: 'Por coordenadas',
+	sortPoints: 'Por pontos',
+	sortName: 'Por nome',
+	thread: 'Tópico',
+	goChooseThread: 'Selecione um tópico no fórum da aliança',
+	summary: 'Sumário',
+	postIn: 'Este será postado em',
+	amountOfSetts: 'Quantidade de povoações selecionadas',
+	postsToBeCreated: '%s mensagens serão criadas',
+	chooseThreadFirst: 'Você tem que selecionar um tópico no fórum da aliança primeiro',
+	formatting: 'Escolha a formatação',
+	header: 'Título',
+	settlementDisplay: 'Exibir povoação',
+	footer: 'rodapé',
+
+	//links
+	goToBarracks: 'Ir para Quartel',
+	goToMain: 'Ir para Castelo',
+	attackWithSpies: 'Ataque com %s espiões',
+
+	//attacks
+	attack: 'Ataque',
+	attacks: 'Ataques',
+	moreAttacks: 'Mais ataques',
+	nextAttacks: 'Próximo %s ataques',
+	noMatch: 'Não há povoações disponíveis',
+	runtimecalc : 'Chegada em',
+	loadAllAttacks: 'Carregar todos os ataques',
+	loadingFinished: 'Carregamento concluído',
+
+	//time
+	toa: 'Tempo para tropas',
+	days: 'Dias',
+	hours: 'Horas',
+	minutes: 'Minutos',
+	seconds: 'Segundos',
+	withoutRuntime: 'Sem tempo para tropas',
+
+	//modules
+	modul: {
+		marketOptions: 'Configurações do mercado',
+		troopsOnMap: 'Destaque tropas no mapa',
+		showAttacksOnMap: 'Salve ataques/mostre ataques no mapa',
+		insertIntoRuntimeCalc: 'Insira ataques em calculadora de tempo para tropas',
+		highlightgroups: 'Destaque grupos',
+		massdisband: 'Personalize despedimento em massa',
+		simulator: 'Personalize simulador',
+		filterOverview: 'Filtro de tropas por tempo de chegada',
+		bbCodeExport: 'Exportar povoações com BB-Code',
+		massforward: 'Encaminhamento em massa de relatórios e mensagens',
+		trooplinks: 'Links rápidos de tropas no Quartel',
+		targetExport: 'Exportar alvos do mapa',
+		massbuild: 'Construção em massa',
+		setGroupsOnMap: 'Definir grupos através do mapa',
+		sortOwnAttacks: 'Ordenar próprios ataques'
+	},
+
+	//units
+	units: {
+		militia: 'Milícia do fazendeiro',
+		sword: 'Templário',
+		spear: 'Escudeiro',
+		axe: 'Guerreiro',
+		bow: 'Arqueiro',
+		spy: 'Espião',
+		light: 'Cruzado',
+		heavy: 'Cavaleiro negro',
+		ram: 'Ariéte',
+		kata: 'Catapulta',
+		snob: 'Conde'
+	},
+
+	//buildings
+	buildings: {
+		main: 'Castelo',
+		stone: 'Pedreira',
+		wood: 'Serraria',
+		iron: 'Mina de Ferro',
+		storage: 'Armazém',
+		hide: 'Esconderijo',
+		farm: 'Moinho',
+		barracks: 'Quartel',
+		wall: 'Muralha',
+		stable: 'Estábulo',
+		market: 'Mercado',
+		garage: 'Alquimista',
+		snob: 'Mansão',
+		smith: 'Joalheiro',
+		statue: 'Memorial'
+	}
+};
+
+var de = {
+	//general
+	turnOn: 'An',
+	turnOff: 'Aus',
+	all: 'Alle',
+	none: 'Keine',
+	name: 'Name',
+	amount: 'Anzahl',
+	color: 'Farbe',
+	loading: 'Daten werden geladen',
+	close: 'Zum Schliessen auf den abgedunkelten Bereich klicken',
+	confirm: 'Bestätigen',
+	preview: 'Vorschau',
+	goto: 'Gehe zu',
+	reset: 'Löschen',
+	fillIn: 'Ausfüllen',
+	buildOne: '1 Stufe',
+	buildMax: 'Stufe(n)',
+	filter: 'Filtern',
+	beingProcessed: 'wird ausgeführt',
+
+	//settings
+	resetSettings: 'Einstellungen zurücksetzen',
+	adoptSettings: 'Deine Einstellungen konnten nicht übernommen werden und wurden zurückgesetzt.',
+	enableDisableModules: 'Module ein-/auschalten',
+	buildingTrebuchet: 'Standardgebäude Tribok',
+	marketSettings: 'Markteinstellungen',
+	linkspy: 'Direktlink Kundschafter',
+	contentTrebuchet: 'Standardgebäude für Tribok-Angriffe',
+	contentSpy: 'Direktlink mit %s Kundschaftern erzeugen',
+	marketDefault: 'Standardoption',
+
+	//kingsage_terminology
+	player: 'Spieler',
+	settlement: 'Siedlung',
+	attacker: 'Angreifer',
+	trooppoints: 'Truppenpunkte',
+	allyTrooppoints: 'Truppenpunkte der Allianz berechnen',
+	troops: 'Truppen',
+	ignore: 'Ignorieren',
+	unit: 'Einheit',
+	nick: 'Nickname',
+	ally: 'Allianz',
+	target: 'Ziel',
+	arrival: 'Ankunft',
+	defender: 'Verteidiger',
+	retrieve: 'Zurückrufen',
+	onlyAbandoned: 'Nur Verlassene Siedlungen',
+	entries: 'Einträge',
+	noMatch: 'Keine Siedlungen gefunden',
+	abbr: 'Symbol',
+	off: 'Offensiveinheit',
+	def: 'Defensiveinheit',
+	count: 'Graf',
+	spy: 'Kundschafter',
+	stone: 'Stein',
+	wood: 'Holz',
+	iron: 'Erz',
+	arrival: 'Ankunftszeit',
+	nameCoords: 'Spielername -koordinaten eingeben',
+	cancelAllDestroy: 'Alle Abbruch-Aufträge abbrechen',
+
+	//research
+	researchMissingTroops: 'Fehlende Truppen erforschen',
+	researchStarted: 'Forschungen in Auftrag gegeben',
+	noMissingResearch: 'Keine fehlenden Forschungen gefunden',
+
+	//selection
+	selectAll: 'Alle auswählen',
+	deselectAll: 'Alle abwählen',
+	selected: 'ausgewählt',
+	deselect: 'abwählen',
+	markSelection: 'Auswahl markieren',
+	selectedGroups: 'Gruppen ausgewählt',
+	deleteSelection: 'Auswahl löschen',
+	targetExport: 'Target Export',
+
+	//save
+	save: 'Abspeichern',
+	saved: 'gespeichert',
+	saveAttacks: 'Diese Angriffe speichern',
+	saveThread: 'Thread speichern',
+	resetSavedAttacks: 'Gespeicherte Angriffe verwerfen',
+
+	//troops
+	highlighttroops: 'Truppen hervorheben',
+	highlighttroopsLabel: 'Truppen zum Hervorheben auswählen',
+	highlighttroopsError: 'Du kannst die "Truppen hervorheben"-Funktion nur verwenden wenn diese im Alchemisten erforscht wurde.',
+	highlighttroopsActivate: 'Bitte aktiviere unterhalb der Karte in den Einstellungen den Punkt "Truppen anzeigen". Dies ist nötig um Truppen auf der Karte anzeigen lassen zu können.',
+	trooplinks: 'Truppenlinks',
+	troopFilter: 'Truppenfilter',
+
+	//group
+	group: 'Gruppe',
+	setGroup: 'Setze Gruppe',
+	switchGroup: 'Die ausgewählte Gruppe muss "Alle" sein, bestätige mit OK um die Gruppe zu wechseln',
+	highlightgroups: 'Gruppen hervorheben',
+	highlightGroupslabel: 'Gruppen zum Hervorheben auswählen',
+	highlightGroupsReplacementError: 'In Abwesenheitsvertretung nicht verfügbar',
+
+	//bbcode
+	bbCode: 'BB-Code',
+	asBBCode: 'Als BB-Code',
+	bbCode: 'Als BB-Code anzeigen',
+	report_as_bb_code: 'kurzer BB-Code',
+	enableBBCodeExport: 'BB-Code Export einschalten',
+	exportBBCode: 'Siedlungen als BB-Code exportieren',
+
+	//messages & reports
+	reports: 'Berichte',
+	recipient: 'Empfänger',
+	forward: 'Weiterleiten',
+	forwardSuccess: 'Berichte erfolgreich weitergeleitet',
+	forwardError: 'Keine Berichte und/oder Usernamen ausgewählt',
+
+	//posting
+	sortContinent: 'Nach Kontinent',
+	sortCoords: 'Nach Koordinaten',
+	sortPoints: 'Nach Punkten',
+	sortName: 'Nach Name',
+	thread: 'Thread',
+	goChooseThread: 'Gehe ins Forum und wähle einen Thread aus',
+	summary: 'Zusammenfassung der Auswahl',
+	postIn: 'Gepostet wird in',
+	amountOfSetts: 'Anzahl der Ausgewählten Siedlungen',
+	postsToBeCreated: 'Es werden %s Post(s) angelegt',
+	chooseThreadFirst: 'Du musst zuerst im Allianzforum einen Thread auswählen',
+	formatting: 'Gewünschte Formatierung',
+	header: 'Kopfzeile',
+	settlementDisplay: 'Siedlungsdarstellung',
+	footer: 'Fußzeile',
+
+	//links
+	goToBarracks: 'Zur Kaserne',
+	goToMain: 'Zur Burg',
+	attackWithSpies: 'Mit %s Kundschaftern angreifen',
+
+	//attacks
+	attack: 'Angriff',
+	attacks: 'Angriffe',
+	moreAttacks: 'Weitere Angriffe',
+	nextAttacks: 'Die nächsten %s Angriffe',
+	noMatch: 'keine passenden Siedlungen vorhanden',
+	runtimecalc : 'Einschlag in',
+	loadAllAttacks: 'Alle Angriffe laden',
+	loadingFinished: 'Fertig geladen',
+
+	//time
+	toa: 'Laufzeit',
+	days: 'Tage',
+	hours: 'Stunden',
+	minutes: 'Minuten',
+	seconds: 'Sekunden',
+	withoutRuntime: 'Ohne Laufzeit',
+
+	//modules
+	modul: {
+		marketOptions: 'Eigene Einstellung Markt',
+		troopsOnMap: 'Truppen hervorheben',
+		showAttacksOnMap: 'Angriffe speichern/Auf Karte hervorheben',
+		insertIntoRuntimeCalc: 'Angriffe in Laufzeitrechner einfügen',
+		highlightgroups: 'Gruppen hervorheben',
+		massdisband: 'Angepasste Massenentlassung',
+		simulator: 'Angepasster Simulator',
+		filterOverview: 'Truppenfilter mit Ankunftszeit für Übersicht>Kombiniert',
+		bbCodeExport: 'Siedlungslisten als BB-Code exportieren',
+		massforward: 'Massenweiterleiten von Berichten',
+		trooplinks: 'Truppenlinks in der Kaserne',
+		targetExport: 'Ziel aus Kartenauschnitt auswählen',
+		massbuild: 'Mehrfachbau in der Burg',
+		setGroupsOnMap: 'Gruppen via Karte setzen',
+		sortOwnAttacks: 'Eigene Angriffe sortieren'
+	},
+
+	//units
+	units: {
+		militia: 'Bauernmiliz',
+		sword: 'Templer',
+		spear: 'Knappe',
+		axe: 'Berserker',
+		bow: 'Langbogen',
+		spy: 'Kundschafter',
+		light: 'Kreuzritter',
+		heavy: 'Schwarzer Ritter',
+		ram: 'Sturmbock',
+		kata: 'Tribok',
+		snob: 'Graf'
+	},
+
+	//buildings
+	buildings: {
+		main: 'Burg',
+		stone: 'Steinbruch',
+		wood: 'Sägewerk',
+		iron: 'Erzbergwerk',
+		storage: 'Lagerhaus',
+		hide: 'Versteck',
+		farm: 'Müller',
+		barracks: 'Kaserne',
+		wall: 'Stadtmauer',
+		stable: 'Eselzucht',
+		market: 'Markt',
+		garage: 'Alchemist',
+		snob: 'Residenz',
+		smith: 'Goldschmiede',
+		statue: 'Denkmal'
+	}
+};
+
+var en = {
+	//general
+	turnOn: 'On',
+	turnOff: 'Off',
+	all: 'All',
+	none: 'None',
+	name: 'Name',
+	amount: 'Amount',
+	color: 'Color',
+	loading: 'Loading data',
+	close: 'Click on darkened area to close',
+	confirm: 'Confirm',
+	preview: 'Preview',
+	goto: 'Go to',
+	reset: 'Reset',
+	fillIn: 'Fill in',
+	buildOne: '1 Level',
+	buildMax: 'Levels',
+	filter: 'Filter',
+	beingProcessed: 'is being processed',
+
+	//settings
+	resetSettings: 'Reset settings',
+	adoptSettings: 'Your settings could not be saved and have reset to default',
+	enableDisableModules: 'En/disable modules',
+	buildingTrebuchet: 'Default target trebuchet',
+	marketSettings: 'Marketsettings',
+	linkspy: 'Link spyattack',
+	contentTrebuchet: 'Default target for trebuchet attacks',
+	contentSpy: 'Create Link for spyattack with %s spies',
+	marketDefault: 'Default',
+
+	//kingsage_terminology
+	player: 'Player',
+	settlement: 'Settlement',
+	attacker: 'Attacker',
+	trooppoints: 'Trooppoints',
+	allyTrooppoints: 'Calculate trooppoints of alliance',
+	troops: 'Troops',
+	ignore: 'Ignore',
+	unit: 'Unit',
+	nick: 'Nickname',
+	ally: 'Alliance',
+	target: 'Target',
+	arrival: 'Arrival',
+	defender: 'Defender',
+	retrieve: 'Retrieve troops',
+	onlyAbandoned: 'Only abandoned settlements',
+	entries: 'Entries',
+	noMatch: 'No match found',
+	abbr: 'Symbol',
+	off: 'Offense',
+	def: 'Defense',
+	count: 'Count',
+	spy: 'Spy',
+	stone: 'Stone',
+	wood: 'Wood',
+	iron: 'Ore',
+	arrival: 'Time of Arrival',
+	nameCoords: 'Enter playername or coordinates',
+	cancelAllDestroy: 'Cancel tear down queue',
+
+	//research
+	researchMissingTroops: 'Research missing troops',
+	researchStarted: 'Research has been started',
+	noMissingResearch: 'No missing research found',
+
+	//selection
+	selectAll: 'Select all',
+	deselectAll: 'Deselect all',
+	selected: 'selected',
+	deselect: 'deselect',
+	markSelection: 'Mark selection',
+	selectedGroups: 'Groups have been selected',
+	deleteSelection: 'Delete selection',
+	targetExport: 'Export targets',
+
+	//save
+	save: 'Save',
+	saved: 'Saved',
+	saveAttacks: 'Save these attacks',
+	saveThread: 'Save thread',
+	resetSavedAttacks: 'Dismiss saved attacks',
+
+	//troops
+	highlighttroops: 'Highlight troops',
+	highlighttroopsLabel: 'Select troops to be highlighted',
+	highlighttroopsError: 'You can only use the "highlight troops" functionality after it has been researched with the alchemist.',
+	highlighttroopsActivate: 'Please activate the "Show troops" functionality below the map. This is required to highlight troops on the map',
+	trooplinks: 'Troop quicklinks',
+	troopFilter: 'Filter troops',
+
+	//group
+	group: 'Group',
+	setGroup: 'Set group',
+	switchGroup: 'Click "OK" to switch to group "All"',
+	highlightgroups: 'Highlight groups',
+	highlightGroupslabel: 'Select groups to be highlighted',
+	highlightGroupsReplacementError: 'Not available when in holiday replacement',
+
+	//bbcode
+	bbCode: 'BB-Code',
+	asBBCode: 'As BB-Code',
+	bbCode: 'Show as BB-Code',
+	report_as_bb_code: 'Short BB-Code',
+	enableBBCodeExport: 'Enable BB-Code export',
+	exportBBCode: 'Export settlements as BB-Code',
+
+	//messages & reports
+	reports: 'Reports',
+	recipient: 'Recipient',
+	forward: 'Forward',
+	forwardSuccess: 'Forwarding successful',
+	forwardError: 'No reports and/or username chosen',
+
+	//posting
+	sortContinent: 'By continent',
+	sortCoords: 'By coordinates',
+	sortPoints: 'By points',
+	sortName: 'By name',
+	thread: 'Thread',
+	goChooseThread: 'Select a thread on the alliance board',
+	summary: 'Summary',
+	postIn: 'This will be posted in',
+	amountOfSetts: 'Amount of selected settlements',
+	postsToBeCreated: '%s posts will be created',
+	chooseThreadFirst: 'You have to select a thread on the alliance board first',
+	formatting: 'Choose formatting',
+	header: 'Headline',
+	settlementDisplay: 'Settlementpresentation',
+	footer: 'footer',
+
+	//links
+	goToBarracks: 'Go to barracks',
+	goToMain: 'Go to castle',
+	attackWithSpies: 'Attack with %s spies',
+
+	//attacks
+	attack: 'Attack',
+	attacks: 'Attacks',
+	moreAttacks: 'More attacks',
+	nextAttacks: 'Next %s attacks',
+	noMatch: 'No matching settlements available',
+	runtimecalc : 'Impact in',
+	loadAllAttacks: 'Load all attacks',
+	loadingFinished: 'Loading finished',
+
+	//time
+	toa: 'Runtime',
+	days: 'Days',
+	hours: 'Hours',
+	minutes: 'Minutes',
+	seconds: 'Seconds',
+	withoutRuntime: 'Without runtime',
+
+	//modules
+	modul: {
+		marketOptions: 'Marketsettings',
+		troopsOnMap: 'Highlight troops on map',
+		showAttacksOnMap: 'Save attacks/show attacks on map',
+		insertIntoRuntimeCalc: 'Insert attacks into runtimecalculator',
+		highlightgroups: 'Highlight groups',
+		massdisband: 'Customize mass discharge',
+		simulator: 'Customize simulator',
+		filterOverview: 'Filter troops by time of arrival',
+		bbCodeExport: 'Export settlements as bb-code',
+		massforward: 'Massforward reports and messages',
+		trooplinks: 'Troop quicklinks in barracks',
+		targetExport: 'Export targets from map',
+		massbuild: 'Massbuild in castle',
+		setGroupsOnMap: 'Set groups via map',
+		sortOwnAttacks: 'Sort own attacks'
+	},
+
+	//units
+	units: {
+		militia: 'Farmer\'s militia',
+		sword: 'Templar',
+		spear: 'Squire',
+		axe: 'Berserker',
+		bow: 'Long-bow',
+		spy: 'Spy',
+		light: 'Crusader',
+		heavy: 'Black knight',
+		ram: 'Battering ram',
+		kata: 'Trebuchet',
+		snob: 'Count'
+	},
+
+	//buildings
+	buildings: {
+		main: 'Castle',
+		stone: 'Quarry',
+		wood: 'Sawmill',
+		iron: 'Ore Mine',
+		storage: 'Warehouse',
+		hide: 'Hideout',
+		farm: 'Miller',
+		barracks: 'Barracks',
+		wall: 'Town Wall',
+		stable: 'Donkey Stable',
+		market: 'Market',
+		garage: 'Alchemist',
+		snob: 'Residence',
+		smith: 'Goldsmith',
+		statue: 'Memorial'
+	}
+};
+
+var selectLanguage = function(lang){
+	switch(lang) {
+		case 'br.kingsage.gameforge.com':
+			return br; break;
+		case 'kingsage.de':
+		case 'de.kingsage.gameforge.com':
+			return de; break;
+		case 'kingsage.com':
+		case 'kingsage.org':
+		case 'en.kingsage.gameforge.com':
+		case 'us.kingsage.gameforge.com':
+			return en; break;
+		default:
+			return en; break;
+	}
+};
+
+var $ = (typeof(unsafeWindow) != 'undefined') ? unsafeWindow.jQuery : jQuery || $;
+
+var location = window.location;
+
+var languageSelector = location.host; // e.g. s1.kingsage.de
+languageSelector = languageSelector.substring(languageSelector.indexOf('.')+1,languageSelector.length); // e.g. kingsage.de
+var loca = selectLanguage(languageSelector);
+
+//* Extract uri parameters
+var Query = (function () {
+	var query = {}, pair,
+	search = location.search.substring(1).split("&"),
+	i = search.length;
+	while (i--) {
+		pair = search[i].split("=");
+		query[pair[0]] = decodeURIComponent(pair[1]);
+	}
+	return query;
+})();
+
+var kes = {},
+	l = loca;
+	
+	kes.module = {};
+
+	// TODO: test in chrome, opera, update-reminder,  show cost for 1 level, save everything apart from user settings in another obj?
 
 	//* fix location in opera
 	var location = window.location;
@@ -907,148 +1572,213 @@ function KESInit($, l, Query){
 	$('div[id*="lay_castle_widget"] > ul > li').eq(1).append('<a class="widget_icon widget_icon_1" style="cursor: pointer;" id="kes_show_settings">kes</a>');
 	$('#kes_show_settings').bind('click', function () { putSettings('content_modules'); });
 
-css += '.kes_group_element { display: inline-block; }';
-
 (function(kes) {
-	kes.module.overview = {
-		matcher: page.match('s=overview') && !page.match('s=overview_villages'),
+	kes.module.attackplaner = {
+		matcher: page.match('s=tools&m=attack_planer'),
 		fn: function() {
+			/* FUNCTIONALITY
+			 * handle x,y input fields (empty if values are 0 on focus)
+			 */
 
-			var place = $('span[onclick*="groups"]').parent(),
-				label = $('span[onclick*="groups"]').text() + ': ',
-				insert = place.closest('table:not(.noborder)'),
-				villageId = Query['village'],
-				groups = $.kes('getGroups', villageId),
-				saveurl = 'popup.php?s=groups&m=village&inta=modifyVillageGroups&village_id=' + villageId + av;
-
-			var formGenerator = function(groups) {
-				var currentGroups = [];
-				var o = '<br /><table width="790px" class="borderlist"><tr><th>';
-					o += label + ' <span id="kes_groups_savestatus" style="color: green; display:none;">' + l.saved + '</span></th></tr><tr><td><form id="kes_groups" action="' + saveurl + '">';
-				for(var g in groups) {
-					if(groups.hasOwnProperty(g)) {
-						var checked = (groups[g].checked) ? 'checked="checked"' : '';
-						o += '<span class="kes_group_element"><input name="vg[]" value="' + groups[g].id + '" type="checkbox" ' + checked + '> ' + groups[g].name + ' </span>';
-						if(groups[g].checked) {
-							// add checked groups to regular group list
-							currentGroups.push(groups[g].name);
-						}
-					}
-				}
-				o += '</form></td></tr></table><br />';
-				if(currentGroups.length > 0) {
-					place.text(label + currentGroups.join(', '));
-				}
-				return (groups.length > 0) ? o : '';
-			};
-
-			insert.before(formGenerator(groups));
-
-			$('#kes_groups').delegate('input', 'click', function () {
-				var data = $('#kes_groups');
-				var newGroups = data.find('input[type="checkbox"]:checked').parent().text();
-				$.ajax({
-					type: 'POST',
-					url: saveurl,
-					data: data.serialize(),
-					success: function () {
-						$('#kes_groups_savestatus').kes('fadeInfadeOut');
-						place.text(label + newGroups.replace(/  /g, ', '));
-					}
-				});
-			});
+			$('input[id*="target_"]').focusin(function () {
+				if ($('#target_x, #target_y').val() == 0) { $('input[id*="target_"]').val(''); }
+			});	
 		}
 	};
 }(kes));
 
 (function(kes) {
-	kes.module.main = {
-		matcher: page.match('s=build_main'),
+	kes.module.attacks = {
+		matcher: page.match('m=attacks'),
 		fn: function() {
 			/* FUNCTIONALITY
-			 * batch cancelling destruct orders for buildings
+			 * insert attack into runtimecalc if enabled
+			 * save attack to be displayed on map
+			 * display incomming attacks with seconds
 			 */
 
-			var destroyText = $('a[href*="m=destroy"]').text(), tableCount = $('table.borderlist'),	isModernView = $('div.mainBuildList, div.mainBuildModern').length;
+			var table = $('table.borderlist').eq(2);
 
-			if(tableCount.length == (6 - isModernView)) {
-				// buildlist available
-				var buildList = tableCount.eq(2), destroyList = $.makeArray(buildList.find('tr > td').parent().filter(function() { return $(this).find('td:first').text().match(destroyText); }));
-				if(destroyList.length > 0 && destroyText != '') {
-					// there are destroy items running
-					buildList.before('<span class="click" id="kes_cancelAllDestroy">(kes) ' + l.cancelAllDestroy + '</span><br />'); // LANG
-					$('#kes_cancelAllDestroy').bind('click', function() {
-						$(this).kes('fadeOutRemove');
-
-						function cancelDestroy(destroyList, callback) {
-							var that = $(destroyList.shift()), link = that.find('a[href*="cancelBuilding"]').attr('href');
-							$.ajax({
-								type: 'post',
-								url: link,
-								success: function() {
-									that.kes('fadeOutRemove');
-									if(destroyList.length == 0 && buildList.length == 1) {
-										buildList.kes('fadeOutRemove');
-									} else {
-										callback(destroyList, callback);
-									}
-								}
-							});
-						};
-						cancelDestroy(destroyList, cancelDestroy);
+			function insertIntoRuntimeCalc() {
+				if (k.modul.insertIntoRuntimeCalc) {
+					$('table.borderlist').eq(2).find('tr').each(function () {
+						var cur = $(this);
+						if (cur.find('td[class*="list"]')) {
+							var children = cur.children();
+							var data	 = '&target=' + children.eq(1).find('a:last').html() + '&source=' + children.eq(2).find('a:last').html() + '&time=' + children.eq(4).find('span').attr('time') + '&starttime=' + new Date().getTime();
+							//* add link to runtimecalc
+							children.eq(0).find('img').replaceWith('<a target="_blank" href="/game.php?&s=tools&m=runtime_calculator' + data + av + '"><img src="/img/command/attack.png"></a>');
+						}
 					});
 				}
 			}
 
-			if(k.modul.massbuild && premium) {
+			//* load all existing pages!
+			//* make ui
+			table.before('<span class="click" id="kes_allAttacks">' +  arrow + ' (kes) ' + l.loadAllAttacks + '<br /><br /></span>');
 
-				$('a[href*="&s=build_main&a=buildBuilding"]').each(function() {
-					var current  = $(this),
-						row 	 = current.parent().parent(),
-						level 	 = parseInt(current.text().match(/\d{1,2}/), 10) - 1 || 0,
-						building = current.attr('href');
-						building = $.kes('getUrlParameters', building)['build'];
+			//* we need the last pagination link to an attack page and the currently displayed page from the url
+			var lastPage = $('table.borderlist').eq(2).find('a[href*="attacks&start"]:last').attr('href'),
+				display  = document.URL;
 
-					var modernStyling = (isModernView > 0) ? 'style="color: #F7D48E;" ' : '',
-						maximumLevel  = buildCosts.getMaximumLevel( /* building stone wood iron workers */
-							buildCosts[building], level, $('#stone').text().replace(".", ""), $('#wood').text().replace(".", ""), $('#iron').text().replace(".", ""), $('a[href*="&s=build_farm"]:first').parent().find('span').text().replace(".", ""));
+			function getPages(last, display) {
+				var lastN = (typeof(last) == 'undefined') ? 0 : last.substring(last.indexOf('&start=') + 7);
+				if (display.indexOf('&start') > 0) {
+					// the url says we are not starting from zero, that means we have to determine whether or not we are currently viewing the last page or if the last pagination link is valid
+					var	displayN = display.substring(display.indexOf('&start=') + 7);
+					return (lastN > displayN) ? lastN : displayN;
+				} else {
+					//we are on the first attack page, the pagination link is valid and we can just return that
+					return lastN;
+				}
+			}
 
-					var data	= row.find('td'), stone, wood, ore, workers, link;
-					if(data.length == 0) {
-						// modern views
-						stone 	= row.find('.res2'), wood = row.find('.res1'), ore = row.find('.res3'),	workers = row.find('.workers'), link = row.find('.button');
-					} else {
-						// classic views
-						stone 	= data.eq(1), wood = data.eq(2), ore = data.eq(3), workers = data.eq(4), link = data.eq(6);
-					}
+			function createQueue(pages) {
+				var pages	= pages/50 + 1,
+					step	= 50,
+					url 	= '/game.php?s=ally&m=attacks&start=' + av,
+					queue 	= [];
+				for(var i = 0; i < pages; i++) {
+					queue.push(url + (i*step));
+				}
+				return queue;
+			}
 
-					stone 	= stone.find('span').text($.kes('prettyNumber', maximumLevel[1]));
-					wood	= wood.find('span').text($.kes('prettyNumber', maximumLevel[2]));
-					ore		= ore.find('span').text($.kes('prettyNumber', maximumLevel[3]));
-					workers	= workers.find('span').text($.kes('prettyNumber', maximumLevel[4]));
+			var pages 		= getPages(lastPage, display),
+				pageQueue 	= createQueue(pages);
+				queueLength = pageQueue.length;
 
-					var replacement  = '<a ' + modernStyling + 'href="' + current.attr('href') + '">' + l.buildOne + '</a> ';
-						replacement += '<input type="text" maxlength="2" style="width: 17px;" data-max="' + maximumLevel[0] + '" class="kes_buildLevels" value="' + maximumLevel[0] + '"> ';
-						replacement += '<span ' + modernStyling + 'class="click kes_massbuild" data-url="' + current.attr('href') + '">' + l.buildMax + '</span>';
+			$('#kes_allAttacks').bind('click', function () {
 
-						current.replaceWith(replacement);
-				});
+				$(this).replaceWith('<span id="kes_allAttacks">' + l.loading + '... (' + (queueLength - pageQueue.length) + '/' + queueLength + ')<br /><br /></span>');
+				// queueloader
+				table.find('tr > td').parent().remove()
+				var getAttacks = function (page) {
+					$.ajax({
+						type: 'POST',
+						url: page.shift(),
+						success: function (data) {
+							var attacks = $(data).find('table.borderlist').eq(2).find('img').parent().parent();
+							$('table.borderlist').eq(2).append(attacks);
+							if (page.length > 0) {
+								$('#kes_allAttacks').replaceWith('<span id="kes_allAttacks">' + l.loading + '... (' + (queueLength - pageQueue.length) + '/' + queueLength + ')<br /><br /></span>')
+								getAttacks(page);
+							} else {
+								$('#kes_allAttacks').replaceWith('<span id="kes_allAttacks">' + l.loadingFinished + '<br /><br /></span>');
+								setTimeout(function () { $('#kes_allAttacks').kes('fadeOutRemove'); }, 800);
 
-				$('.contentpane').on('click', '.kes_massbuild', function() {
-					var url		= $(this).data('url');
-						max		= $(this).siblings('input').data('max'),
-						levels 	= $(this).siblings('input').val();
-						levels 	= (levels > max) ? max : levels;
-					for(var i = 0; i < levels; i++) {
-						$.kes('queue', {
-							type: 'post',
-							url: url,
-							success: function(data) {
-							 	var content = $(data).find('.contentpane');
-								$('.contentpane').replaceWith(content);
+								displayAttacksWithSeconds(2);
+								insertIntoRuntimeCalc();
+								window.timersDown = []; // reset timers array so that the page doesnt get reloaded
+
+								//filter ui
+								table.prepend('<tr style="height: 35px;"><td colspan="4"><form id="kes_filterOption"><input type="radio" name="filter" value="attacker" id="kes_filterAttacker" class="filter"> ' + l.attacker + '\
+									<input type="radio" id="kes_filterDefender" value="defender" name="filter" checked="checked" class="filter"> ' + l.defender + '<span style="width: 25px; display: inline-block"> </span>' +  l.nameCoords + ': <input style="width: 100px;" type="text" id="kes_filterInput"> <span id="kes_attackRowCount"></span></div></td>\
+									<td colspan="1"><span class="click" id="kes_resetFilter">' + arrow + ' ' + l.reset + '</span></td></tr>');
+
+								//load last target
+								if ($.kes('isKey', 'kes_lastAttackFilterInput')) {
+									$('#kes_filterInput').val($.kes('loadKey', 'kes_lastAttackFilterInput'));
+								}
+
+								// TODO limit for MANY attacks?!
+								var filterAttacks = function (event) {
+
+									var keycodes = [ 9, 16, 17, 18, 20, 33, 34, 35];
+
+									if(!event || keycodes.indexOf(event.keyCode) > -1) return;
+
+									var filterOption = $('#kes_filterOption').find('input[type="radio"]:checked').val(),
+										filterInput  = $('#kes_filterInput').val();
+									if (filterInput == "") {
+										// we need more input
+										if(event.keyCode != 8) $('#kes_filterInput').css('border', '1px solid red').effect('pulsate', 300, function () { $(this).css('border', '1px solid #CFAB65'); })
+									} else {
+										//save input
+										$.kes('saveKey', 'kes_lastAttackFilterInput', filterInput);
+										//start filtering
+										var target = (filterOption == 'attacker') ? 2 : 1; // attacker has column 2 in the table defender has column 1
+										table.find('tr:gt(1)').show().filter(function () {
+											return ($(this).find('td:eq(' + target + ')').text().search(new RegExp(filterInput, "i")) < 0);
+										}).hide();
+
+										var attackRowCount = $('table.borderlist').eq(2).find('tr:gt(1)').filter(function () { return ($(this).css('display') != 'none'); }).length;
+
+										suffix = (attackRowCount != 1) ? ' ' + l.attacks : ' ' + l.attack;
+										$('#kes_attackRowCount').text(attackRowCount + suffix);
+									}
+								};
+
+								$('#kes_filterInput').bind('keyup', filterAttacks);
+								$('#kes_resetFilter').bind('click', function () { table.find('tr:gt(1)').show(); });
+								$('#kes_filterOption').submit(function(event) { event.preventDefault(); });
+
+								filterAttacks();
 							}
-						});
-					}
+						}
+					});
+				}
+				getAttacks(pageQueue);
+			});
+
+			displayAttacksWithSeconds(2);
+			insertIntoRuntimeCalc();
+
+			if (k.modul.showAttacksOnMap) {
+				var display_delete = 'none';
+				if ($.kes('isKey', 'kes_save_attacks')) {
+					display_delete = 'inline';
+					filterOverdueAttacks($.kes('loadKey', 'kes_save_attacks'));
+				}
+				$('table[class*="borderlist"]').eq(2).prepend('<tr><td colspan="5"><span id="kes_save_attacks" class="click kes_mark">' + l.saveAttacks + '</span> \
+					<span id="kes_save_attacks_success" style="display: none; color: green;"> ' + l.saved + '!</span> \
+					<span style="display: ' + display_delete + ';" class="click kes_mark" id="kes_delete_attacks">' + l.resetSavedAttacks + '</td></tr>');
+
+				$('#kes_save_attacks').bind('click', function () {
+					var kes_attacks = {};
+					$('table[class*="borderlist"]').eq(2).find('tr > td[class*="list"]').parent().each(function () {
+						var attack		 	= $(this).find('td');
+						var def_attack_name = attack.eq(0).text();
+						var def_villageId   = attack.eq(1).find('a[href*="info_village"]').attr('href');
+						def_villageId	   = def_villageId.substring(def_villageId.lastIndexOf('id=') + 3);
+						var off_player	  = attack.eq(2).find('a[href*="info_player"]').html();
+						var off_playerId	= attack.eq(2).find('a[href*="info_player"]').attr('href');
+						off_playerId		= off_playerId.substring(off_playerId.lastIndexOf('id=') + 3);
+						var off_village	 = attack.eq(2).find('a[href*="info_village"]').html();
+						var off_villageId   = attack.eq(2).find('a[href*="info_village"]').attr('href');
+						off_villageId	   = off_villageId.substring(off_villageId.lastIndexOf('id=') + 3);
+						var off_ally		= '-';
+						var off_allyId	  = '-';
+						if (attack.eq(2).find('a[href*="info_ally"]').html()) {
+							off_ally   = attack.eq(2).find('a[href*="info_ally"]').html();
+							off_allyId = attack.eq(2).find('a[href*="info_ally"]').attr('href');
+							off_allyId = off_allyId.substring(off_allyId.lastIndexOf('id=') + 3);
+						}
+						// sanitize ids from av
+						if (av != '') {
+							def_villageId 	= def_villageId.replace(av, '');
+							off_playerId 	= off_playerId.replace(av, '');
+							off_villageId 	= off_villageId.replace(av, '');
+							off_allyId 		= off_allyId.replace(av, '');
+						}
+						var attack_timeleft = attack.eq(4).find('span').attr('time');
+						attack_timeleft	 = (Date.parse(new Date()) / 1000) + parseInt10(attack_timeleft);
+						single_attack 		= {0: off_player, 1: off_playerId, 2: off_village, 3: off_villageId, 4: off_ally, 5: off_allyId, 6: attack_timeleft, 7: def_attack_name};
+						if (kes_attacks.hasOwnProperty(def_villageId)) {
+							kes_attacks[def_villageId].length = kes_attacks[def_villageId].length+1;
+							kes_attacks[def_villageId][kes_attacks[def_villageId].length] = single_attack;
+						} else {
+							kes_attacks[def_villageId] = {};
+							kes_attacks[def_villageId].length = 0;
+							kes_attacks[def_villageId][kes_attacks[def_villageId].length] = single_attack;
+						}
+					});
+					$.kes('saveKey', 'kes_save_attacks', kes_attacks);
+					$('#kes_save_attacks_success').fadeIn('slow').fadeOut('fast');
+				});
+				$('#kes_delete_attacks').bind('click', function () {
+					$(this).fadeOut('slow');
+					$.kes('deleteKey', 'kes_save_attacks');
 				});
 			}	
 		}
@@ -1192,16 +1922,475 @@ css += '.kes_toggle_sim { cursor: pointer; width: 25px; text-align: center; }';
 }(kes));
 
 (function(kes) {
-	kes.module.attackplaner = {
-		matcher: page.match('s=tools&m=attack_planer'),
+	kes.module.forum = {
+		matcher: k.modul.bbCodeExport && page.match('s=ally&m=forum'),
 		fn: function() {
 			/* FUNCTIONALITY
-			 * handle x,y input fields (empty if values are 0 on focus)
+			 * add ui for selecting a thread inside the board to post setts into
 			 */
 
-			$('input[id*="target_"]').focusin(function () {
-				if ($('#target_x, #target_y').val() == 0) { $('input[id*="target_"]').val(''); }
-			});	
+			//* create a button to save threadId, threadName;
+			$('iframe[src*="forum.php"]').load(function () {
+				var iframeURL = $('iframe[src*="forum.php"]').get(0).contentDocument.location.href;
+				if (iframeURL.match('s=forum_thread' + av + '&thread_id=')) {
+					var frame = $('iframe[src*="forum.php"]').contents();
+					$(frame).find('div.smallButton:first').before('<div id="kes_save_thread" class="smallButton"><span style="cursor: pointer;">(kes) ' + l.saveThread + '</span></div>');
+					$(frame).find('#kes_save_thread').bind('click', function () {
+						$(this).fadeOut().fadeIn();
+						var uri = $('iframe[src*="forum.php"]').contents().find('td.headerInfo > a').attr('href')
+						var threadId = uri.substring(uri.indexOf('thread_id=') + 10);
+						var threadName = $('iframe[src*="forum.php"]').contents().find('td.headerInfo > a').html();
+						// sanitize thread id
+						if (av != '') {
+							threadId = threadId.replace(av, '');
+						}
+						var obj = { id: threadId, name: threadName }
+						$.kes('saveKey', 'kes_thread', obj);
+					});
+				}
+			});
+		}
+	};
+}(kes));
+
+css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; position: fixed; width: 500px; left: 50%; top: 5%; margin-left: -250px; padding: 6px; z-index: 200; }';
+css += '.kes_progressOuter { border:1px solid #CFAB65; overflow: hidden; width:100px; height:10px; background: #CFAB65; }';
+css += '.kes_progressInner { width: 0px; height: 10px; background: #FFCC6E; }';
+
+(function(kes) {
+	kes.module.infoally = {
+		matcher: page.match('s=info_ally') && !premium || identifyActiveTab('s=info_ally&m=profile'),
+		fn: function() {
+			/* FUNCTIONALITY
+			 * collect and sort all trooppoints of the alliance's players
+			 * also generates bb-code for easy posting into the forum
+			 */
+
+			//* set up ui
+			var cachedTable = $('table.borderlist').eq(2);
+			cachedTable.append('<tr><td colspan="2"><span class="click" id="kes_getAllyTroopPoints">' + l.allyTrooppoints +'</span></td></tr>');
+
+			function getPlayerInfo(members, callback) {
+				var href = members.shift();
+				$.ajax({
+					type: 'POST',
+					url: href,
+					success: function (data) {
+						callback(members, data);
+					}
+				});
+			}
+
+			$('#kes_getAllyTroopPoints').bind('click', function () {
+				$(this).unbind('click').fadeOut();
+
+				var membersPage = cachedTable.find('a[href*="info_member"]').attr('href');
+				$.when($.ajax({
+					type: 'POST',
+					url: membersPage
+				}).then(function (data) {
+					var members = [];
+					$(data).find('table.borderlist').eq(2).find('a[href*="info_player"]').each(function () {
+						members.push($(this).attr('href'));
+					});
+
+					function getAllPlayerInfos(members, callback) {
+						var allyTroopPoints = [];
+						var len = members.length;
+						var left = len;
+						var i = 0;
+
+						$('#kes_getAllyTroopPoints').removeClass('click').text(l.loading + ': ' + i +'/'+ len).fadeIn().parent().attr('colspan', 0).after('<td><div class="kes_progressOuter"><div id="kes_progress" class="kes_progressInner" maxwidth="100"></div></div></td>');
+
+						function callQueue(members) {
+							getPlayerInfo(members, function (members, playerInfo) {
+								var player = [];
+								var playerName = $(playerInfo).find('h1').eq(1).text();
+									playerName = playerName.substring(playerName.indexOf(' ') + 1);
+									playerName = playerName.replace(/\(.*\)/, "").trim();
+
+								player.push(playerName);
+								player.push(calculateTroopScore(playerInfo));
+
+								i++;
+								$('#kes_getAllyTroopPoints').text(l.loading + ': ' + i +'/'+ len);
+								$('#kes_progress').css({'width': i*(100/len) + '%'});
+
+								allyTroopPoints.push(player)
+								if (--left === 0) {
+									$('#kes_getAllyTroopPoints').parent().parent().remove();
+									callback(allyTroopPoints);
+								} else {
+									callQueue(members);
+								}
+							});
+						}
+						callQueue(members);
+					};
+					getAllPlayerInfos(members, showData);
+
+					function showData(allyTroopPoints) {
+						//* sort data according to trooppoints
+						allyTroopPoints.sort(function (a,b) { return b[1][0] - a[1][0]; });
+
+						var displayDataAsTable = function(data) {
+							var o = '';
+							var len = data.length;
+							for(var i = 0; i < len; i++) {
+								o += '<tr><td>' + data[i][0] + '</td><td>' + $.kes('prettyNumber', data[i][1][0]) + ' (' + ((data[i][1][0]/data[i][1][1])*100).toFixed(2) + '%)';
+								if (i != len-1) { o += '</td></tr>'; }
+							}
+							return o;
+						};
+
+						var displayDataAsBBCode = function(data) {
+
+						};
+
+						function getDataReady(lineStart, lineMiddle, lineEnd, data) {
+							var o = '';
+							var len = data.length;
+							for(var i = 0; i < len; i++) {
+								o += lineStart + data[i][0] + lineMiddle + $.kes('prettyNumber', data[i][1][0]) + ' (' + ((data[i][1][0]/data[i][1][1])*100).toFixed(2) + '%)';
+								if (i != len-1) { o += lineEnd; }
+							}
+							return o;
+						}
+						var o = arrow + ' <span class="click" id="kes_createBB">(kes) ' + l.bbCode + '</span><table class="borderlist" style="width: 420px;">';
+							o += '<tr><th>' + l.player + '</th><th>' + l.trooppoints + '</th></tr>';
+							o += getDataReady('<tr><td>', '</td><td>', '</td></tr>', allyTroopPoints);
+							o += '</table><br />';
+
+						$('table.borderlist').eq(3).before(o);
+						$('#kes_createBB').bind('click', function () {
+
+							$('body').append('<div id="kes_box"><textarea style="width: 99%; resize: none;" id="kes_data"></textarea></div><div id="kes_overlay"></div>');
+							$('#kes_data').text(getDataReady('[player]', '[/player] ', '\n', allyTroopPoints)).select();
+							$('#kes_overlay').fadeIn().bind('click',function () {
+								$('#kes_overlay, #kes_box').kes('fadeOutRemove');
+							});
+							$('#kes_box').fadeIn();
+							$('#kes_data').kes('resizeTextarea');
+						});
+					}
+				}));
+			});
+		}
+	};
+}(kes));
+
+css += 'tr.kes_selected td { background: url("img/layout/bg_table_cell_marked2.jpg") repeat-x scroll 0 0 transparent !important; }';
+css += '.unselectable { user-select: none; -moz-user-select: none; -khtml-user-select: none; }';
+css += '.kes_remove_selection { display: inline; background-color: #fff; cursor: pointer; position: relative; float: right; z-index: 150; color: crimson; font-weight: bold; }';
+css += '#kes_showSelectedSetts { position: fixed; background: #FFF; font-size: 10pt; border-radius: 5px; padding: 5px; z-index: 200; top: 10%; left: 50%; margin-left: -310px; width: 620px; max-height: 85%; overflow-y: auto; }';
+
+
+(function(kes) {
+	kes.module.infoplayer = {
+		matcher: page.match('s=info_player') && !(page.match('m=statistics') || page.match('m=conquers')),
+		fn: function() {
+			/* FUNCTIONALITY
+			 * add bbCodeExport and sorting functionality to settlements
+			 * basically lets you post into board via ajax
+			 * also calculates how well the player has used their available trooppoints
+			 */
+
+			//* tags for bbCodeExport
+			var post_details 			= { settlementName: 'kes_settname', nick: 'kes_player', village: 'kes_coords', continent: 'kes_continent', points: 'kes_points' };
+				post_details.std_input  = post_details.village;
+
+			if (k.modul.bbCodeExport) {
+
+				$('table.borderlist').eq(3).prepend('<tr><th colspan="3"><span class="click" id="kes_enablebbCodeExport">' + arrow +' (kes) ' + l.enableBBCodeExport + '</span></th></tr>');
+				$('#kes_enablebbCodeExport').bind('click', function () {
+					$(this).parent().parent().replaceWith('<tr><th colspan="3">' + l.exportBBCode + '</td></tr><tr><td id="kes_threadId_avail" colspan="3"></td></tr><tr><td colspan="2">\
+					<input type="radio" value="kontinent" name="kes_sel_setts"><span style="vertical-align: bottom; display: inline-block; width: 100px;">' + l.sortContinent + '</span>\
+					<input type="radio" value="koords" name="kes_sel_setts" checked="checked"><span style="vertical-align:bottom">' + l.sortCoords + '</span></td><td></td></tr><td colspan="2">\
+					<input type="radio" value="points" name="kes_sel_setts"><span style="vertical-align: bottom; display: inline-block; width: 100px">' + l.sortPoints + '</span>\
+					<input type="radio" value="name" name="kes_sel_setts"><span style="vertical-align: bottom">' + l.sortName + '</span></td><td><input type="submit" id="kes_sel_setts_submit" value="' + l.bbCode + '"></td></tr>\
+					<tr><td colspan="3"><span class="click kes_mark" id="kes_select_all">' + arrow + ' ' + l.selectAll + '</span> <span class="click kes_mark" id="kes_deselect_all">' + arrow + ' ' + l.deselectAll + '</span></td></tr>');
+
+					function getKontinent (koords) { return koords.substring(4,5)+koords.substring(0,1); }
+					//* prepend controls
+					$('table.borderlist').eq(3).prepend('');
+					//* make table unselectable
+					$('table.borderlist').eq(3).addClass('unselectable');
+					//* write msg whether thread was selected or not
+					if ($.kes('isKey', 'kes_thread')) {
+						var thread 		= $.kes('loadKey', 'kes_thread');
+							threadName  = thread.name;
+						$('#kes_threadId_avail').html('<span style="color: green; font-weight: bold;">' + l.thread + ' "' + threadName + '" ' + l.selected + '.</span>');
+					} else {
+						$('#kes_threadId_avail').html('<span style="color: crimson; font-weight: bold;">' + l.goChooseThread + '.</span>');
+					}
+
+					$(document).ready(function () {
+						$.fn.selectSettlement = function () {
+							if (!$(this).hasClass('kes_selected')) {
+								$(this).addClass('kes_selected').find('td:first').find('a, img').css('float', 'left').end().append('<div class="kes_remove_selection"><div style="position: absolute; right: 0;">' + l.deselect + '</div></div>');
+							}
+						}
+						var selectable = false;
+						// handle selecting
+						$('table.borderlist').eq(3).find('tr:gt(5)')
+							.mousedown(function (){ selectable = true; })
+								.mouseup(function (){ selectable = false; })
+									.mousemove(function () { if (selectable) { $(this).selectSettlement(); } })
+										.click(function () { $(this).selectSettlement(); });
+						//* deselect handler
+						$('.kes_remove_selection').live('click', function () {
+							$(this).parent().parent().removeClass('kes_selected').end().end().fadeOut().remove();
+						});
+					});
+					//* select deselect all handlers
+					$('#kes_select_all').bind('click', function () { $(this).fadeOut().fadeIn(); $('table.borderlist').eq(3).find('tr:gt(5)').each(function () { $(this).selectSettlement(); }); });
+					$('#kes_deselect_all').bind('click', function () { $(this).fadeOut().fadeIn(); $('table.borderlist').eq(3).find('tr:gt(5)').each(function () { $(this).removeClass('kes_selected').find('td:first > div').remove(); }); }).fadeOut().fadeIn();
+					//* sort data eventually push to board
+					$('#kes_sel_setts_submit').bind('click', function () {
+						if ($.kes('isKey', 'kes_thread')) {
+							//* collect data
+							var thread 	   = $.kes('loadKey', 'kes_thread'),
+								threadName = thread.name, mode = $('input[name="kes_sel_setts"]:checked').val(),
+								threadId   = thread.id;
+								playerName = $('table.borderlist').eq(2).find('tr:first').text().trim();
+								playerName = playerName.substring(playerName.indexOf(':') + 1);
+								playerName = $.trim(playerName);
+							var setts = [];
+							$('table.borderlist').eq(3).find('tr.kes_selected').each(function () {
+								var settlementName = $(this).find('td:first > a').html(),
+									xy = $(this).find('td:nth-child(2) > a').html(),
+									x = parseInt10(xy.split('|')[0]), y = parseInt10(xy.split('|')[1]),
+									k = getKontinent(xy), p = $(this).find('td:nth-child(3)').html();
+									p = p.replace(/\./g, '');
+								setts.push({pos: x + '|' + y, continent: k, points: p, sett: settlementName, nick: playerName});
+							});
+
+							function formatOutput(sett, r) {
+								var o = r;
+								o = o.replace(new RegExp('{' + post_details.nick		   + '}', 'g'), ' ' + sett['nick']);
+								o = o.replace(new RegExp('{' + post_details.settlementName + '}', 'g'), ' ' + sett['sett']);
+								o = o.replace(new RegExp('{' + post_details.village		+ '}', 'g'), ' [village]' + sett['pos'] + '[/village]');
+								o = o.replace(new RegExp('{' + post_details.continent	  + '}', 'g'), ' K' + sett['continent']);
+								o = o.replace(new RegExp('{' + post_details.points		 + '}', 'g'), ' ' + sett['points']);
+								return o;
+							}
+
+							function confirmPost(setts, playerName, threadName, threadId, settsPerPosts) {
+								var postCount = Math.ceil(setts.length/parseInt(settsPerPosts, 10));
+								//* settlement count, post count, playername, threadname, threadId submit button to click
+								$('body').append('<div id="kes_overlay" class="kes-backlight" style="display: block !important;"><h3 style="color: white; text-align:left; opacity: 1; margin: 1em;">' + l.close + '</h3></div>\
+										<div id="kes_showSelectedSetts">\
+											<div style="line-height: 1.1; text-align: left; width: 50%; margin: 0; float: left; border-right: 1px solid #DDD;">\
+												<h3>' + l.summary + ':</h3>\
+												' + l.postIn + ' "' + threadName +'" (<a href="/forum.php?s=forum_thread&thread_id=' + threadId + av + '" target="_blank">' + threadId + '</a>)<br /> ' + l.player + ': ' + playerName + '<br />\
+												' + l.amountOfSetts + ': ' + setts.length + '<br />' + printf(l.postsToBeCreated, postCount) + '<br /><br />\
+												<h3>' + l.formatting + ':</h3>\
+												<h4>' + l.header + ':</h4><textarea style="min-width: 290px; max-width: 290px; min-height: 60px; max-height: 60px;" id="kes_post_top"></textarea>\
+												<h4>' + l.settlementDisplay + ':</h4>\
+												<span class="kes_input click">{' + post_details.nick + '}</span>, <span class="kes_input click">{' + post_details.settlementName + '}</span>, <span class="kes_input click">{' + post_details.village + '}</span>, \
+												<span class="kes_input click">{' + post_details.continent + '}</span>, <span class="kes_input click">{' + post_details.points + '}</span><br />\
+												<textarea style="min-width: 297px; max-width: 297px; min-height: 90px; max-height: 90px;" id="kes_post_body">{' + post_details.std_input +'}</textarea>\
+												<h4>' + l.footer + ':</h4><textarea style="min-width: 290px; max-width: 290px;min-height: 60px; max-height: 60px; height: 60px;" id="kes_post_footer"></textarea>\
+												<input id="confirm_post_submit" type="submit" value="' + l.confirm + '">\
+											</div>\
+											<div style="line-height: 1.1; text-align: left; padding-left: 3px; width: 49%; margin: 0; float: right;">\
+											<h3>' + l.preview + ':</h3><span id="kes_post_preview"></span>\
+											</div></div>');
+								// update preview on change
+								function updatePreview() {
+									$('#kes_post_preview').html($('#kes_post_top').val() + '<br />' + formatOutput({pos: 'xxx|yyy', continent: 'YX', points: '10000', sett: l.settlement, nick: l.player}, $('#kes_post_body').val()) + '<br />[...]<br />' + $('#kes_post_footer').val());
+								}
+								updatePreview();
+								$('.kes_input').bind('click', function () { $('#kes_post_body').val($('#kes_post_body').val() + $(this).html()); updatePreview(); });
+								$('textarea[id*="kes_post_"]').keyup(function () {
+									updatePreview();
+								});
+								$('.kes-backlight').bind('click', function () { $('.kes-backlight, #kes_showSelectedSetts').fadeOut().remove(); $('.kes_input').unbind('click'); });
+								$('#confirm_post_submit').bind('click', function () {
+									var top	= $('#kes_post_top').val(),
+										format = $('#kes_post_body').val(),
+										footer = $('#kes_post_footer').val(),
+										output = top + '\n' + playerName + '\n',
+										count  = 0,
+										data   = [];
+									for(var i = 0; i < setts.length; i++) {
+										output += formatOutput(setts[i], format) + '\n';
+										count++;
+										if (count == settsPerPosts || i == setts.length-1) {
+											output += footer;
+											data.push(output);
+											output = top + '\n' + playerName + '\n';
+											count = 0;
+										}
+									}
+									function makePost(threadId) {
+										var single = data.shift();
+										$.ajax({
+											type: 'post',
+											url: '/forum.php?s=forum_thread&thread_id=' + threadId + '&a=forumReplyThread' + av,
+											data: 'text=' + single,
+											complete: function () {
+												if (data.length > 0) {
+													makePost(threadId);
+												}
+											}
+										});
+									}
+									makePost(threadId);
+									$('.kes_overlay').click();
+								});
+							}
+
+							function sortKoords(a, b) {
+								var xya = a.pos.split('|'), xyb = b.pos.split('|'),
+								a = xya[0]+xya[1], b = xyb[0]+xyb[1];
+								return a-b;
+							}
+
+							function sortKontinents(a, b) {
+								var xya = a.pos.split('|'), xyb = b.pos.split('|'),
+								a = (a.continent * 1000) + (xya[0]+xya[1]), b = (b.continent * 1000)+ (xyb[0]+xyb[1]);
+								return a-b;
+							}
+
+							function sortSetts(setts, mode) {
+								switch(mode) {
+									case 'kontinent': return setts.sort(sortKontinents); break;
+									case 'points'   : return setts.sort(function (a, b) { return a.points-b.points; }); break;
+									case 'koords'   : return setts.sort(sortKoords); break;
+									default		 : return setts;
+								}
+							}
+							confirmPost(sortSetts(setts, mode), playerName, threadName, threadId, 200);
+						} else {
+							window.alert(l.chooseThreadFirst + '.');
+						}
+					});
+				});
+			}
+
+			var troopScore = calculateTroopScore($('body'));
+			//append to cached table
+			$('table.borderlist').eq(2).append('<tr><td>' + l.trooppoints + ':</td><td>' + $.kes('prettyNumber', troopScore[0]) + ' (' + ((troopScore[0]/troopScore[1])*100).toFixed(2) + '%)</td></tr>');
+		}
+	};
+}(kes));
+
+(function(kes) {
+	kes.module.infovillages = {
+		matcher: page.match('s=info_village'),
+		fn: function() {
+			/* FUNCTIONALITY
+			 * add shortcuts to barracks and main building to every village info page
+			 * add shortcuts to attack (with spies or without)
+			 */
+			
+			var target  = $('a[href*="&s=build_barracks&m=command&target="]').attr('href'),
+				id 		= Query['id'],
+				player  = $('a[href*="info_player&"]').text();
+
+			if (self.match(player) && player != "") {
+				// this is me add links to switch to main / barracks
+				$('a[href*="edit_player_colors"]').after('<br /><span><a href="/game.php?village=' + id + '&s=build_barracks' + av + '">' + arrow + ' ' + l.goToBarracks + '</a></span><br />\
+					<span><a href="/game.php?village=' + id + '&s=build_main' + av + '">' + arrow + ' ' + l.goToMain + '</a></span>');
+			} else {
+				// this is an enemy add links to spy attack, barracks and insert koords
+				$('a[href*="&s=build_barracks&m=command&target="]').after('<br /><a href="' + target + '&spy=' + k.spylink_amount+ '">' + arrow + ' ' + printf(l.attackWithSpies, k.spylink_amount) +'</a>');
+			}
+		}
+	};
+}(kes));
+
+(function(kes) {
+	kes.module.main = {
+		matcher: page.match('s=build_main'),
+		fn: function() {
+			/* FUNCTIONALITY
+			 * batch cancelling destruct orders for buildings
+			 */
+
+			var destroyText = $('a[href*="m=destroy"]').text(), tableCount = $('table.borderlist'),	isModernView = $('div.mainBuildList, div.mainBuildModern').length;
+
+			if(tableCount.length == (6 - isModernView)) {
+				// buildlist available
+				var buildList = tableCount.eq(2), destroyList = $.makeArray(buildList.find('tr > td').parent().filter(function() { return $(this).find('td:first').text().match(destroyText); }));
+				if(destroyList.length > 0 && destroyText != '') {
+					// there are destroy items running
+					buildList.before('<span class="click" id="kes_cancelAllDestroy">(kes) ' + l.cancelAllDestroy + '</span><br />'); // LANG
+					$('#kes_cancelAllDestroy').bind('click', function() {
+						$(this).kes('fadeOutRemove');
+
+						function cancelDestroy(destroyList, callback) {
+							var that = $(destroyList.shift()), link = that.find('a[href*="cancelBuilding"]').attr('href');
+							$.ajax({
+								type: 'post',
+								url: link,
+								success: function() {
+									that.kes('fadeOutRemove');
+									if(destroyList.length == 0 && buildList.length == 1) {
+										buildList.kes('fadeOutRemove');
+									} else {
+										callback(destroyList, callback);
+									}
+								}
+							});
+						};
+						cancelDestroy(destroyList, cancelDestroy);
+					});
+				}
+			}
+
+			if(k.modul.massbuild && premium) {
+
+				$('a[href*="&s=build_main&a=buildBuilding"]').each(function() {
+					var current  = $(this),
+						row 	 = current.parent().parent(),
+						level 	 = parseInt(current.text().match(/\d{1,2}/), 10) - 1 || 0,
+						building = current.attr('href');
+						building = $.kes('getUrlParameters', building)['build'];
+
+					var modernStyling = (isModernView > 0) ? 'style="color: #F7D48E;" ' : '',
+						maximumLevel  = buildCosts.getMaximumLevel( /* building stone wood iron workers */
+							buildCosts[building], level, $('#stone').text().replace(".", ""), $('#wood').text().replace(".", ""), $('#iron').text().replace(".", ""), $('a[href*="&s=build_farm"]:first').parent().find('span').text().replace(".", ""));
+
+					var data	= row.find('td'), stone, wood, ore, workers, link;
+					if(data.length == 0) {
+						// modern views
+						stone 	= row.find('.res2'), wood = row.find('.res1'), ore = row.find('.res3'),	workers = row.find('.workers'), link = row.find('.button');
+					} else {
+						// classic views
+						stone 	= data.eq(1), wood = data.eq(2), ore = data.eq(3), workers = data.eq(4), link = data.eq(6);
+					}
+
+					stone 	= stone.find('span').text($.kes('prettyNumber', maximumLevel[1]));
+					wood	= wood.find('span').text($.kes('prettyNumber', maximumLevel[2]));
+					ore		= ore.find('span').text($.kes('prettyNumber', maximumLevel[3]));
+					workers	= workers.find('span').text($.kes('prettyNumber', maximumLevel[4]));
+
+					var replacement  = '<a ' + modernStyling + 'href="' + current.attr('href') + '">' + l.buildOne + '</a> ';
+						replacement += '<input type="text" maxlength="2" style="width: 17px;" data-max="' + maximumLevel[0] + '" class="kes_buildLevels" value="' + maximumLevel[0] + '"> ';
+						replacement += '<span ' + modernStyling + 'class="click kes_massbuild" data-url="' + current.attr('href') + '">' + l.buildMax + '</span>';
+
+						current.replaceWith(replacement);
+				});
+
+				$('.contentpane').on('click', '.kes_massbuild', function() {
+					var url		= $(this).data('url');
+						max		= $(this).siblings('input').data('max'),
+						levels 	= $(this).siblings('input').val();
+						levels 	= (levels > max) ? max : levels;
+					for(var i = 0; i < levels; i++) {
+						$.kes('queue', {
+							type: 'post',
+							url: url,
+							success: function(data) {
+							 	var content = $(data).find('.contentpane');
+								$('.contentpane').replaceWith(content);
+							}
+						});
+					}
+				});
+			}	
 		}
 	};
 }(kes));
@@ -1548,256 +2737,6 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 }(kes));
 
 (function(kes) {
-	kes.module.attacks = {
-		matcher: page.match('m=attacks'),
-		fn: function() {
-			/* FUNCTIONALITY
-			 * insert attack into runtimecalc if enabled
-			 * save attack to be displayed on map
-			 * display incomming attacks with seconds
-			 */
-
-			var table = $('table.borderlist').eq(2);
-
-			function insertIntoRuntimeCalc() {
-				if (k.modul.insertIntoRuntimeCalc) {
-					$('table.borderlist').eq(2).find('tr').each(function () {
-						var cur = $(this);
-						if (cur.find('td[class*="list"]')) {
-							var children = cur.children();
-							var data	 = '&target=' + children.eq(1).find('a:last').html() + '&source=' + children.eq(2).find('a:last').html() + '&time=' + children.eq(4).find('span').attr('time') + '&starttime=' + new Date().getTime();
-							//* add link to runtimecalc
-							children.eq(0).find('img').replaceWith('<a target="_blank" href="/game.php?&s=tools&m=runtime_calculator' + data + av + '"><img src="/img/command/attack.png"></a>');
-						}
-					});
-				}
-			}
-
-			//* load all existing pages!
-			//* make ui
-			table.before('<span class="click" id="kes_allAttacks">' +  arrow + ' (kes) ' + l.loadAllAttacks + '<br /><br /></span>');
-
-			//* we need the last pagination link to an attack page and the currently displayed page from the url
-			var lastPage = $('table.borderlist').eq(2).find('a[href*="attacks&start"]:last').attr('href'),
-				display  = document.URL;
-
-			function getPages(last, display) {
-				var lastN = (typeof(last) == 'undefined') ? 0 : last.substring(last.indexOf('&start=') + 7);
-				if (display.indexOf('&start') > 0) {
-					// the url says we are not starting from zero, that means we have to determine whether or not we are currently viewing the last page or if the last pagination link is valid
-					var	displayN = display.substring(display.indexOf('&start=') + 7);
-					return (lastN > displayN) ? lastN : displayN;
-				} else {
-					//we are on the first attack page, the pagination link is valid and we can just return that
-					return lastN;
-				}
-			}
-
-			function createQueue(pages) {
-				var pages	= pages/50 + 1,
-					step	= 50,
-					url 	= '/game.php?s=ally&m=attacks&start=' + av,
-					queue 	= [];
-				for(var i = 0; i < pages; i++) {
-					queue.push(url + (i*step));
-				}
-				return queue;
-			}
-
-			var pages 		= getPages(lastPage, display),
-				pageQueue 	= createQueue(pages);
-				queueLength = pageQueue.length;
-
-			$('#kes_allAttacks').bind('click', function () {
-
-				$(this).replaceWith('<span id="kes_allAttacks">' + l.loading + '... (' + (queueLength - pageQueue.length) + '/' + queueLength + ')<br /><br /></span>');
-				// queueloader
-				table.find('tr > td').parent().remove()
-				var getAttacks = function (page) {
-					$.ajax({
-						type: 'POST',
-						url: page.shift(),
-						success: function (data) {
-							var attacks = $(data).find('table.borderlist').eq(2).find('img').parent().parent();
-							$('table.borderlist').eq(2).append(attacks);
-							if (page.length > 0) {
-								$('#kes_allAttacks').replaceWith('<span id="kes_allAttacks">' + l.loading + '... (' + (queueLength - pageQueue.length) + '/' + queueLength + ')<br /><br /></span>')
-								getAttacks(page);
-							} else {
-								$('#kes_allAttacks').replaceWith('<span id="kes_allAttacks">' + l.loadingFinished + '<br /><br /></span>');
-								setTimeout(function () { $('#kes_allAttacks').kes('fadeOutRemove'); }, 800);
-
-								displayAttacksWithSeconds(2);
-								insertIntoRuntimeCalc();
-								window.timersDown = []; // reset timers array so that the page doesnt get reloaded
-
-								//filter ui
-								table.prepend('<tr style="height: 35px;"><td colspan="4"><form id="kes_filterOption"><input type="radio" name="filter" value="attacker" id="kes_filterAttacker" class="filter"> ' + l.attacker + '\
-									<input type="radio" id="kes_filterDefender" value="defender" name="filter" checked="checked" class="filter"> ' + l.defender + '<span style="width: 25px; display: inline-block"> </span>' +  l.nameCoords + ': <input style="width: 100px;" type="text" id="kes_filterInput"> <span id="kes_attackRowCount"></span></div></td>\
-									<td colspan="1"><span class="click" id="kes_resetFilter">' + arrow + ' ' + l.reset + '</span></td></tr>');
-
-								//load last target
-								if ($.kes('isKey', 'kes_lastAttackFilterInput')) {
-									$('#kes_filterInput').val($.kes('loadKey', 'kes_lastAttackFilterInput'));
-								}
-
-								// TODO limit for MANY attacks?!
-								var filterAttacks = function (event) {
-
-									var keycodes = [ 9, 16, 17, 18, 20, 33, 34, 35];
-
-									if(!event || keycodes.indexOf(event.keyCode) > -1) return;
-
-									var filterOption = $('#kes_filterOption').find('input[type="radio"]:checked').val(),
-										filterInput  = $('#kes_filterInput').val();
-									if (filterInput == "") {
-										// we need more input
-										if(event.keyCode != 8) $('#kes_filterInput').css('border', '1px solid red').effect('pulsate', 300, function () { $(this).css('border', '1px solid #CFAB65'); })
-									} else {
-										//save input
-										$.kes('saveKey', 'kes_lastAttackFilterInput', filterInput);
-										//start filtering
-										var target = (filterOption == 'attacker') ? 2 : 1; // attacker has column 2 in the table defender has column 1
-										table.find('tr:gt(1)').show().filter(function () {
-											return ($(this).find('td:eq(' + target + ')').text().search(new RegExp(filterInput, "i")) < 0);
-										}).hide();
-
-										var attackRowCount = $('table.borderlist').eq(2).find('tr:gt(1)').filter(function () { return ($(this).css('display') != 'none'); }).length;
-
-										suffix = (attackRowCount != 1) ? ' ' + l.attacks : ' ' + l.attack;
-										$('#kes_attackRowCount').text(attackRowCount + suffix);
-									}
-								};
-
-								$('#kes_filterInput').bind('keyup', filterAttacks);
-								$('#kes_resetFilter').bind('click', function () { table.find('tr:gt(1)').show(); });
-								$('#kes_filterOption').submit(function(event) { event.preventDefault(); });
-
-								filterAttacks();
-							}
-						}
-					});
-				}
-				getAttacks(pageQueue);
-			});
-
-			displayAttacksWithSeconds(2);
-			insertIntoRuntimeCalc();
-
-			if (k.modul.showAttacksOnMap) {
-				var display_delete = 'none';
-				if ($.kes('isKey', 'kes_save_attacks')) {
-					display_delete = 'inline';
-					filterOverdueAttacks($.kes('loadKey', 'kes_save_attacks'));
-				}
-				$('table[class*="borderlist"]').eq(2).prepend('<tr><td colspan="5"><span id="kes_save_attacks" class="click kes_mark">' + l.saveAttacks + '</span> \
-					<span id="kes_save_attacks_success" style="display: none; color: green;"> ' + l.saved + '!</span> \
-					<span style="display: ' + display_delete + ';" class="click kes_mark" id="kes_delete_attacks">' + l.resetSavedAttacks + '</td></tr>');
-
-				$('#kes_save_attacks').bind('click', function () {
-					var kes_attacks = {};
-					$('table[class*="borderlist"]').eq(2).find('tr > td[class*="list"]').parent().each(function () {
-						var attack		 	= $(this).find('td');
-						var def_attack_name = attack.eq(0).text();
-						var def_villageId   = attack.eq(1).find('a[href*="info_village"]').attr('href');
-						def_villageId	   = def_villageId.substring(def_villageId.lastIndexOf('id=') + 3);
-						var off_player	  = attack.eq(2).find('a[href*="info_player"]').html();
-						var off_playerId	= attack.eq(2).find('a[href*="info_player"]').attr('href');
-						off_playerId		= off_playerId.substring(off_playerId.lastIndexOf('id=') + 3);
-						var off_village	 = attack.eq(2).find('a[href*="info_village"]').html();
-						var off_villageId   = attack.eq(2).find('a[href*="info_village"]').attr('href');
-						off_villageId	   = off_villageId.substring(off_villageId.lastIndexOf('id=') + 3);
-						var off_ally		= '-';
-						var off_allyId	  = '-';
-						if (attack.eq(2).find('a[href*="info_ally"]').html()) {
-							off_ally   = attack.eq(2).find('a[href*="info_ally"]').html();
-							off_allyId = attack.eq(2).find('a[href*="info_ally"]').attr('href');
-							off_allyId = off_allyId.substring(off_allyId.lastIndexOf('id=') + 3);
-						}
-						// sanitize ids from av
-						if (av != '') {
-							def_villageId 	= def_villageId.replace(av, '');
-							off_playerId 	= off_playerId.replace(av, '');
-							off_villageId 	= off_villageId.replace(av, '');
-							off_allyId 		= off_allyId.replace(av, '');
-						}
-						var attack_timeleft = attack.eq(4).find('span').attr('time');
-						attack_timeleft	 = (Date.parse(new Date()) / 1000) + parseInt10(attack_timeleft);
-						single_attack 		= {0: off_player, 1: off_playerId, 2: off_village, 3: off_villageId, 4: off_ally, 5: off_allyId, 6: attack_timeleft, 7: def_attack_name};
-						if (kes_attacks.hasOwnProperty(def_villageId)) {
-							kes_attacks[def_villageId].length = kes_attacks[def_villageId].length+1;
-							kes_attacks[def_villageId][kes_attacks[def_villageId].length] = single_attack;
-						} else {
-							kes_attacks[def_villageId] = {};
-							kes_attacks[def_villageId].length = 0;
-							kes_attacks[def_villageId][kes_attacks[def_villageId].length] = single_attack;
-						}
-					});
-					$.kes('saveKey', 'kes_save_attacks', kes_attacks);
-					$('#kes_save_attacks_success').fadeIn('slow').fadeOut('fast');
-				});
-				$('#kes_delete_attacks').bind('click', function () {
-					$(this).fadeOut('slow');
-					$.kes('deleteKey', 'kes_save_attacks');
-				});
-			}	
-		}
-	};
-}(kes));
-
-(function(kes) {
-	kes.module.runtimecalculator = {
-		matcher: k.modul.insertIntoRuntimeCalc && page.match('m=runtime_calculator'),
-		fn: function() {
-			/* FUNCTIONALITY
-			 * insert target & source if provided
-			 * display eta and grey out units that can not be part of the attack
-			 */
-
-			if (page.match('&target=')) {
-
-				var target 		= Query['target'].split('|'),
-					source 		= Query['source'].split('|'),
-					time 		= Query['time'],
-					starttime 	= Query['starttime'];
-
-				$.kes('saveKey', 'time', time);
-				$.kes('saveKey', 'starttime', starttime);
-
-				$('input[id*="start"], input[id*="target"]').kes('multiCheckBoxes', source.concat(target));
-				$('input[type*="submit"]').click();
-
-			} else if (page.match('&inta=calculate')) {
-
-				var time 		= $.kes('deleteKey', 'time');
-					starttime 	= $.kes('deleteKey', 'starttime');
-					currenttime = new Date().getTime();
-
-				time = time - Math.floor((currenttime - starttime) / 1000);
-				time = (time <= 0) ? 0 : time;
-				time = $.kes('prettyTime', time);
-
-				$('table[class*="borderlist"]').eq(4).find('tbody').prepend('<tr><td colspan="3"><p style="color: #DC143C; font-weight: bold; text-align: center;">' + l.runtimecalc + ' ' + time + '</p></td></tr>');
-
-				$('table[class*="borderlist"] > tbody > tr > td[class*="right"]').each(function () {
-					var runtime_unit 	= $(this).text().split(':'),
-						timeInSeconds 	= time.split(':');
-
-					var inSeconds = function(time) {
-						return parseInt10(time[0]) * 3600 + parseInt10(time[1]) * 60 + parseInt10(time[2]);
-					};
-
-					runtimeInSeconds = inSeconds(runtime_unit);
-					timeInSeconds 	 = inSeconds(timeInSeconds);
-
-					if (timeInSeconds > runtimeInSeconds) { $(this).css('color', 'grey'); }
-				});
-			}	
-		}
-	};
-}(kes));
-
-(function(kes) {
 	kes.module.market = {
 		matcher: k.modul.marketOptions && page.match('s=build_market') && !page.match('inta') && identifyActiveTab('s=build_market&m=send'),
 		fn: function() {
@@ -1874,6 +2813,222 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 					default: wanted_res.push(k.market[opt].stone, k.market[opt].wood, k.market[opt].iron); break;
 				}
 				calculateRes(avail_donkeys, avail_res, wanted_res);
+			});
+		}
+	};
+}(kes));
+
+css += '#bb_code { word-wrap: break-word; overflow-wrap: break-word; }';
+
+(function(kes) {
+	kes.module.messages = {
+		matcher: page.match('s=messages'),
+		fn: function() {
+			/* FUNCTIONALITY
+			 * multi-selection of items with colors
+			 * also lets you mass-forward reports
+			 */
+			if(page.match('&id')) {
+
+				var returnBBCodeForImage = function(a, match) {
+					var type = match.substring(match.lastIndexOf('/') + 1, match.lastIndexOf('.')), result = '';
+					if(type.indexOf('res') > -1) {
+						switch(type) {
+							case 'res2': result = '[img_stone]'; break;
+							case 'res1': result = '[img_wood]';  break;
+							case 'res3': result = '[img_iron]';  break;
+						}
+					} else if(type.indexOf('unit') > -1) {
+						result = '[img' + type.substring(type.lastIndexOf('_')) + ']';
+					} else if(match.indexOf('buildings') > -1) {
+						result = '[img_build_' + match.substring(match.lastIndexOf('/') + 1, match.lastIndexOf('.')) + ']';
+					} else {
+						result = '[img]' + match + '[/img]';
+					}
+					return result;
+
+				}, regex = new RegExp(/\[img](.*?)\[\/img]/gi);
+
+				var $bbCode = $('#bb_code');
+
+				// ui
+				$bbCode.prevAll('.borderlist:first').find('tr:last > td').append(' ' + arrow + ' <span id="kes_report_as_bb_code" class="click">(kes) ' + l.report_as_bb_code + '</span>');
+
+				$('#kes_report_as_bb_code').click(function() {
+						bb = $bbCode.html();
+						bb = bb.replace(regex, returnBBCodeForImage);
+
+					$bbCode.html(bb).show();
+				});
+
+			} else if(identifyActiveTab('s=messages&m=in')) {
+
+				//* Module CSS
+				css += '.kes_padding { padding: 0 5px; }';
+
+				//* multi-all selectors
+				$('input[type="checkbox"][name="confbox"]').parent().append(' <span class="click kes_mark kes_padding" rel="reports" toggle="false">' + l.reports + '</span> \
+					<span class="click kes_mark kes_padding" rel="mail" toggle="false"><img src="img/messages/mail_read.png"></span> <span class="click kes_mark kes_padding" rel="misc" toggle="false"><img src="img/report/misc.png"></span> <span class="click kes_mark kes_padding" rel="green" toggle="false"><img src="img/dots/green.png"></span>\
+					<span class="click kes_mark kes_padding" rel="yellow" toggle="false"><img src="img/dots/yellow.png"></span> <span class="click kes_mark kes_padding" rel="red" toggle="false"><img src="img/dots/red.png"></span> \
+					<span class="click kes_mark kes_padding" rel="blue" toggle="false"><img src="img/dots/blue.png"></span> <span class="click kes_mark kes_padding" rel="support" toggle="false"><img src="img/report/support.png"></span>\
+					<span class="click kes_mark kes_padding" rel="trade" toggle="false"><img src="img/report/trade.png"></span');
+
+				//* bind clickhandler
+				$('.kes_mark').click(function () {
+					function selector(rel) {
+						switch(rel) {
+							case 'reports' 	: return 'img[src*="red"], img[src*="green"],img[src*="blue"],img[src*="yellow"]'; break;
+							case 'mail'		: return 'img[src*="mail"]'; break;
+							case 'misc'		: return 'img[src*="misc"]'; break;
+							case 'red'	 	: return 'img[src*="red"]'; break;
+							case 'yellow'  	: return 'img[src*="yellow"]'; break;
+							case 'blue'		: return 'img[src*="blue"]'; break;
+							case 'green'	: return 'img[src*="green"]'; break;
+							case 'support' 	: return 'img[src*="support"]'; break;
+							case 'trade'   	: return 'img[src*="trade"]'; break;
+						}
+					}
+
+					//* lets you toggle the selection
+					var toggle = $(this).attr('toggle');
+					var selection = $(selector($(this).attr('rel'))).siblings('input[type="checkbox"]');
+					if (toggle == 'false') {
+						selection.attr('checked', true);
+						$(this).attr('toggle', true);
+					} else if (toggle == 'true') {
+						selection.attr('checked', false);
+						$(this).attr('toggle', false);
+					}
+				});
+				if (k.modul.massforward) {
+
+					function forward(type, details, nick) {
+						var url, data;
+						switch(type) {
+							case 'report':
+								url = 'game.php?s=messages&m=all&a=reportForward&p=' + details.p + '&id=' + details.id;
+								data = 'report_to=' + nick;
+								break;
+							case 'message':
+								url = details.url;
+								data = 'msg_to=' + nick + '&confbox=on&' + details.data;
+								break;
+						}
+						$.ajax({ type: 'post', url: url + av, data: data	});
+					}
+
+					var messageDetails = function(id) {
+						return $.ajax({
+							type: 'get',
+							url: 'game.php?s=messages&m=forward&id=' + id + av,
+						}).promise();
+					};
+
+					var reportSession = function(id) {
+						return $.ajax({
+							type: 'post',
+							url: 'game.php?s=messages&m=forward_report&id=' + id + av,
+						}).promise();
+					};
+
+					//* add ui to input a username
+					$('table.borderlist').eq(5).append('<tr><td colspan="3"><span style="font-weight:bold;">' + l.recipient + ': </span><input type="text" id="kes_massforward_nick"> <input type="submit" id="kes_massforward" value="(kes) ' + l.forward + '"> <span style="display: none; font-weight: bold;" id="kes_massforward_text"></span></td></tr>');
+
+					//* input handling
+					$('#kes_massforward').bind('click', function (event) {
+						event.preventDefault();
+						var table 		= $('table.borderlist').eq(5);
+							reports 	= table.find('img[src*="red"], img[src*="green"],img[src*="blue"],img[src*="yellow"]').siblings('input:checked');
+							messages 	= table.find('img[src*="mail"]').siblings('input:checked');
+							nick 		= $('#kes_massforward_nick').val();
+							session		= '';
+
+						if ((reports.length != 0 || messages.length != 0)&& nick != '') {
+
+							$(reports).each(function () {
+								var id = $(this).val();
+								if(session == '') session = reportSession(id);
+
+								session.then(function(results) {
+									dt = {};
+									dt['id'] = id;
+									dt['p'] = $.kes('getUrlParameters', $(results).find('form').attr('action'))['p'];
+									forward('report', dt, nick);
+								});
+							});
+							$(messages).each(function() {
+								var id = $(this).val(),	dt = messageDetails(id);
+
+								dt.then(function(results) {
+									var form 	 = $(results).find('form'),
+										details  = {};
+
+									details.url  = form.prop('action');
+									details.data = form.find('input[type="checkbox"][name="mid[]"]').serialize();
+									forward('message', details, nick)
+								});
+							});
+
+							$('#kes_massforward_text').html(l.forwardSuccess + '.').css('color', 'green').fadeIn(500).delay(800).fadeOut(100);
+						} else {
+							$('#kes_massforward_text').html(l.forwardError + '!').css('color', 'red').fadeIn(500).delay(800).fadeOut(100);
+						}
+					});
+				}
+			}
+		}
+	};
+}(kes));
+
+css += '.kes_group_element { display: inline-block; }';
+
+(function(kes) {
+	kes.module.overview = {
+		matcher: page.match('s=overview') && !page.match('s=overview_villages'),
+		fn: function() {
+
+			var place = $('span[onclick*="groups"]').parent(),
+				label = $('span[onclick*="groups"]').text() + ': ',
+				insert = place.closest('table:not(.noborder)'),
+				villageId = Query['village'],
+				groups = $.kes('getGroups', villageId),
+				saveurl = 'popup.php?s=groups&m=village&inta=modifyVillageGroups&village_id=' + villageId + av;
+
+			var formGenerator = function(groups) {
+				var currentGroups = [];
+				var o = '<br /><table width="790px" class="borderlist"><tr><th>';
+					o += label + ' <span id="kes_groups_savestatus" style="color: green; display:none;">' + l.saved + '</span></th></tr><tr><td><form id="kes_groups" action="' + saveurl + '">';
+				for(var g in groups) {
+					if(groups.hasOwnProperty(g)) {
+						var checked = (groups[g].checked) ? 'checked="checked"' : '';
+						o += '<span class="kes_group_element"><input name="vg[]" value="' + groups[g].id + '" type="checkbox" ' + checked + '> ' + groups[g].name + ' </span>';
+						if(groups[g].checked) {
+							// add checked groups to regular group list
+							currentGroups.push(groups[g].name);
+						}
+					}
+				}
+				o += '</form></td></tr></table><br />';
+				if(currentGroups.length > 0) {
+					place.text(label + currentGroups.join(', '));
+				}
+				return (groups.length > 0) ? o : '';
+			};
+
+			insert.before(formGenerator(groups));
+
+			$('#kes_groups').delegate('input', 'click', function () {
+				var data = $('#kes_groups');
+				var newGroups = data.find('input[type="checkbox"]:checked').parent().text();
+				$.ajax({
+					type: 'POST',
+					url: saveurl,
+					data: data.serialize(),
+					success: function () {
+						$('#kes_groups_savestatus').kes('fadeInfadeOut');
+						place.text(label + newGroups.replace(/  /g, ', '));
+					}
+				});
 			});
 		}
 	};
@@ -2517,549 +3672,58 @@ css += '.kes_multiselect_open { display: block !important; }';
 }(kes));
 
 (function(kes) {
-	kes.module.infovillages = {
-		matcher: page.match('s=info_village'),
+	kes.module.runtimecalculator = {
+		matcher: k.modul.insertIntoRuntimeCalc && page.match('m=runtime_calculator'),
 		fn: function() {
 			/* FUNCTIONALITY
-			 * add shortcuts to barracks and main building to every village info page
-			 * add shortcuts to attack (with spies or without)
-			 */
-			
-			var target  = $('a[href*="&s=build_barracks&m=command&target="]').attr('href'),
-				id 		= Query['id'],
-				player  = $('a[href*="info_player&"]').text();
-
-			if (self.match(player) && player != "") {
-				// this is me add links to switch to main / barracks
-				$('a[href*="edit_player_colors"]').after('<br /><span><a href="/game.php?village=' + id + '&s=build_barracks' + av + '">' + arrow + ' ' + l.goToBarracks + '</a></span><br />\
-					<span><a href="/game.php?village=' + id + '&s=build_main' + av + '">' + arrow + ' ' + l.goToMain + '</a></span>');
-			} else {
-				// this is an enemy add links to spy attack, barracks and insert koords
-				$('a[href*="&s=build_barracks&m=command&target="]').after('<br /><a href="' + target + '&spy=' + k.spylink_amount+ '">' + arrow + ' ' + printf(l.attackWithSpies, k.spylink_amount) +'</a>');
-			}
-		}
-	};
-}(kes));
-
-css += 'tr.kes_selected td { background: url("img/layout/bg_table_cell_marked2.jpg") repeat-x scroll 0 0 transparent !important; }';
-css += '.unselectable { user-select: none; -moz-user-select: none; -khtml-user-select: none; }';
-css += '.kes_remove_selection { display: inline; background-color: #fff; cursor: pointer; position: relative; float: right; z-index: 150; color: crimson; font-weight: bold; }';
-css += '#kes_showSelectedSetts { position: fixed; background: #FFF; font-size: 10pt; border-radius: 5px; padding: 5px; z-index: 200; top: 10%; left: 50%; margin-left: -310px; width: 620px; max-height: 85%; overflow-y: auto; }';
-
-
-(function(kes) {
-	kes.module.infoplayer = {
-		matcher: page.match('s=info_player') && !(page.match('m=statistics') || page.match('m=conquers')),
-		fn: function() {
-			/* FUNCTIONALITY
-			 * add bbCodeExport and sorting functionality to settlements
-			 * basically lets you post into board via ajax
-			 * also calculates how well the player has used their available trooppoints
+			 * insert target & source if provided
+			 * display eta and grey out units that can not be part of the attack
 			 */
 
-			//* tags for bbCodeExport
-			var post_details 			= { settlementName: 'kes_settname', nick: 'kes_player', village: 'kes_coords', continent: 'kes_continent', points: 'kes_points' };
-				post_details.std_input  = post_details.village;
+			if (page.match('&target=')) {
 
-			if (k.modul.bbCodeExport) {
+				var target 		= Query['target'].split('|'),
+					source 		= Query['source'].split('|'),
+					time 		= Query['time'],
+					starttime 	= Query['starttime'];
 
-				$('table.borderlist').eq(3).prepend('<tr><th colspan="3"><span class="click" id="kes_enablebbCodeExport">' + arrow +' (kes) ' + l.enableBBCodeExport + '</span></th></tr>');
-				$('#kes_enablebbCodeExport').bind('click', function () {
-					$(this).parent().parent().replaceWith('<tr><th colspan="3">' + l.exportBBCode + '</td></tr><tr><td id="kes_threadId_avail" colspan="3"></td></tr><tr><td colspan="2">\
-					<input type="radio" value="kontinent" name="kes_sel_setts"><span style="vertical-align: bottom; display: inline-block; width: 100px;">' + l.sortContinent + '</span>\
-					<input type="radio" value="koords" name="kes_sel_setts" checked="checked"><span style="vertical-align:bottom">' + l.sortCoords + '</span></td><td></td></tr><td colspan="2">\
-					<input type="radio" value="points" name="kes_sel_setts"><span style="vertical-align: bottom; display: inline-block; width: 100px">' + l.sortPoints + '</span>\
-					<input type="radio" value="name" name="kes_sel_setts"><span style="vertical-align: bottom">' + l.sortName + '</span></td><td><input type="submit" id="kes_sel_setts_submit" value="' + l.bbCode + '"></td></tr>\
-					<tr><td colspan="3"><span class="click kes_mark" id="kes_select_all">' + arrow + ' ' + l.selectAll + '</span> <span class="click kes_mark" id="kes_deselect_all">' + arrow + ' ' + l.deselectAll + '</span></td></tr>');
+				$.kes('saveKey', 'time', time);
+				$.kes('saveKey', 'starttime', starttime);
 
-					function getKontinent (koords) { return koords.substring(4,5)+koords.substring(0,1); }
-					//* prepend controls
-					$('table.borderlist').eq(3).prepend('');
-					//* make table unselectable
-					$('table.borderlist').eq(3).addClass('unselectable');
-					//* write msg whether thread was selected or not
-					if ($.kes('isKey', 'kes_thread')) {
-						var thread 		= $.kes('loadKey', 'kes_thread');
-							threadName  = thread.name;
-						$('#kes_threadId_avail').html('<span style="color: green; font-weight: bold;">' + l.thread + ' "' + threadName + '" ' + l.selected + '.</span>');
-					} else {
-						$('#kes_threadId_avail').html('<span style="color: crimson; font-weight: bold;">' + l.goChooseThread + '.</span>');
-					}
+				$('input[id*="start"], input[id*="target"]').kes('multiCheckBoxes', source.concat(target));
+				$('input[type*="submit"]').click();
 
-					$(document).ready(function () {
-						$.fn.selectSettlement = function () {
-							if (!$(this).hasClass('kes_selected')) {
-								$(this).addClass('kes_selected').find('td:first').find('a, img').css('float', 'left').end().append('<div class="kes_remove_selection"><div style="position: absolute; right: 0;">' + l.deselect + '</div></div>');
-							}
-						}
-						var selectable = false;
-						// handle selecting
-						$('table.borderlist').eq(3).find('tr:gt(5)')
-							.mousedown(function (){ selectable = true; })
-								.mouseup(function (){ selectable = false; })
-									.mousemove(function () { if (selectable) { $(this).selectSettlement(); } })
-										.click(function () { $(this).selectSettlement(); });
-						//* deselect handler
-						$('.kes_remove_selection').live('click', function () {
-							$(this).parent().parent().removeClass('kes_selected').end().end().fadeOut().remove();
-						});
-					});
-					//* select deselect all handlers
-					$('#kes_select_all').bind('click', function () { $(this).fadeOut().fadeIn(); $('table.borderlist').eq(3).find('tr:gt(5)').each(function () { $(this).selectSettlement(); }); });
-					$('#kes_deselect_all').bind('click', function () { $(this).fadeOut().fadeIn(); $('table.borderlist').eq(3).find('tr:gt(5)').each(function () { $(this).removeClass('kes_selected').find('td:first > div').remove(); }); }).fadeOut().fadeIn();
-					//* sort data eventually push to board
-					$('#kes_sel_setts_submit').bind('click', function () {
-						if ($.kes('isKey', 'kes_thread')) {
-							//* collect data
-							var thread 	   = $.kes('loadKey', 'kes_thread'),
-								threadName = thread.name, mode = $('input[name="kes_sel_setts"]:checked').val(),
-								threadId   = thread.id;
-								playerName = $('table.borderlist').eq(2).find('tr:first').text().trim();
-								playerName = playerName.substring(playerName.indexOf(':') + 1);
-								playerName = $.trim(playerName);
-							var setts = [];
-							$('table.borderlist').eq(3).find('tr.kes_selected').each(function () {
-								var settlementName = $(this).find('td:first > a').html(),
-									xy = $(this).find('td:nth-child(2) > a').html(),
-									x = parseInt10(xy.split('|')[0]), y = parseInt10(xy.split('|')[1]),
-									k = getKontinent(xy), p = $(this).find('td:nth-child(3)').html();
-									p = p.replace(/\./g, '');
-								setts.push({pos: x + '|' + y, continent: k, points: p, sett: settlementName, nick: playerName});
-							});
+			} else if (page.match('&inta=calculate')) {
 
-							function formatOutput(sett, r) {
-								var o = r;
-								o = o.replace(new RegExp('{' + post_details.nick		   + '}', 'g'), ' ' + sett['nick']);
-								o = o.replace(new RegExp('{' + post_details.settlementName + '}', 'g'), ' ' + sett['sett']);
-								o = o.replace(new RegExp('{' + post_details.village		+ '}', 'g'), ' [village]' + sett['pos'] + '[/village]');
-								o = o.replace(new RegExp('{' + post_details.continent	  + '}', 'g'), ' K' + sett['continent']);
-								o = o.replace(new RegExp('{' + post_details.points		 + '}', 'g'), ' ' + sett['points']);
-								return o;
-							}
+				var time 		= $.kes('deleteKey', 'time');
+					starttime 	= $.kes('deleteKey', 'starttime');
+					currenttime = new Date().getTime();
 
-							function confirmPost(setts, playerName, threadName, threadId, settsPerPosts) {
-								var postCount = Math.ceil(setts.length/parseInt(settsPerPosts, 10));
-								//* settlement count, post count, playername, threadname, threadId submit button to click
-								$('body').append('<div id="kes_overlay" class="kes-backlight" style="display: block !important;"><h3 style="color: white; text-align:left; opacity: 1; margin: 1em;">' + l.close + '</h3></div>\
-										<div id="kes_showSelectedSetts">\
-											<div style="line-height: 1.1; text-align: left; width: 50%; margin: 0; float: left; border-right: 1px solid #DDD;">\
-												<h3>' + l.summary + ':</h3>\
-												' + l.postIn + ' "' + threadName +'" (<a href="/forum.php?s=forum_thread&thread_id=' + threadId + av + '" target="_blank">' + threadId + '</a>)<br /> ' + l.player + ': ' + playerName + '<br />\
-												' + l.amountOfSetts + ': ' + setts.length + '<br />' + printf(l.postsToBeCreated, postCount) + '<br /><br />\
-												<h3>' + l.formatting + ':</h3>\
-												<h4>' + l.header + ':</h4><textarea style="min-width: 290px; max-width: 290px; min-height: 60px; max-height: 60px;" id="kes_post_top"></textarea>\
-												<h4>' + l.settlementDisplay + ':</h4>\
-												<span class="kes_input click">{' + post_details.nick + '}</span>, <span class="kes_input click">{' + post_details.settlementName + '}</span>, <span class="kes_input click">{' + post_details.village + '}</span>, \
-												<span class="kes_input click">{' + post_details.continent + '}</span>, <span class="kes_input click">{' + post_details.points + '}</span><br />\
-												<textarea style="min-width: 297px; max-width: 297px; min-height: 90px; max-height: 90px;" id="kes_post_body">{' + post_details.std_input +'}</textarea>\
-												<h4>' + l.footer + ':</h4><textarea style="min-width: 290px; max-width: 290px;min-height: 60px; max-height: 60px; height: 60px;" id="kes_post_footer"></textarea>\
-												<input id="confirm_post_submit" type="submit" value="' + l.confirm + '">\
-											</div>\
-											<div style="line-height: 1.1; text-align: left; padding-left: 3px; width: 49%; margin: 0; float: right;">\
-											<h3>' + l.preview + ':</h3><span id="kes_post_preview"></span>\
-											</div></div>');
-								// update preview on change
-								function updatePreview() {
-									$('#kes_post_preview').html($('#kes_post_top').val() + '<br />' + formatOutput({pos: 'xxx|yyy', continent: 'YX', points: '10000', sett: l.settlement, nick: l.player}, $('#kes_post_body').val()) + '<br />[...]<br />' + $('#kes_post_footer').val());
-								}
-								updatePreview();
-								$('.kes_input').bind('click', function () { $('#kes_post_body').val($('#kes_post_body').val() + $(this).html()); updatePreview(); });
-								$('textarea[id*="kes_post_"]').keyup(function () {
-									updatePreview();
-								});
-								$('.kes-backlight').bind('click', function () { $('.kes-backlight, #kes_showSelectedSetts').fadeOut().remove(); $('.kes_input').unbind('click'); });
-								$('#confirm_post_submit').bind('click', function () {
-									var top	= $('#kes_post_top').val(),
-										format = $('#kes_post_body').val(),
-										footer = $('#kes_post_footer').val(),
-										output = top + '\n' + playerName + '\n',
-										count  = 0,
-										data   = [];
-									for(var i = 0; i < setts.length; i++) {
-										output += formatOutput(setts[i], format) + '\n';
-										count++;
-										if (count == settsPerPosts || i == setts.length-1) {
-											output += footer;
-											data.push(output);
-											output = top + '\n' + playerName + '\n';
-											count = 0;
-										}
-									}
-									function makePost(threadId) {
-										var single = data.shift();
-										$.ajax({
-											type: 'post',
-											url: '/forum.php?s=forum_thread&thread_id=' + threadId + '&a=forumReplyThread' + av,
-											data: 'text=' + single,
-											complete: function () {
-												if (data.length > 0) {
-													makePost(threadId);
-												}
-											}
-										});
-									}
-									makePost(threadId);
-									$('.kes_overlay').click();
-								});
-							}
+				time = time - Math.floor((currenttime - starttime) / 1000);
+				time = (time <= 0) ? 0 : time;
+				time = $.kes('prettyTime', time);
 
-							function sortKoords(a, b) {
-								var xya = a.pos.split('|'), xyb = b.pos.split('|'),
-								a = xya[0]+xya[1], b = xyb[0]+xyb[1];
-								return a-b;
-							}
+				$('table[class*="borderlist"]').eq(4).find('tbody').prepend('<tr><td colspan="3"><p style="color: #DC143C; font-weight: bold; text-align: center;">' + l.runtimecalc + ' ' + time + '</p></td></tr>');
 
-							function sortKontinents(a, b) {
-								var xya = a.pos.split('|'), xyb = b.pos.split('|'),
-								a = (a.continent * 1000) + (xya[0]+xya[1]), b = (b.continent * 1000)+ (xyb[0]+xyb[1]);
-								return a-b;
-							}
+				$('table[class*="borderlist"] > tbody > tr > td[class*="right"]').each(function () {
+					var runtime_unit 	= $(this).text().split(':'),
+						timeInSeconds 	= time.split(':');
 
-							function sortSetts(setts, mode) {
-								switch(mode) {
-									case 'kontinent': return setts.sort(sortKontinents); break;
-									case 'points'   : return setts.sort(function (a, b) { return a.points-b.points; }); break;
-									case 'koords'   : return setts.sort(sortKoords); break;
-									default		 : return setts;
-								}
-							}
-							confirmPost(sortSetts(setts, mode), playerName, threadName, threadId, 200);
-						} else {
-							window.alert(l.chooseThreadFirst + '.');
-						}
-					});
-				});
-			}
-
-			var troopScore = calculateTroopScore($('body'));
-			//append to cached table
-			$('table.borderlist').eq(2).append('<tr><td>' + l.trooppoints + ':</td><td>' + $.kes('prettyNumber', troopScore[0]) + ' (' + ((troopScore[0]/troopScore[1])*100).toFixed(2) + '%)</td></tr>');
-		}
-	};
-}(kes));
-
-(function(kes) {
-	kes.module.forum = {
-		matcher: k.modul.bbCodeExport && page.match('s=ally&m=forum'),
-		fn: function() {
-			/* FUNCTIONALITY
-			 * add ui for selecting a thread inside the board to post setts into
-			 */
-
-			//* create a button to save threadId, threadName;
-			$('iframe[src*="forum.php"]').load(function () {
-				var iframeURL = $('iframe[src*="forum.php"]').get(0).contentDocument.location.href;
-				if (iframeURL.match('s=forum_thread' + av + '&thread_id=')) {
-					var frame = $('iframe[src*="forum.php"]').contents();
-					$(frame).find('div.smallButton:first').before('<div id="kes_save_thread" class="smallButton"><span style="cursor: pointer;">(kes) ' + l.saveThread + '</span></div>');
-					$(frame).find('#kes_save_thread').bind('click', function () {
-						$(this).fadeOut().fadeIn();
-						var uri = $('iframe[src*="forum.php"]').contents().find('td.headerInfo > a').attr('href')
-						var threadId = uri.substring(uri.indexOf('thread_id=') + 10);
-						var threadName = $('iframe[src*="forum.php"]').contents().find('td.headerInfo > a').html();
-						// sanitize thread id
-						if (av != '') {
-							threadId = threadId.replace(av, '');
-						}
-						var obj = { id: threadId, name: threadName }
-						$.kes('saveKey', 'kes_thread', obj);
-					});
-				}
-			});
-		}
-	};
-}(kes));
-
-css += '#bb_code { word-wrap: break-word; overflow-wrap: break-word; }';
-
-(function(kes) {
-	kes.module.messages = {
-		matcher: page.match('s=messages'),
-		fn: function() {
-			/* FUNCTIONALITY
-			 * multi-selection of items with colors
-			 * also lets you mass-forward reports
-			 */
-			if(page.match('&id')) {
-
-				var returnBBCodeForImage = function(a, match) {
-					var type = match.substring(match.lastIndexOf('/') + 1, match.lastIndexOf('.')), result = '';
-					if(type.indexOf('res') > -1) {
-						switch(type) {
-							case 'res2': result = '[img_stone]'; break;
-							case 'res1': result = '[img_wood]';  break;
-							case 'res3': result = '[img_iron]';  break;
-						}
-					} else if(type.indexOf('unit') > -1) {
-						result = '[img' + type.substring(type.lastIndexOf('_')) + ']';
-					} else if(match.indexOf('buildings') > -1) {
-						result = '[img_build_' + match.substring(match.lastIndexOf('/') + 1, match.lastIndexOf('.')) + ']';
-					} else {
-						result = '[img]' + match + '[/img]';
-					}
-					return result;
-
-				}, regex = new RegExp(/\[img](.*?)\[\/img]/gi);
-
-				var $bbCode = $('#bb_code');
-
-				// ui
-				$bbCode.prevAll('.borderlist:first').find('tr:last > td').append(' ' + arrow + ' <span id="kes_report_as_bb_code" class="click">(kes) ' + l.report_as_bb_code + '</span>');
-
-				$('#kes_report_as_bb_code').click(function() {
-						bb = $bbCode.html();
-						bb = bb.replace(regex, returnBBCodeForImage);
-
-					$bbCode.html(bb).show();
-				});
-
-			} else if(identifyActiveTab('s=messages&m=in')) {
-
-				//* Module CSS
-				css += '.kes_padding { padding: 0 5px; }';
-
-				//* multi-all selectors
-				$('input[type="checkbox"][name="confbox"]').parent().append(' <span class="click kes_mark kes_padding" rel="reports" toggle="false">' + l.reports + '</span> \
-					<span class="click kes_mark kes_padding" rel="mail" toggle="false"><img src="img/messages/mail_read.png"></span> <span class="click kes_mark kes_padding" rel="misc" toggle="false"><img src="img/report/misc.png"></span> <span class="click kes_mark kes_padding" rel="green" toggle="false"><img src="img/dots/green.png"></span>\
-					<span class="click kes_mark kes_padding" rel="yellow" toggle="false"><img src="img/dots/yellow.png"></span> <span class="click kes_mark kes_padding" rel="red" toggle="false"><img src="img/dots/red.png"></span> \
-					<span class="click kes_mark kes_padding" rel="blue" toggle="false"><img src="img/dots/blue.png"></span> <span class="click kes_mark kes_padding" rel="support" toggle="false"><img src="img/report/support.png"></span>\
-					<span class="click kes_mark kes_padding" rel="trade" toggle="false"><img src="img/report/trade.png"></span');
-
-				//* bind clickhandler
-				$('.kes_mark').click(function () {
-					function selector(rel) {
-						switch(rel) {
-							case 'reports' 	: return 'img[src*="red"], img[src*="green"],img[src*="blue"],img[src*="yellow"]'; break;
-							case 'mail'		: return 'img[src*="mail"]'; break;
-							case 'misc'		: return 'img[src*="misc"]'; break;
-							case 'red'	 	: return 'img[src*="red"]'; break;
-							case 'yellow'  	: return 'img[src*="yellow"]'; break;
-							case 'blue'		: return 'img[src*="blue"]'; break;
-							case 'green'	: return 'img[src*="green"]'; break;
-							case 'support' 	: return 'img[src*="support"]'; break;
-							case 'trade'   	: return 'img[src*="trade"]'; break;
-						}
-					}
-
-					//* lets you toggle the selection
-					var toggle = $(this).attr('toggle');
-					var selection = $(selector($(this).attr('rel'))).siblings('input[type="checkbox"]');
-					if (toggle == 'false') {
-						selection.attr('checked', true);
-						$(this).attr('toggle', true);
-					} else if (toggle == 'true') {
-						selection.attr('checked', false);
-						$(this).attr('toggle', false);
-					}
-				});
-				if (k.modul.massforward) {
-
-					function forward(type, details, nick) {
-						var url, data;
-						switch(type) {
-							case 'report':
-								url = 'game.php?s=messages&m=all&a=reportForward&p=' + details.p + '&id=' + details.id;
-								data = 'report_to=' + nick;
-								break;
-							case 'message':
-								url = details.url;
-								data = 'msg_to=' + nick + '&confbox=on&' + details.data;
-								break;
-						}
-						$.ajax({ type: 'post', url: url + av, data: data	});
-					}
-
-					var messageDetails = function(id) {
-						return $.ajax({
-							type: 'get',
-							url: 'game.php?s=messages&m=forward&id=' + id + av,
-						}).promise();
+					var inSeconds = function(time) {
+						return parseInt10(time[0]) * 3600 + parseInt10(time[1]) * 60 + parseInt10(time[2]);
 					};
 
-					var reportSession = function(id) {
-						return $.ajax({
-							type: 'post',
-							url: 'game.php?s=messages&m=forward_report&id=' + id + av,
-						}).promise();
-					};
+					runtimeInSeconds = inSeconds(runtime_unit);
+					timeInSeconds 	 = inSeconds(timeInSeconds);
 
-					//* add ui to input a username
-					$('table.borderlist').eq(5).append('<tr><td colspan="3"><span style="font-weight:bold;">' + l.recipient + ': </span><input type="text" id="kes_massforward_nick"> <input type="submit" id="kes_massforward" value="(kes) ' + l.forward + '"> <span style="display: none; font-weight: bold;" id="kes_massforward_text"></span></td></tr>');
-
-					//* input handling
-					$('#kes_massforward').bind('click', function (event) {
-						event.preventDefault();
-						var table 		= $('table.borderlist').eq(5);
-							reports 	= table.find('img[src*="red"], img[src*="green"],img[src*="blue"],img[src*="yellow"]').siblings('input:checked');
-							messages 	= table.find('img[src*="mail"]').siblings('input:checked');
-							nick 		= $('#kes_massforward_nick').val();
-							session		= '';
-
-						if ((reports.length != 0 || messages.length != 0)&& nick != '') {
-
-							$(reports).each(function () {
-								var id = $(this).val();
-								if(session == '') session = reportSession(id);
-
-								session.then(function(results) {
-									dt = {};
-									dt['id'] = id;
-									dt['p'] = $.kes('getUrlParameters', $(results).find('form').attr('action'))['p'];
-									forward('report', dt, nick);
-								});
-							});
-							$(messages).each(function() {
-								var id = $(this).val(),	dt = messageDetails(id);
-
-								dt.then(function(results) {
-									var form 	 = $(results).find('form'),
-										details  = {};
-
-									details.url  = form.prop('action');
-									details.data = form.find('input[type="checkbox"][name="mid[]"]').serialize();
-									forward('message', details, nick)
-								});
-							});
-
-							$('#kes_massforward_text').html(l.forwardSuccess + '.').css('color', 'green').fadeIn(500).delay(800).fadeOut(100);
-						} else {
-							$('#kes_massforward_text').html(l.forwardError + '!').css('color', 'red').fadeIn(500).delay(800).fadeOut(100);
-						}
-					});
-				}
-			}
-		}
-	};
-}(kes));
-
-css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; position: fixed; width: 500px; left: 50%; top: 5%; margin-left: -250px; padding: 6px; z-index: 200; }';
-css += '.kes_progressOuter { border:1px solid #CFAB65; overflow: hidden; width:100px; height:10px; background: #CFAB65; }';
-css += '.kes_progressInner { width: 0px; height: 10px; background: #FFCC6E; }';
-
-(function(kes) {
-	kes.module.infoally = {
-		matcher: page.match('s=info_ally') && !premium || identifyActiveTab('s=info_ally&m=profile'),
-		fn: function() {
-			/* FUNCTIONALITY
-			 * collect and sort all trooppoints of the alliance's players
-			 * also generates bb-code for easy posting into the forum
-			 */
-
-			//* set up ui
-			var cachedTable = $('table.borderlist').eq(2);
-			cachedTable.append('<tr><td colspan="2"><span class="click" id="kes_getAllyTroopPoints">' + l.allyTrooppoints +'</span></td></tr>');
-
-			function getPlayerInfo(members, callback) {
-				var href = members.shift();
-				$.ajax({
-					type: 'POST',
-					url: href,
-					success: function (data) {
-						callback(members, data);
-					}
+					if (timeInSeconds > runtimeInSeconds) { $(this).css('color', 'grey'); }
 				});
-			}
-
-			$('#kes_getAllyTroopPoints').bind('click', function () {
-				$(this).unbind('click').fadeOut();
-
-				var membersPage = cachedTable.find('a[href*="info_member"]').attr('href');
-				$.when($.ajax({
-					type: 'POST',
-					url: membersPage
-				}).then(function (data) {
-					var members = [];
-					$(data).find('table.borderlist').eq(2).find('a[href*="info_player"]').each(function () {
-						members.push($(this).attr('href'));
-					});
-
-					function getAllPlayerInfos(members, callback) {
-						var allyTroopPoints = [];
-						var len = members.length;
-						var left = len;
-						var i = 0;
-
-						$('#kes_getAllyTroopPoints').removeClass('click').text(l.loading + ': ' + i +'/'+ len).fadeIn().parent().attr('colspan', 0).after('<td><div class="kes_progressOuter"><div id="kes_progress" class="kes_progressInner" maxwidth="100"></div></div></td>');
-
-						function callQueue(members) {
-							getPlayerInfo(members, function (members, playerInfo) {
-								var player = [];
-								var playerName = $(playerInfo).find('h1').eq(1).text();
-									playerName = playerName.substring(playerName.indexOf(' ') + 1);
-									playerName = playerName.replace(/\(.*\)/, "").trim();
-
-								player.push(playerName);
-								player.push(calculateTroopScore(playerInfo));
-
-								i++;
-								$('#kes_getAllyTroopPoints').text(l.loading + ': ' + i +'/'+ len);
-								$('#kes_progress').css({'width': i*(100/len) + '%'});
-
-								allyTroopPoints.push(player)
-								if (--left === 0) {
-									$('#kes_getAllyTroopPoints').parent().parent().remove();
-									callback(allyTroopPoints);
-								} else {
-									callQueue(members);
-								}
-							});
-						}
-						callQueue(members);
-					};
-					getAllPlayerInfos(members, showData);
-
-					function showData(allyTroopPoints) {
-						//* sort data according to trooppoints
-						allyTroopPoints.sort(function (a,b) { return b[1][0] - a[1][0]; });
-
-						var displayDataAsTable = function(data) {
-							var o = '';
-							var len = data.length;
-							for(var i = 0; i < len; i++) {
-								o += '<tr><td>' + data[i][0] + '</td><td>' + $.kes('prettyNumber', data[i][1][0]) + ' (' + ((data[i][1][0]/data[i][1][1])*100).toFixed(2) + '%)';
-								if (i != len-1) { o += '</td></tr>'; }
-							}
-							return o;
-						};
-
-						var displayDataAsBBCode = function(data) {
-
-						};
-
-						function getDataReady(lineStart, lineMiddle, lineEnd, data) {
-							var o = '';
-							var len = data.length;
-							for(var i = 0; i < len; i++) {
-								o += lineStart + data[i][0] + lineMiddle + $.kes('prettyNumber', data[i][1][0]) + ' (' + ((data[i][1][0]/data[i][1][1])*100).toFixed(2) + '%)';
-								if (i != len-1) { o += lineEnd; }
-							}
-							return o;
-						}
-						var o = arrow + ' <span class="click" id="kes_createBB">(kes) ' + l.bbCode + '</span><table class="borderlist" style="width: 420px;">';
-							o += '<tr><th>' + l.player + '</th><th>' + l.trooppoints + '</th></tr>';
-							o += getDataReady('<tr><td>', '</td><td>', '</td></tr>', allyTroopPoints);
-							o += '</table><br />';
-
-						$('table.borderlist').eq(3).before(o);
-						$('#kes_createBB').bind('click', function () {
-
-							$('body').append('<div id="kes_box"><textarea style="width: 99%; resize: none;" id="kes_data"></textarea></div><div id="kes_overlay"></div>');
-							$('#kes_data').text(getDataReady('[player]', '[/player] ', '\n', allyTroopPoints)).select();
-							$('#kes_overlay').fadeIn().bind('click',function () {
-								$('#kes_overlay, #kes_box').kes('fadeOutRemove');
-							});
-							$('#kes_box').fadeIn();
-							$('#kes_data').kes('resizeTextarea');
-						});
-					}
-				}));
-			});
+			}	
 		}
 	};
 }(kes));
 
 	//* append css to head
-	console.log(css);
 	var h = document.getElementsByTagName('head')[0],
 		injectCss = document.createElement('style');
 		injectCss.type = 'text/css';
@@ -3076,675 +3740,3 @@ css += '.kes_progressInner { width: 0px; height: 10px; background: #FFCC6E; }';
 			}
 		}
 	}
-
-}
-
-var de = {
-	//general
-	turnOn: 'An',
-	turnOff: 'Aus',
-	all: 'Alle',
-	none: 'Keine',
-	name: 'Name',
-	amount: 'Anzahl',
-	color: 'Farbe',
-	loading: 'Daten werden geladen',
-	close: 'Zum Schliessen auf den abgedunkelten Bereich klicken',
-	confirm: 'Bestätigen',
-	preview: 'Vorschau',
-	goto: 'Gehe zu',
-	reset: 'Löschen',
-	fillIn: 'Ausfüllen',
-	buildOne: '1 Stufe',
-	buildMax: 'Stufe(n)',
-	filter: 'Filtern',
-	beingProcessed: 'wird ausgeführt',
-
-	//settings
-	resetSettings: 'Einstellungen zurücksetzen',
-	adoptSettings: 'Deine Einstellungen konnten nicht übernommen werden und wurden zurückgesetzt.',
-	enableDisableModules: 'Module ein-/auschalten',
-	buildingTrebuchet: 'Standardgebäude Tribok',
-	marketSettings: 'Markteinstellungen',
-	linkspy: 'Direktlink Kundschafter',
-	contentTrebuchet: 'Standardgebäude für Tribok-Angriffe',
-	contentSpy: 'Direktlink mit %s Kundschaftern erzeugen',
-	marketDefault: 'Standardoption',
-
-	//kingsage_terminology
-	player: 'Spieler',
-	settlement: 'Siedlung',
-	attacker: 'Angreifer',
-	trooppoints: 'Truppenpunkte',
-	allyTrooppoints: 'Truppenpunkte der Allianz berechnen',
-	troops: 'Truppen',
-	ignore: 'Ignorieren',
-	unit: 'Einheit',
-	nick: 'Nickname',
-	ally: 'Allianz',
-	target: 'Ziel',
-	arrival: 'Ankunft',
-	defender: 'Verteidiger',
-	retrieve: 'Zurückrufen',
-	onlyAbandoned: 'Nur Verlassene Siedlungen',
-	entries: 'Einträge',
-	noMatch: 'Keine Siedlungen gefunden',
-	abbr: 'Symbol',
-	off: 'Offensiveinheit',
-	def: 'Defensiveinheit',
-	count: 'Graf',
-	spy: 'Kundschafter',
-	stone: 'Stein',
-	wood: 'Holz',
-	iron: 'Erz',
-	arrival: 'Ankunftszeit',
-	nameCoords: 'Spielername -koordinaten eingeben',
-	cancelAllDestroy: 'Alle Abbruch-Aufträge abbrechen',
-
-	//research
-	researchMissingTroops: 'Fehlende Truppen erforschen',
-	researchStarted: 'Forschungen in Auftrag gegeben',
-	noMissingResearch: 'Keine fehlenden Forschungen gefunden',
-
-	//selection
-	selectAll: 'Alle auswählen',
-	deselectAll: 'Alle abwählen',
-	selected: 'ausgewählt',
-	deselect: 'abwählen',
-	markSelection: 'Auswahl markieren',
-	selectedGroups: 'Gruppen ausgewählt',
-	deleteSelection: 'Auswahl löschen',
-	targetExport: 'Target Export',
-
-	//save
-	save: 'Abspeichern',
-	saved: 'gespeichert',
-	saveAttacks: 'Diese Angriffe speichern',
-	saveThread: 'Thread speichern',
-	resetSavedAttacks: 'Gespeicherte Angriffe verwerfen',
-
-	//troops
-	highlighttroops: 'Truppen hervorheben',
-	highlighttroopsLabel: 'Truppen zum Hervorheben auswählen',
-	highlighttroopsError: 'Du kannst die "Truppen hervorheben"-Funktion nur verwenden wenn diese im Alchemisten erforscht wurde.',
-	highlighttroopsActivate: 'Bitte aktiviere unterhalb der Karte in den Einstellungen den Punkt "Truppen anzeigen". Dies ist nötig um Truppen auf der Karte anzeigen lassen zu können.',
-	trooplinks: 'Truppenlinks',
-	troopFilter: 'Truppenfilter',
-
-	//group
-	group: 'Gruppe',
-	setGroup: 'Setze Gruppe',
-	switchGroup: 'Die ausgewählte Gruppe muss "Alle" sein, bestätige mit OK um die Gruppe zu wechseln',
-	highlightgroups: 'Gruppen hervorheben',
-	highlightGroupslabel: 'Gruppen zum Hervorheben auswählen',
-	highlightGroupsReplacementError: 'In Abwesenheitsvertretung nicht verfügbar',
-
-	//bbcode
-	bbCode: 'BB-Code',
-	asBBCode: 'Als BB-Code',
-	bbCode: 'Als BB-Code anzeigen',
-	report_as_bb_code: 'kurzer BB-Code',
-	enableBBCodeExport: 'BB-Code Export einschalten',
-	exportBBCode: 'Siedlungen als BB-Code exportieren',
-
-	//messages & reports
-	reports: 'Berichte',
-	recipient: 'Empfänger',
-	forward: 'Weiterleiten',
-	forwardSuccess: 'Berichte erfolgreich weitergeleitet',
-	forwardError: 'Keine Berichte und/oder Usernamen ausgewählt',
-
-	//posting
-	sortContinent: 'Nach Kontinent',
-	masscoinFixActive: 'Mengenprägen',
-	sortCoords: 'Nach Koordinaten',
-	sortPoints: 'Nach Punkten',
-	sortName: 'Nach Name',
-	thread: 'Thread',
-	goChooseThread: 'Gehe ins Forum und wähle einen Thread aus',
-	summary: 'Zusammenfassung der Auswahl',
-	postIn: 'Gepostet wird in',
-	amountOfSetts: 'Anzahl der Ausgewählten Siedlungen',
-	postsToBeCreated: 'Es werden %s Post(s) angelegt',
-	chooseThreadFirst: 'Du musst zuerst im Allianzforum einen Thread auswählen',
-	formatting: 'Gewünschte Formatierung',
-	header: 'Kopfzeile',
-	settlementDisplay: 'Siedlungsdarstellung',
-	footer: 'Fußzeile',
-
-	//links
-	goToBarracks: 'Zur Kaserne',
-	goToMain: 'Zur Burg',
-	attackWithSpies: 'Mit %s Kundschaftern angreifen',
-
-	//attacks
-	attack: 'Angriff',
-	attacks: 'Angriffe',
-	moreAttacks: 'Weitere Angriffe',
-	nextAttacks: 'Die nächsten %s Angriffe',
-	noMatch: 'keine passenden Siedlungen vorhanden',
-	runtimecalc : 'Einschlag in',
-	loadAllAttacks: 'Alle Angriffe laden',
-	loadingFinished: 'Fertig geladen',
-
-	//time
-	toa: 'Laufzeit',
-	days: 'Tage',
-	hours: 'Stunden',
-	minutes: 'Minuten',
-	seconds: 'Sekunden',
-	withoutRuntime: 'Ohne Laufzeit',
-
-	//modules
-	modul: {
-		marketOptions: 'Eigene Einstellung Markt',
-		troopsOnMap: 'Truppen hervorheben',
-		showAttacksOnMap: 'Angriffe speichern/Auf Karte hervorheben',
-		insertIntoRuntimeCalc: 'Angriffe in Laufzeitrechner einfügen',
-		highlightgroups: 'Gruppen hervorheben',
-		massdisband: 'Angepasste Massenentlassung',
-		simulator: 'Angepasster Simulator',
-		filterOverview: 'Truppenfilter mit Ankunftszeit für Übersicht>Kombiniert',
-		bbCodeExport: 'Siedlungslisten als BB-Code exportieren',
-		massforward: 'Massenweiterleiten von Berichten',
-		trooplinks: 'Truppenlinks in der Kaserne',
-		targetExport: 'Ziel aus Kartenauschnitt auswählen',
-		massbuild: 'Mehrfachbau in der Burg',
-		setGroupsOnMap: 'Gruppen via Karte setzen',
-		sortOwnAttacks: 'Eigene Angriffe sortieren'
-	},
-
-	//units
-	units: {
-		militia: 'Bauernmiliz',
-		sword: 'Templer',
-		spear: 'Knappe',
-		axe: 'Berserker',
-		bow: 'Langbogen',
-		spy: 'Kundschafter',
-		light: 'Kreuzritter',
-		heavy: 'Schwarzer Ritter',
-		ram: 'Sturmbock',
-		kata: 'Tribok',
-		snob: 'Graf'
-	},
-
-	//buildings
-	buildings: {
-		main: 'Burg',
-		stone: 'Steinbruch',
-		wood: 'Sägewerk',
-		iron: 'Erzbergwerk',
-		storage: 'Lagerhaus',
-		hide: 'Versteck',
-		farm: 'Müller',
-		barracks: 'Kaserne',
-		wall: 'Stadtmauer',
-		stable: 'Eselzucht',
-		market: 'Markt',
-		garage: 'Alchemist',
-		snob: 'Residenz',
-		smith: 'Goldschmiede',
-		statue: 'Denkmal'
-	}
-};
-
-var en = {
-	//general
-	turnOn: 'On',
-	turnOff: 'Off',
-	all: 'All',
-	none: 'None',
-	name: 'Name',
-	amount: 'Amount',
-	color: 'Color',
-	loading: 'Loading data',
-	close: 'Click on darkened area to close',
-	confirm: 'Confirm',
-	preview: 'Preview',
-	goto: 'Go to',
-	reset: 'Reset',
-	fillIn: 'Fill in',
-	buildOne: '1 Level',
-	buildMax: 'Levels',
-	filter: 'Filter',
-	beingProcessed: 'is being processed',
-
-	//settings
-	resetSettings: 'Reset settings',
-	adoptSettings: 'Your settings could not be saved and have reset to default',
-	enableDisableModules: 'En/disable modules',
-	buildingTrebuchet: 'Default target trebuchet',
-	marketSettings: 'Marketsettings',
-	linkspy: 'Link spyattack',
-	contentTrebuchet: 'Default target for trebuchet attacks',
-	contentSpy: 'Create Link for spyattack with %s spies',
-	marketDefault: 'Default',
-
-	//kingsage_terminology
-	player: 'Player',
-	settlement: 'Settlement',
-	attacker: 'Attacker',
-	trooppoints: 'Trooppoints',
-	allyTrooppoints: 'Calculate trooppoints of alliance',
-	troops: 'Troops',
-	ignore: 'Ignore',
-	unit: 'Unit',
-	nick: 'Nickname',
-	ally: 'Alliance',
-	target: 'Target',
-	arrival: 'Arrival',
-	defender: 'Defender',
-	retrieve: 'Retrieve troops',
-	onlyAbandoned: 'Only abandoned settlements',
-	entries: 'Entries',
-	noMatch: 'No match found',
-	abbr: 'Symbol',
-	off: 'Offense',
-	def: 'Defense',
-	count: 'Count',
-	spy: 'Spy',
-	stone: 'Stone',
-	wood: 'Wood',
-	iron: 'Ore',
-	arrival: 'Time of Arrival',
-	nameCoords: 'Enter playername or coordinates',
-	cancelAllDestroy: 'Cancel destruction queue',
-
-	//research
-	researchMissingTroops: 'Research missing troops',
-	researchStarted: 'Research has been started',
-	noMissingResearch: 'No missing research found',
-
-	//selection
-	selectAll: 'Select all',
-	deselectAll: 'Deselect all',
-	selected: 'selected',
-	deselect: 'deselect',
-	markSelection: 'Mark selection',
-	selectedGroups: 'Groups have been selected',
-	deleteSelection: 'Delete selection',
-	targetExport: 'Export targets',
-
-	//save
-	save: 'Save',
-	saved: 'Saved',
-	saveAttacks: 'Save these attacks',
-	saveThread: 'Save thread',
-	resetSavedAttacks: 'Dismiss saved attacks',
-
-	//troops
-	highlighttroops: 'Highlight troops',
-	highlighttroopsLabel: 'Select troops to be highlighted',
-	highlighttroopsError: 'You can only use the "highlight troops" functionality after it has been researched with the alchemist.',
-	highlighttroopsActivate: 'Please activate the "Show troops" functionality below the map. This is required to highlight troops on the map',
-	trooplinks: 'Troop quicklinks',
-	troopFilter: 'Filter troops',
-
-	//group
-	group: 'Group',
-	setGroup: 'Set group',
-	switchGroup: 'Click "OK" to switch to group "All"',
-	highlightgroups: 'Highlight groups',
-	highlightGroupslabel: 'Select groups to be highlighted',
-	highlightGroupsReplacementError: 'Not available when in holiday replacement',
-
-	//bbcode
-	bbCode: 'BB-Code',
-	asBBCode: 'As BB-Code',
-	bbCode: 'Show as BB-Code',
-	report_as_bb_code: 'Short BB-Code',
-	enableBBCodeExport: 'Enable BB-Code export',
-	exportBBCode: 'Export settlements as BB-Code',
-
-	//messages & reports
-	reports: 'Reports',
-	recipient: 'Recipient',
-	forward: 'Forward',
-	forwardSuccess: 'Forwarding successful',
-	forwardError: 'No reports and/or username chosen',
-
-	//posting
-	sortContinent: 'By continent',
-	masscoinFixActive: 'Mengenprägen', // TODO
-	sortCoords: 'By coordinates',
-	sortPoints: 'By points',
-	sortName: 'By name',
-	thread: 'Thread',
-	goChooseThread: 'Select a thread on the alliance board',
-	summary: 'Summary',
-	postIn: 'This will be posted in',
-	amountOfSetts: 'Amount of selected settlements',
-	postsToBeCreated: '%s posts will be created',
-	chooseThreadFirst: 'You have to select a thread on the alliance board first',
-	formatting: 'Choose formatting',
-	header: 'Headline',
-	settlementDisplay: 'Settlementpresentation',
-	footer: 'footer',
-
-	//links
-	goToBarracks: 'Go to barracks',
-	goToMain: 'Go to Castle',
-	attackWithSpies: 'Attack with %s spies',
-
-	//attacks
-	attack: 'Attack',
-	attacks: 'Attacks',
-	moreAttacks: 'More attacks',
-	nextAttacks: 'Next %s attacks',
-	noMatch: 'No matching settlements available',
-	runtimecalc : 'Impact in',
-	loadAllAttacks: 'Load all attacks',
-	loadingFinished: 'Loading finished',
-
-	//time
-	toa: 'Runtime',
-	days: 'Days',
-	hours: 'Hours',
-	minutes: 'Minutes',
-	seconds: 'Seconds',
-	withoutRuntime: 'Without runtime',
-
-	//modules
-	modul: {
-		marketOptions: 'Marketsettings',
-		troopsOnMap: 'Highlight troops on map',
-		showAttacksOnMap: 'Save attacks/show attacks on map',
-		insertIntoRuntimeCalc: 'Insert attacks into runtimecalculator',
-		highlightgroups: 'Highlight groups',
-		massdisband: 'Angepasste Massenentlassung', //TODO
-		simulator: 'Customize simulator',
-		filterOverview: 'Filter troops by time of arrival',
-		bbCodeExport: 'Export settlements as bb-code',
-		massforward: 'Massforward reports and messages',
-		trooplinks: 'Troop quicklinks in barracks',
-		targetExport: 'Export targets from map',
-		massbuild: 'Massbuild in Castle',
-		setGroupsOnMap: 'Set groups via map',
-		sortOwnAttacks: 'Sort own attacks'
-	},
-
-	//units
-	units: {
-		militia: 'Farmer\'s militia',
-		sword: 'Templar',
-		spear: 'Squire',
-		axe: 'Berserker',
-		bow: 'Long-bow',
-		spy: 'Spy',
-		light: 'Crusader',
-		heavy: 'Black knight',
-		ram: 'Battering ram',
-		kata: 'Trebuchet',
-		snob: 'Count'
-	},
-
-	//buildings
-	buildings: {
-		main: 'Castle',
-		stone: 'Quarry',
-		wood: 'Sawmill',
-		iron: 'Ore Mine',
-		storage: 'Warehouse',
-		hide: 'Hideout',
-		farm: 'Miller',
-		barracks: 'Barracks',
-		wall: 'Town Wall',
-		stable: 'Donkey Stable',
-		market: 'Market',
-		garage: 'Alchemist',
-		snob: 'Residence',
-		smith: 'Goldsmith',
-		statue: 'Memorial'
-	}
-};
-
-var en = {
-	//general
-	turnOn: 'On',
-	turnOff: 'Off',
-	all: 'All',
-	none: 'None',
-	name: 'Name',
-	amount: 'Amount',
-	color: 'Color',
-	loading: 'Loading data',
-	close: 'Click on darkened area to close',
-	confirm: 'Confirm',
-	preview: 'Preview',
-	goto: 'Go to',
-	reset: 'Reset',
-	fillIn: 'Fill in',
-	buildOne: '1 Level',
-	buildMax: 'Levels',
-	filter: 'Filter',
-	beingProcessed: 'is being processed',
-
-	//settings
-	resetSettings: 'Reset settings',
-	adoptSettings: 'Your settings could not be saved and have reset to default',
-	enableDisableModules: 'En/disable modules',
-	buildingTrebuchet: 'Default target trebuchet',
-	marketSettings: 'Marketsettings',
-	linkspy: 'Link spyattack',
-	contentTrebuchet: 'Default target for trebuchet attacks',
-	contentSpy: 'Create Link for spyattack with %s spies',
-	marketDefault: 'Default',
-
-	//kingsage_terminology
-	player: 'Player',
-	settlement: 'Settlement',
-	attacker: 'Attacker',
-	trooppoints: 'Trooppoints',
-	allyTrooppoints: 'Calculate trooppoints of alliance',
-	troops: 'Troops',
-	ignore: 'Ignore',
-	unit: 'Unit',
-	nick: 'Nickname',
-	ally: 'Alliance',
-	target: 'Target',
-	arrival: 'Arrival',
-	defender: 'Defender',
-	retrieve: 'Retrieve troops',
-	onlyAbandoned: 'Only abandoned settlements',
-	entries: 'Entries',
-	noMatch: 'No match found',
-	abbr: 'Symbol',
-	off: 'Offense',
-	def: 'Defense',
-	count: 'Count',
-	spy: 'Spy',
-	stone: 'Stone',
-	wood: 'Wood',
-	iron: 'Ore',
-	arrival: 'Time of Arrival',
-	nameCoords: 'Enter playername or coordinates',
-	cancelAllDestroy: 'Cancel destruction queue',
-
-	//research
-	researchMissingTroops: 'Research missing troops',
-	researchStarted: 'Research has been started',
-	noMissingResearch: 'No missing research found',
-
-	//selection
-	selectAll: 'Select all',
-	deselectAll: 'Deselect all',
-	selected: 'selected',
-	deselect: 'deselect',
-	markSelection: 'Mark selection',
-	selectedGroups: 'Groups have been selected',
-	deleteSelection: 'Delete selection',
-	targetExport: 'Export targets',
-
-	//save
-	save: 'Save',
-	saved: 'Saved',
-	saveAttacks: 'Save these attacks',
-	saveThread: 'Save thread',
-	resetSavedAttacks: 'Dismiss saved attacks',
-
-	//troops
-	highlighttroops: 'Highlight troops',
-	highlighttroopsLabel: 'Select troops to be highlighted',
-	highlighttroopsError: 'You can only use the "highlight troops" functionality after it has been researched with the alchemist.',
-	highlighttroopsActivate: 'Please activate the "Show troops" functionality below the map. This is required to highlight troops on the map',
-	trooplinks: 'Troop quicklinks',
-	troopFilter: 'Filter troops',
-
-	//group
-	group: 'Group',
-	setGroup: 'Set group',
-	switchGroup: 'Click "OK" to switch to group "All"',
-	highlightgroups: 'Highlight groups',
-	highlightGroupslabel: 'Select groups to be highlighted',
-	highlightGroupsReplacementError: 'Not available when in holiday replacement',
-
-	//bbcode
-	bbCode: 'BB-Code',
-	asBBCode: 'As BB-Code',
-	bbCode: 'Show as BB-Code',
-	report_as_bb_code: 'Short BB-Code',
-	enableBBCodeExport: 'Enable BB-Code export',
-	exportBBCode: 'Export settlements as BB-Code',
-
-	//messages & reports
-	reports: 'Reports',
-	recipient: 'Recipient',
-	forward: 'Forward',
-	forwardSuccess: 'Forwarding successful',
-	forwardError: 'No reports and/or username chosen',
-
-	//posting
-	sortContinent: 'By continent',
-	masscoinFixActive: 'Mengenprägen', // TODO
-	sortCoords: 'By coordinates',
-	sortPoints: 'By points',
-	sortName: 'By name',
-	thread: 'Thread',
-	goChooseThread: 'Select a thread on the alliance board',
-	summary: 'Summary',
-	postIn: 'This will be posted in',
-	amountOfSetts: 'Amount of selected settlements',
-	postsToBeCreated: '%s posts will be created',
-	chooseThreadFirst: 'You have to select a thread on the alliance board first',
-	formatting: 'Choose formatting',
-	header: 'Headline',
-	settlementDisplay: 'Settlementpresentation',
-	footer: 'footer',
-
-	//links
-	goToBarracks: 'Go to barracks',
-	goToMain: 'Go to Castle',
-	attackWithSpies: 'Attack with %s spies',
-
-	//attacks
-	attack: 'Attack',
-	attacks: 'Attacks',
-	moreAttacks: 'More attacks',
-	nextAttacks: 'Next %s attacks',
-	noMatch: 'No matching settlements available',
-	runtimecalc : 'Impact in',
-	loadAllAttacks: 'Load all attacks',
-	loadingFinished: 'Loading finished',
-
-	//time
-	toa: 'Runtime',
-	days: 'Days',
-	hours: 'Hours',
-	minutes: 'Minutes',
-	seconds: 'Seconds',
-	withoutRuntime: 'Without runtime',
-
-	//modules
-	modul: {
-		marketOptions: 'Marketsettings',
-		troopsOnMap: 'Highlight troops on map',
-		showAttacksOnMap: 'Save attacks/show attacks on map',
-		insertIntoRuntimeCalc: 'Insert attacks into runtimecalculator',
-		highlightgroups: 'Highlight groups',
-		massdisband: 'Customize Massenentlassung', //TODO
-		simulator: 'Customize simulator',
-		filterOverview: 'Filter troops by time of arrival',
-		bbCodeExport: 'Export settlements as bb-code',
-		massforward: 'Massforward reports and messages',
-		trooplinks: 'Troop quicklinks in barracks',
-		targetExport: 'Export targets from map',
-		massbuild: 'Massbuild in Castle',
-		setGroupsOnMap: 'Set groups via map',
-		sortOwnAttacks: 'Sort own attacks'
-	},
-
-	//units
-	units: {
-		militia: 'Farmer\'s militia',
-		sword: 'Templar',
-		spear: 'Squire',
-		axe: 'Berserker',
-		bow: 'Long-bow',
-		spy: 'Spy',
-		light: 'Crusader',
-		heavy: 'Black knight',
-		ram: 'Battering ram',
-		kata: 'Trebuchet',
-		snob: 'Count'
-	},
-
-	//buildings
-	buildings: {
-		main: 'Castle',
-		stone: 'Quarry',
-		wood: 'Sawmill',
-		iron: 'Ore Mine',
-		storage: 'Warehouse',
-		hide: 'Hideout',
-		farm: 'Miller',
-		barracks: 'Barracks',
-		wall: 'Town Wall',
-		stable: 'Donkey Stable',
-		market: 'Market',
-		garage: 'Alchemist',
-		snob: 'Residence',
-		smith: 'Goldsmith',
-		statue: 'Memorial'
-	}
-};
-
-var selectLanguage = function(lang){
-	switch(lang) {
-		case 'br.kingsage.gameforge.com':
-			return br; break;
-		case 'kingsage.de':
-		case 'de.kingsage.gameforge.com':
-			return de; break;
-		case 'kingsage.com':
-		case 'kingsage.org':
-		case 'en.kingsage.gameforge.com':
-		case 'us.kingsage.gameforge.com':
-			return en; break;
-		default:
-			return en; break;
-	}
-};
-
-(function () {
-	var $ = (typeof(unsafeWindow) != 'undefined') ? unsafeWindow.jQuery : jQuery || $;
-
-	var languageSelector = location.host; // e.g. s1.kingsage.de
-	languageSelector = languageSelector.substring(languageSelector.indexOf('.')+1,languageSelector.length); // e.g. kingsage.de
-	var loca = selectLanguage(languageSelector);
-
-	//* Extract uri parameters
-	var Query = (function () {
-		var query = {}, pair,
-		search = location.search.substring(1).split("&"),
-		i = search.length;
-		while (i--) {
-			pair = search[i].split("=");
-			query[pair[0]] = decodeURIComponent(pair[1]);
-		}
-		return query;
-	})();
-
-	KESInit($, loca, Query);
-
-})();

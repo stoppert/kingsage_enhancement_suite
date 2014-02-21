@@ -1,11 +1,4 @@
-function KESInit($, l, Query){
-
 	// TODO: test in chrome, opera, update-reminder,  show cost for 1 level, save everything apart from user settings in another obj?
-	var kes = {};
-		kes.module = {};
-
-	//* fix location in opera
-	var location = window.location;
 
 	//* global variables
 	var version = '1.2';
