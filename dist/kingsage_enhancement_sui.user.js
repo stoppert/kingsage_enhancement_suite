@@ -678,9 +678,6 @@ var kes = {},
 
 	// TODO: test in chrome, opera, update-reminder,  show cost for 1 level, save everything apart from user settings in another obj?
 
-	//* fix location in opera
-	var location = window.location;
-
 	//* global variables
 	var version = '1.2';
 	var host	= location.host; // like "s1.kingsage.de"
@@ -695,74 +692,6 @@ var kes = {},
 	var units		 = { 0: l.units.militia, 1: l.units.sword, 2: l.units.spear, 3: l.units.axe, 4: l.units.bow, 5: l.units.spy, 7: l.units.light, 8: l.units.heavy, 9: l.units.ram, 10: l.units.kata, 11: l.units.snob };
 	var unit_runtime = { "farmer": 20, "sword": 22, "spear": 18, "axe": 18, "bow": 18, "spy": 9, "light": 10, "heavy": 11, "ram": 30, "kata": 30, "snob": 35};
 	var buildings	 = l.buildings;
-
-	var buildCosts	 = {
-		main: 	  {min: 1, max: 50, stone: {b: 	   85, f: 1.17}, wood: {b: 	   70, f: 1.165}, ore: {b: 	   65, f: 1.165}, workers: {b: 	 2, f: 1.12}},
-		wood: 	  {min: 0, max: 50, stone: {b: 	   55, f: 1.17}, wood: {b: 	   30, f: 1.165}, ore: {b: 	   40, f: 1.165}, workers: {b: 	 5, f:  1.1}},
-		stone: 	  {min: 0, max: 50, stone: {b: 	   40, f: 1.17}, wood: {b: 	   30, f: 1.165}, ore: {b: 	   55, f: 1.165}, workers: {b: 	 5, f:  1.1}},
-		iron: 	  {min: 0, max: 50, stone: {b: 	   55, f: 1.17}, wood: {b: 	   40, f: 1.165}, ore: {b: 	   30, f: 1.165}, workers: {b: 	 5, f:  1.1}},
-		storage:  {min: 1, max: 50, stone: {b: 	   43, f: 1.17}, wood: {b: 	   40, f: 1.165}, ore: {b: 	   35, f: 1.165}, workers: {b: 0.1, f: 	1.1}},
-		hide: 	  {min: 0, max: 30, stone: {b: 	   50, f: 1.17}, wood: {b: 	   40, f: 1.165}, ore: {b: 	   40, f: 1.165}, workers: {b: 	 1, f: 1.15}},
-		farm: 	  {min: 1, max: 50, stone: {b: 	   65, f: 1.17}, wood: {b: 	   50, f: 1.165}, ore: {b: 	   50, f:  1.16}, workers: {b: 	 0, f: 	  1}},
-		barracks: {min: 0, max: 30, stone: {b: 	  180, f: 1.23}, wood: {b: 	  180, f:  1.21}, ore: {b: 	  120, f:  1.22}, workers: {b: 	 6, f: 1.17}},
-		wall: 	  {min: 1, max: 20, stone: {b: 	   60, f: 1.17}, wood: {b: 	   40, f: 1.165}, ore: {b: 	   30, f:  1.16}, workers: {b: 	 4, f: 	1.2}},
-		stable:   {min: 0, max: 30, stone: {b: 	  240, f: 1.17}, wood: {b: 	  200, f: 1.165}, ore: {b: 	  220, f:  1.16}, workers: {b:  10, f: 	1.1}},
-		market:   {min: 0, max: 30, stone: {b: 	  100, f: 1.17}, wood: {b: 	   80, f: 1.165}, ore: {b: 	   70, f:  1.16}, workers: {b:  10, f: 1.17}},
-		garage:   {min: 0, max:  5, stone: {b: 	  400, f: 1.17}, wood: {b: 	  600, f: 1.165}, ore: {b: 	  500, f:  1.16}, workers: {b:  50, f: 	1.4}},
-		snob: 	  {min: 0, max: 10, stone: {b:  30000, f:  1.3}, wood: {b:  25000, f: 	1.3}, ore: {b:  25000, f: 	1.3}, workers: {b: 100, f: 	1.2}},
-		smith: 	  {min: 0, max:  5, stone: {b:   4000, f:  1.4}, wood: {b: 	 3000, f: 	1.4}, ore: {b:   2500, f: 	1.4}, workers: {b:  25, f: 	1.2}},
-		statue:   {min: 0, max:  1, stone: {b: 400000, f: 	 2}, wood: {b: 400000, f: 	  2}, ore: {b: 400000, f: 	  2}, workers: {b: 	 0, f: 1.17}},
-		cost: function(building, level) {
-			var stone = 0, wood = 0, ore = 0, workers = 0;
-			if(typeof level == "number" && level <= building.max && level >= building.min) {
-				stone	= Math.round(building.stone.b 	* Math.pow(building.stone.f, level-1)),
-				wood	= Math.round(building.wood.b 	* Math.pow(building.wood.f, level-1)),
-				ore		= Math.round(building.ore.b		* Math.pow(building.ore.f, level-1)),
-				workers	= Math.round(building.workers.b * Math.pow(building.workers.f, level-1));
-			}
-			return [stone, wood, ore, workers];
-		},
-		cumulatedCost: function(building, min, max) {
-			var stone = 0, wood = 0, ore = 0, workersLow = this.cost(building, min)[3], workersHigh = this.cost(building, max)[3];
-			for(var i = min + 1; i <= max; i++) {
-				cost = this.cost(building, i);
-				stone 	+= cost[0];
-				wood	+= cost[1];
-				ore		+= cost[2];
-			}
-			return [stone, wood, ore, workersHigh - workersLow];
-		},
-		getMaximumLevel: function(building, level, stone, wood, iron, workers) {
-			var max 		= building.max,
-				min 		= level,
-				available 	= [stone, wood, iron, workers],
-				canBuild 	= function(cumulated, available) {
-					return (cumulated[0] <= available[0] && cumulated[1] <= available[1] && cumulated[2] <= available[2] && cumulated[3] <= available[3]);
-				},
-				addCost		= function(n, o) {
-					return [n[0] + o[0], n[1] + o[1], n[2] + o[2], n[3]];
-				};
-			//can we build max?
-			var maxCost = this.cumulatedCost(building, min, max);
-			if(canBuild(maxCost, available)) {
-				return [max - min].concat(maxCost);
-			} else {
-				// search for the max level we can build
-				var high 	= max-1,
-					low  	= min,
-					lowCost = this.cumulatedCost(building, low, low+1),
-					lastCost = lowCost;
-				for(var i = low + 1; low <= high; i++) {
-					var tmpCost = addCost(this.cost(building, i), lastCost);
-					if(canBuild(tmpCost, available)) {
-						lastCost = tmpCost;
-					} else {
-						return [i-low].concat(lastCost);
-					}
-				}
-			}
-		}
-	};
 
 	//* got premium?
 	var premium	 = ($('div.buff[style*="premium-account"]').length > 0) ? true : false;
@@ -2341,6 +2270,74 @@ css += '#kes_showSelectedSetts { position: fixed; background: #FFF; font-size: 1
 			}
 
 			if(k.modul.massbuild && premium) {
+
+				var buildCosts	 = {
+					main: 	  {min: 1, max: 50, stone: {b: 	   85, f: 1.17}, wood: {b: 	   70, f: 1.165}, ore: {b: 	   65, f: 1.165}, workers: {b: 	 2, f: 1.12}},
+					wood: 	  {min: 0, max: 50, stone: {b: 	   55, f: 1.17}, wood: {b: 	   30, f: 1.165}, ore: {b: 	   40, f: 1.165}, workers: {b: 	 5, f:  1.1}},
+					stone: 	  {min: 0, max: 50, stone: {b: 	   40, f: 1.17}, wood: {b: 	   30, f: 1.165}, ore: {b: 	   55, f: 1.165}, workers: {b: 	 5, f:  1.1}},
+					iron: 	  {min: 0, max: 50, stone: {b: 	   55, f: 1.17}, wood: {b: 	   40, f: 1.165}, ore: {b: 	   30, f: 1.165}, workers: {b: 	 5, f:  1.1}},
+					storage:  {min: 1, max: 50, stone: {b: 	   43, f: 1.17}, wood: {b: 	   40, f: 1.165}, ore: {b: 	   35, f: 1.165}, workers: {b: 0.1, f: 	1.1}},
+					hide: 	  {min: 0, max: 30, stone: {b: 	   50, f: 1.17}, wood: {b: 	   40, f: 1.165}, ore: {b: 	   40, f: 1.165}, workers: {b: 	 1, f: 1.15}},
+					farm: 	  {min: 1, max: 50, stone: {b: 	   65, f: 1.17}, wood: {b: 	   50, f: 1.165}, ore: {b: 	   50, f:  1.16}, workers: {b: 	 0, f: 	  1}},
+					barracks: {min: 0, max: 30, stone: {b: 	  180, f: 1.23}, wood: {b: 	  180, f:  1.21}, ore: {b: 	  120, f:  1.22}, workers: {b: 	 6, f: 1.17}},
+					wall: 	  {min: 1, max: 20, stone: {b: 	   60, f: 1.17}, wood: {b: 	   40, f: 1.165}, ore: {b: 	   30, f:  1.16}, workers: {b: 	 4, f: 	1.2}},
+					stable:   {min: 0, max: 30, stone: {b: 	  240, f: 1.17}, wood: {b: 	  200, f: 1.165}, ore: {b: 	  220, f:  1.16}, workers: {b:  10, f: 	1.1}},
+					market:   {min: 0, max: 30, stone: {b: 	  100, f: 1.17}, wood: {b: 	   80, f: 1.165}, ore: {b: 	   70, f:  1.16}, workers: {b:  10, f: 1.17}},
+					garage:   {min: 0, max:  5, stone: {b: 	  400, f: 1.17}, wood: {b: 	  600, f: 1.165}, ore: {b: 	  500, f:  1.16}, workers: {b:  50, f: 	1.4}},
+					snob: 	  {min: 0, max: 10, stone: {b:  30000, f:  1.3}, wood: {b:  25000, f: 	1.3}, ore: {b:  25000, f: 	1.3}, workers: {b: 100, f: 	1.2}},
+					smith: 	  {min: 0, max:  5, stone: {b:   4000, f:  1.4}, wood: {b: 	 3000, f: 	1.4}, ore: {b:   2500, f: 	1.4}, workers: {b:  25, f: 	1.2}},
+					statue:   {min: 0, max:  1, stone: {b: 400000, f: 	 2}, wood: {b: 400000, f: 	  2}, ore: {b: 400000, f: 	  2}, workers: {b: 	 0, f: 1.17}},
+					cost: function(building, level) {
+						var stone = 0, wood = 0, ore = 0, workers = 0;
+						if(typeof level == "number" && level <= building.max && level >= building.min) {
+							stone	= Math.round(building.stone.b 	* Math.pow(building.stone.f, level-1)),
+							wood	= Math.round(building.wood.b 	* Math.pow(building.wood.f, level-1)),
+							ore		= Math.round(building.ore.b		* Math.pow(building.ore.f, level-1)),
+							workers	= Math.round(building.workers.b * Math.pow(building.workers.f, level-1));
+						}
+						return [stone, wood, ore, workers];
+					},
+					cumulatedCost: function(building, min, max) {
+						var stone = 0, wood = 0, ore = 0, workersLow = this.cost(building, min)[3], workersHigh = this.cost(building, max)[3];
+						for(var i = min + 1; i <= max; i++) {
+							cost = this.cost(building, i);
+							stone 	+= cost[0];
+							wood	+= cost[1];
+							ore		+= cost[2];
+						}
+						return [stone, wood, ore, workersHigh - workersLow];
+					},
+					getMaximumLevel: function(building, level, stone, wood, iron, workers) {
+						var max 		= building.max,
+							min 		= level,
+							available 	= [stone, wood, iron, workers],
+							canBuild 	= function(cumulated, available) {
+								return (cumulated[0] <= available[0] && cumulated[1] <= available[1] && cumulated[2] <= available[2] && cumulated[3] <= available[3]);
+							},
+							addCost		= function(n, o) {
+								return [n[0] + o[0], n[1] + o[1], n[2] + o[2], n[3]];
+							};
+						//can we build max?
+						var maxCost = this.cumulatedCost(building, min, max);
+						if(canBuild(maxCost, available)) {
+							return [max - min].concat(maxCost);
+						} else {
+							// search for the max level we can build
+							var high 	= max-1,
+								low  	= min,
+								lowCost = this.cumulatedCost(building, low, low+1),
+								lastCost = lowCost;
+							for(var i = low + 1; low <= high; i++) {
+								var tmpCost = addCost(this.cost(building, i), lastCost);
+								if(canBuild(tmpCost, available)) {
+									lastCost = tmpCost;
+								} else {
+									return [i-low].concat(lastCost);
+								}
+							}
+						}
+					}
+				};
 
 				$('a[href*="&s=build_main&a=buildBuilding"]').each(function() {
 					var current  = $(this),
