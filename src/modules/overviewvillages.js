@@ -26,7 +26,7 @@ css += '.kes_multiselect_open { display: block !important; }';
 					ui +=		'<td><input type="text" name="spy" size="4" maxlength="5"></td><td><input type="text" name="light" size="4" maxlength="5"></td>';
 					ui +=		'<td><input type="text" name="heavy" size="4" maxlength="5"></td><td><input type="text" name="ram" size="4" maxlength="5"></td>';
 					ui += 		'<td><input type="text" name="kata" size="4" maxlength="5"></td><td><input type="text" name="snob" size="4" maxlength="5"></td></tr>';
-					ui += 	'<tr><td>Ziel: <input id="kes_filterTroops_target" type="text" size="7"></td>';
+					ui += 	'<tr><td>' + l.target +': <input id="kes_filterTroops_target" type="text" size="7"></td>';
 					ui +=		'<td colspan="10">' + l.toa + ': ';
 					ui +=				l.days +' <input id="kes_filterTroops_arrival_d" type="text" size="2">' + l.hours + ' <input id="kes_filterTroops_arrival_h" type="text" size="2">';
 					ui +=			l.minutes + ' <input id="kes_filterTroops_arrival_m" type="text" size="2"> ' + l.seconds + ' <input id="kes_filterTroops_arrival_s" type="text" size="2">';
