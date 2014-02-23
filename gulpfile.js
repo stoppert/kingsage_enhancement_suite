@@ -1,11 +1,16 @@
 var gulp = require('gulp'),
+	gulpif = require('gulp-if');
 	rename = require('gulp-rename'),
 	concat = require('gulp-concat'),
 	uglify = require('gulp-uglify');
+	markdown = require('gulp-markdown');
 
 var base_path = 'src/';
 
-var target = {
+var js = {
+	isHeader: function(file) {
+		return file.path.indexOf('header.js') == -1;
+	},
 	files : [						// all js files that should not be concatinated
 		base_path + 'header.js',
 		base_path + 'loca/*',
@@ -24,19 +29,35 @@ var target = {
 	name : 'kingsage_enhancement_sui.user.js'
 };
 
+var md = {
+	files: [
+		'docs/*/*'
+	],
+	dest: 'dist/docs/'
+}
+
+gulp.task('markdown', function() {
+	return gulp.src(md.files)
+		.pipe(markdown())
+		.pipe(gulp.dest(md.dest));
+})
+
 gulp.task('js', function() {
-	return gulp.src(target.files)
-		.pipe(concat(target.name))
+	return gulp.src(js.files)
+		.pipe(gulpif(js.isHeader, uglify()))
+		.pipe(concat(js.name))
+/*
+		.pipe(concat(js.name))
 	/*	.pipe(uglify({ 
 			global_defs: { 
 				DEBUG: false 
 			},
 		}))*/
-		.pipe(gulp.dest(target.dest));
+		.pipe(gulp.dest(js.dest));
 });
 
 gulp.task('copy', function() {
-	return gulp.src(target.dest + target.name)
+	return gulp.src(js.dest + js.name)
 		.pipe(gulp.dest('E:\\Firefox\\apple-sauce\\gm_scripts\\Kingsage_Enhancement_Suite'));
 });
 
