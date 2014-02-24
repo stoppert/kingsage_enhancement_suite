@@ -46,7 +46,6 @@
 	+ Nächster Einschlag
 	+ Angreifer
 	+ Angreifer Siedlung
-
 + Angriffe die bereits angekommen sind werden automatisch von der List der gespeicherten Angriffe entfernt
 
 #### Ziel aus Kartenauschnitt auswählen

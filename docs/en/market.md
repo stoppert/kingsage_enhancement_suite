@@ -6,7 +6,7 @@
 
 > **Requirements**
 
->+ `Own market settings` is activated on the settings page
+> + `Own market settings` is activated on the settings page
 
 **How it works**
 

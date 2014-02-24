@@ -1,9 +1,9 @@
-- Einleitung
+- Preface
 	- [Installation](/docs/installation)
 	- [Updating](/docs/update)
 	- [Changelog](/docs/changelog)
 	- [Translators](/docs/translators)
-- Funktionen
+- Features
 	- [Overview](/docs/overviewvillages)
 	- [Map](/docs/map)
 	- [Castle](/docs/main)

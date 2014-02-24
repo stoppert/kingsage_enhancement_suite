@@ -12,7 +12,7 @@
 
 > + `Troop quicklinks in barracks` is activated on the settings page
 
-**Funktionenweise**
+**How it works**
 
 + "Select all" insert all available troops into the formfields
 + Troop quicklinks #1, #2, #3 insert troop amounts according to the settings
@@ -32,17 +32,18 @@
 Under normal circumstances mass discharge discharges the amount of troops specified in the formfields.
 When `customize mass discharge` is activated KES will discharge only excess troops.
 
-**Beispiel**
+**Example**
 
-Troops avaible: 12000 Berserker
-Input: 10000 Berserker
++ Troops avaible: 12000 Berserker
++ Input: 10000 Berserker
 
-Result with customize mass discharge 10000 Berserker
-Result without customize mass discharge 2000 Berserker
++ Result with customize mass discharge 10000 Berserker
++ Result without customize mass discharge 2000 Berserker
 
 ## Simulator
 
 > **Requirements**
+
 > + `Customize simulator` is activated on the settings page
 
 **How it works**

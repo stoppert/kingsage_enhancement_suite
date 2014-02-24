@@ -11,7 +11,7 @@
 
 > + `Truppenlinks in der Kaserne` muss in den Einstellungen aktiviert sein
 
-**Funktionenweise**
+**Funktionsweise**
 
 + "Alle einfügen" fügt alle verfügbaren Truppen ein
 + Truppenlinks #1, #2, #3 füllen die in den Einstellungen auswgewählten Truppen ein
@@ -33,15 +33,16 @@ Ist `angepasste Massenentlassung` aktiviert wird KES alle überschüssigen Trupp
 
 **Beispiel**
 
-Truppen vorhanden: 12000 Berserker
-Eingabe: 10000 Berserker
++ Truppen vorhanden: 12000 Berserker
++ Eingabe: 10000 Berserker
 
-Ergebnis mit angepasster Massenentlassung 10000 Berserker
-Ergebnis ohne angepasste Massenentlassung 2000 Berserker
++ Ergebnis mit angepasster Massenentlassung 10000 Berserker
++ Ergebnis ohne angepasste Massenentlassung 2000 Berserker
 
 ## Simulator
 
 > **Voraussetzungen**
+
 > + `Angepasster Simulator` muss in den Einstellungen aktiviert sein
 
 **Funktionsweise**

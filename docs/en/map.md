@@ -46,7 +46,6 @@
 	+ Next impact
 	+ Attacker
 	+ Settlement of the attacker
-
 + Attacks that have already arrived are automatically removed from the list of saved attacks
 
 #### Export targets from map

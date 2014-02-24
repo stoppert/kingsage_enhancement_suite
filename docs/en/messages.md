@@ -20,7 +20,7 @@
 
 > **Requirements**
 
-> +`Massforward reports and messages` is activated on the settings page
+> + `Massforward reports and messages` is activated on the settings page
 
 **How it works**
 

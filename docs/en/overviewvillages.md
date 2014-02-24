@@ -17,12 +17,10 @@
 + Runtime can be ignored checking the "Without runtime" checkbox
 + "Save" saves the input for future use
 + Troop quicklinks apply the troop presets to the respective fields
-
-+ "Fitler" checks for every settlement on the page
++ "Filter" checks for every settlement on the page
 	+ if the troops can arrive within the given runtime at the target coordinates
 	+ if enough troops are available
 + Settlements not matching the criteria are hidden
-
 + A column containingt the runtime is added to settlements matching the criteria
 + Runtime is a link to the barracks
 + Clicking the link will enter the troops into the barracks formfields so you can send out the attack/support as fast as possible
@@ -34,7 +32,6 @@
 + "Research missing troops" researches missing troops for every settlement on the page
 + If no missing research is found an error is displayed
 + Upon finishing research the page is reloaded
-
 + Research that is still missing needs either ressources or is missing the requirements to research a unit
 
 ## Troops > Supports
@@ -50,7 +47,7 @@
 
 > + `Sort own attacks` is activated on the settings page
 
-**Funcktionsweise**
+**How it works**
 
 + "Sort own attacks" creates a table containing all attacks targeting a specific settlement
 + Amount of attacks per settlement is displayed (Attacks using counts in parenthesis)

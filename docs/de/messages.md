@@ -20,7 +20,7 @@
 
 > **Voraussetzungen**
 
-> +`Massenweiterleiten` von Berichten muss in den Einstellungen aktiviert sein
+> + `Massenweiterleiten` von Berichten muss in den Einstellungen aktiviert sein
 
 **Funktionsweise**
 
