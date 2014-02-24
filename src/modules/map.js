@@ -229,7 +229,9 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 						var displayDataAsBBCode = function (data) {
 							var r = data.length + ' ' + l.entries + ' \n';
 							for(var i in data) {
-								r += '[village]' + data[i] + '[/village] \n';
+								if(data.hasOwnProperty(i)) {	
+									r += '[village]' + data[i] + '[/village] \n';
+								}
 							}
 							return r.substring(0,r.length-2);
 						};
@@ -237,7 +239,9 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 						var displayDataAsList = function (data) {
 							var r = data.length + ' ' + l.entries + ' \n';
 							for(var i in data) {
-								r += '"' + data[i] + '",' + '\n';
+								if(data.hasOwnProperty(i)) {	
+									r += '"' + data[i] + '",' + '\n';
+								}
 							}
 							return r.substring(0,r.length-2);
 						};
