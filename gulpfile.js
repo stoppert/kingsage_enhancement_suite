@@ -44,7 +44,7 @@ gulp.task('markdown', function() {
 
 gulp.task('js', function() {
 	return gulp.src(js.files)
-		.pipe(gulpif(js.isHeader, uglify()))
+		.pipe(gulpif(js.isHeader, uglify({ mangle: false })))
 		.pipe(concat(js.name))
 /*
 		.pipe(concat(js.name))
