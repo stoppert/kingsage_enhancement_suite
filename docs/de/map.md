@@ -35,7 +35,7 @@
 > **Voraussetzungen** 
 
 > + `Angriffe auf Karte hervorheben` muss in den Einstellungen aktiviert sein
-> + Es müssen aktuell laufende Angriffe gespeichert sein [Wie speichert man Angriffe?]()
+> + Es müssen aktuell laufende Angriffe gespeichert sein [Wie speichert man Angriffe?](/docs/attacks#save-attacks)
 
 **Funktionsweise**
 

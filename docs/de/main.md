@@ -11,7 +11,7 @@
 
 > **Voraussetzungen**
 
-> + Mehrfachbau in der Burg muss in den Einstellungen aktiviert sein
+> + `Mehrfachbau in der Burg` muss in den Einstellungen aktiviert sein
 
 **Funktionsweise**
 

@@ -19,6 +19,7 @@
 
 [Zur Dokumentation Laufzeitrechner](/docs/runtimecalculator)
 
+<a name="save-attacks"></a>
 #### Angriffe speichern
 
 > **Voraussetzungen** 

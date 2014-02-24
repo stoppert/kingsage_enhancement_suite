@@ -16,5 +16,5 @@
 	- [Information Allianz](/docs/infoally)
 	- [Angriffe](/docs/attacks)
 	- [Forum](/docs/forum)
-	- [Laufzreitrechner](/docs/runtimecalculator)
+	- [Laufzeitrechner](/docs/runtimecalculator)
 	- [Angriffsplaner](/docs/attackplaner)

@@ -6,7 +6,7 @@
 
 > **Voraussetzungen**
 
->+ Eigene Einstellung Markt muss in den Einstellungen aktiviert sein
+>+ `Eigene Einstellung Markt` muss in den Einstellungen aktiviert sein
 
 **Funktionsweise**
 

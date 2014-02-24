@@ -1,11 +1,11 @@
 # Laufzeitrechner
 
-#### Ángriffe in Laufzeitrechner einfügen
+#### Angriffe in Laufzeitrechner einfügen
 
 > **Voraussetzungen** 
 
 > + `Angriffe in Laufzeitrechner einfügen` muss in den Einstellungen aktiviert sein
-> + `Laufzeitrechnerlinks` von den Angriffsseiten würde aufgerufen
+> + `Laufzeitrechnerlinks` von den Angriffsseiten wurde aufgerufen
 
 
 **Funktionsweise**

@@ -1,4 +1,4 @@
-# Übersetzer
+# Translators
 
 Thanks to all helpers who help promote and translate the Kingsage Enhancement Suite as well as this documentation.
 If you want to help or translate KES into an entirely different Language please contact me via Email.
