@@ -12,4 +12,4 @@ Nach der Installation kannst du die Kingsage Enhancement Suite herunterladen.
 
 ## Download
 
-[Hier geht's zum Download der aktuellen Version]()
+[Hier geht's zum Download der aktuellen Version](https://github.com/mstoppert/kingsage_enhancement_suite/raw/release/dist/kingsage_enhancement_sui.user.js)

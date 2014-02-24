@@ -12,4 +12,4 @@ After installing you can click the download link at the bottom on this page to i
 
 ## Download
 
-[Download the latest version of the userscript]()
+[Download the current version](https://github.com/mstoppert/kingsage_enhancement_suite/raw/release/dist/kingsage_enhancement_sui.user.js)
