@@ -12,4 +12,4 @@ Após a instalação você pode clicar no link de download na parte inferior des
 
 ## Download
 
-[Baixe a versão atual]()
+[Baixe a versão atual](https://github.com/mstoppert/kingsage_enhancement_suite/raw/release/dist/kingsage_enhancement_sui.user.js)
