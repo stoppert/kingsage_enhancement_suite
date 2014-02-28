@@ -16,18 +16,18 @@ var br = {
 	fillIn: 'Preencher',
 	buildOne: '1 Nível',
 	buildMax: 'Níveis',
-	filter: 'Filtro',
+	filter: 'Filtrar',
 	beingProcessed: 'Está sendo processado',
 
 	//settings
-	resetSettings: 'Redefinir as configurações',
+	resetSettings: 'Redefinir configurações',
 	adoptSettings: 'Suas configurações não puderam ser salvas e foram redefinidas para o padrão',
 	enableDisableModules: 'Ativar/Desativar módulos',
 	buildingTrebuchet: 'Alvo padrão da catapulta',
-	marketSettings: 'Configurações do mercado',
-	linkspy: 'Link espionagem',
+	marketSettings: 'Configurar mercado',
+	linkspy: 'Link de espionagem',
 	contentTrebuchet: 'Alvo padrão para ataques de catapulta',
-	contentSpy: 'Criar link para espionagem com %s espiões',
+	contentSpy: 'Criar link de espionagem com %s espiões',
 	marketDefault: 'Padrão',
 
 	//kingsage_terminology
@@ -48,7 +48,7 @@ var br = {
 	onlyAbandoned: 'Apenas povoações abandonadas',
 	entries: 'Entradas',
 	noMatch: 'Não há povoações disponíveis',
-	abbr: 'Emblema',
+	abbr: 'Símbolo',
 	off: 'Ataque',
 	def: 'Defesa',
 	count: 'Conde',
@@ -62,14 +62,14 @@ var br = {
 
 	//research
 	researchMissingTroops: 'Pesquisar tropas faltando',
-	researchStarted: 'Pesquisa foi iniciada',
-	noMissingResearch: 'Nenhuma pesquisa faltando encontrada',
+	researchStarted: 'Pesquisa iniciada',
+	noMissingResearch: 'Nenhuma pesquisa faltando encontrado',
 
 	//selection
 	selectAll: 'Selecionar todos',
-	deselectAll: 'Desmarque todos',
+	deselectAll: 'Deselecionar todos',
 	selected: 'Selecionado',
-	deselect: 'Desmarcar',
+	deselect: 'Deselecionar',
 	markSelection: 'Marcar seleção',
 	selectedGroups: 'Grupos foram selecionados',
 	deleteSelection: 'Excluir seleção',
@@ -83,27 +83,27 @@ var br = {
 	resetSavedAttacks: 'Dispensar ataques salvos',
 
 	//troops
-	highlighttroops: 'Destacar tropas',
-	highlighttroopsLabel: 'Selecione tropas a serem destacadas',
-	highlighttroopsError: 'Você só pode usar a funcionalidade de "Destacar tropas" depois de ter sido pesquisada no alquimista.',
-	highlighttroopsActivate: 'Por favor, ative a funcionalidade de "Mostrar tropas" abaixo do mapa. Isto é necessário para destacar tropas no mapa',
-	trooplinks: 'Links rápidos de tropas',
+	highlighttroops: 'Realçar tropas',
+	highlighttroopsLabel: 'Selecione tropas a serem realçadas',
+	highlighttroopsError: 'Você só pode usar a funcionalidade de "Realçar Tropas" depois de pesquisar no alquimista Mostrar Tropas',
+	highlighttroopsActivate: 'Por favor, ative a funcionalidade "Mostrar Tropas" abaixo do mapa. Isto é necessário para realçar tropas no mapa',
+	trooplinks: 'Links de tropas',
 	troopFilter: 'Filtrar tropas',
 
 	//group
 	group: 'Grupo',
 	setGroup: 'Definir grupo',
 	switchGroup: 'Clique em "OK" para mudar para o grupo "Todos"',
-	highlightgroups: 'Destacar grupos',
-	highlightGroupslabel: 'Selecione grupos a serem destacados',
-	highlightGroupsReplacementError: 'Não disponível quando em "Ausência"',
+	highlightgroups: 'Realçar grupos',
+	highlightGroupslabel: 'Selecione grupos a serem realçados',
+	highlightGroupsReplacementError: 'Não disponível quando em Ausência',
 
 	//bbcode
 	bbCode: 'Mostrar com BB-Code',
 	asBBCode: 'Com BB-Code',
 	bbCode: 'Mostrar com BB-Code',
-	report_as_bb_code: 'BB-Code Curto',
-	enableBBCodeExport: 'Ativar exportação de BB-Code',
+	report_as_bb_code: 'BB-Code compacto',
+	enableBBCodeExport: 'Ativar exportação com BB-Code',
 	exportBBCode: 'Exportar povoações com BB-Code',
 
 	//messages & reports
@@ -115,6 +115,7 @@ var br = {
 
 	//posting
 	sortContinent: 'Por continentes',
+	masscoinFixActive: 'Produção em massa',
 	sortCoords: 'Por coordenadas',
 	sortPoints: 'Por pontos',
 	sortName: 'Por nome',
@@ -126,49 +127,49 @@ var br = {
 	postsToBeCreated: '%s mensagens serão criadas',
 	chooseThreadFirst: 'Você tem que selecionar um tópico no fórum da aliança primeiro',
 	formatting: 'Escolha a formatação',
-	header: 'Título',
-	settlementDisplay: 'Exibir povoação',
-	footer: 'rodapé',
+	header: 'Cabeçalho',
+	settlementDisplay: 'Apresentação da povoação',
+	footer: 'Rodapé',
 
 	//links
 	goToBarracks: 'Ir para Quartel',
-	goToMain: 'Ir para Castelo',
-	attackWithSpies: 'Ataque com %s espiões',
+	goToMain: 'Ir para Castelo ',
+	attackWithSpies: 'Enviar %s espiões',
 
 	//attacks
 	attack: 'Ataque',
 	attacks: 'Ataques',
 	moreAttacks: 'Mais ataques',
-	nextAttacks: 'Próximo %s ataques',
+	nextAttacks: 'Próximos %s ataques',
 	noMatch: 'Não há povoações disponíveis',
-	runtimecalc : 'Chegada em',
+	runtimecalc : 'Impacto em',
 	loadAllAttacks: 'Carregar todos os ataques',
 	loadingFinished: 'Carregamento concluído',
 
 	//time
-	toa: 'Tempo para tropas',
+	toa: 'Tempo de execução',
 	days: 'Dias',
 	hours: 'Horas',
 	minutes: 'Minutos',
 	seconds: 'Segundos',
-	withoutRuntime: 'Sem tempo para tropas',
+	withoutRuntime: 'Sem tempo de execução',
 
 	//modules
 	modul: {
-		marketOptions: 'Configurações do mercado',
-		troopsOnMap: 'Destaque tropas no mapa',
-		showAttacksOnMap: 'Salve ataques/mostre ataques no mapa',
-		insertIntoRuntimeCalc: 'Insira ataques em calculadora de tempo para tropas',
-		highlightgroups: 'Destaque grupos',
-		massdisband: 'Personalize despedimento em massa',
-		simulator: 'Personalize simulador',
-		filterOverview: 'Filtro de tropas por tempo de chegada',
+		marketOptions: 'Configurar mercado',
+		troopsOnMap: 'Realçar tropas no mapa',
+		showAttacksOnMap: 'Salvar ataques/Mostrar ataques no mapa',
+		insertIntoRuntimeCalc: 'Inserir ataques na calculadora de tempo',
+		highlightgroups: 'Realçar grupos',
+		massdisband: 'Personalizar libertação em massa',
+		simulator: 'Personalizar simulador',
+		filterOverview: 'Filtrar tropas por tempo de chegada',
 		bbCodeExport: 'Exportar povoações com BB-Code',
-		massforward: 'Encaminhamento em massa de relatórios e mensagens',
-		trooplinks: 'Links rápidos de tropas no Quartel',
+		massforward: 'Encaminhar relatórios e mensagens em massa',
+		trooplinks: 'Links de tropas no quartel',
 		targetExport: 'Exportar alvos do mapa',
-		massbuild: 'Construção em massa',
-		setGroupsOnMap: 'Definir grupos através do mapa',
+		massbuild: 'Construir em massa no castelo',
+		setGroupsOnMap: 'Definir grupos no mapa',
 		sortOwnAttacks: 'Ordenar próprios ataques'
 	},
 
@@ -182,7 +183,7 @@ var br = {
 		spy: 'Espião',
 		light: 'Cruzado',
 		heavy: 'Cavaleiro negro',
-		ram: 'Ariéte',
+		ram: 'Aríete',
 		kata: 'Catapulta',
 		snob: 'Conde'
 	},
