@@ -236,7 +236,7 @@
 			html += '	<span id="kes_save_success" class="kes-saved">' + l.saved + '<span class="kes-icons kes-icon-saved"></span></span>';
 			html += '	<div>';
 			html += '		<div class="kes-menu-wrapper">';
-			html += '				<span class="kes-heading">Kingsage Enhancement Suite<a href="http://kes.egoserv.com/whykes" target="_blank"><span class="kes-icons kes-icon-home"></span></a></span><span class="kes-subheading">version ' + version + '</span>';
+			html += '				<span class="kes-heading">Kingsage Enhancement Suite<a href="http://kingsage-enhancement.com/" target="_blank"><span class="kes-icons kes-icon-home"></span></a></span><span class="kes-subheading">version ' + version + '</span>';
 			html += '			<div class="kes-menu">';
 			html += '				<div class="kes-separator"></div>';
 			html += '				<a href="#" id="kes_reset_settings">' + l.resetSettings + '</a>';
