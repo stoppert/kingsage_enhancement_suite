@@ -7,7 +7,7 @@ After installing you can click the download link at the bottom on this page to i
 
 ## Google Chrome
 
-To use the Kingsage Enhancement Suite with Firefox the Firefox addon [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) has to be installed.
+To use the Kingsage Enhancement Suite with Chrome the Chrome extension [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) has to be installed.
 After installing you can click the download link at the bottom on this page to install the userscript.
 
 ## Download
