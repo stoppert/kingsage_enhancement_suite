@@ -1,3 +1,4 @@
 node_modules/*
 *.txt
 docs.old/
+.DS_Store
