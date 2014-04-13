@@ -10,6 +10,11 @@ Nach der Installation kannst du die Kingsage Enhancement Suite herunterladen.
 Um die Kingsage Enhancement Suite in Google Chrome zu benutzen zu können benötigst du zuerst einmal die Chrome Erweiterung [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo).
 Nach der Installation kannst du die Kingsage Enhancement Suite herunterladen.
 
+## Maxthon
+
+Um die Kingsage Enhancement Suite in Google Chrome zu benutzen zu können benötigst du zuerst einmal die Chrome Erweiterung [Violentmonkey](http://extension.maxthon.com/detail/index.php?view_id=1680).
+Nach der Installation kannst du die Kingsage Enhancement Suite herunterladen.
+
 ## Download
 
 [Hier geht's zum Download der aktuellen Version](https://github.com/mstoppert/kingsage_enhancement_suite/raw/release/dist/kingsage_enhancement_sui.user.js)
