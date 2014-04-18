@@ -115,7 +115,6 @@ var nl = {
 
 	//posting
 	sortContinent: 'Op continent',
-	masscoinFixActive: '',
 	sortCoords: 'Op Coördinaten',
 	sortPoints: 'Op punten',
 	sortName: 'Op naam',
