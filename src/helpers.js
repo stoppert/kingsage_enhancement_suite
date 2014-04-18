@@ -32,6 +32,9 @@ function calculateTroopScore(playerPage) {
 	var troopScoremax = cities * 10000;
 	var startIndex	= playerPage.find('table.borderlist').eq(3).find('tr > th:last').parent().index();
 	var cityScore	 = 0;
+
+	bonusScore = (bonusScore < 0) ? 0 : bonusScore;
+
 	playerPage.find('table.borderlist').eq(3).find('tr:gt(' + startIndex + ')').each(function () {
 		cityScore += Number($(this).find('td:last').html().replace(/\./g, ""));
 	});
