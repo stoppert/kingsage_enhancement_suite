@@ -58,7 +58,7 @@ gulp.task('js', function() {
 
 gulp.task('copy', function() {
 	return gulp.src(js.dest + js.name)
-		.pipe(gulp.dest('E:\\Firefox\\apple-sauce\\gm_scripts\\Kingsage_Enhancement_Suite'));
+		.pipe(gulp.dest('/Users/marc/Library/Application Support/Firefox/Profiles/yzbnre08.default/gm_scripts/Kingsage_Enhancement_Suite'));
 });
 
 gulp.task('make', ['js'], function() {
