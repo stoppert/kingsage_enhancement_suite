@@ -96,11 +96,15 @@ css += '.kes_progressInner { width: 0px; height: 10px; background: #FFCC6E; }';
 							var o = '';
 							var len = data.length;
 							for(var i = 0; i < len; i++) {
-								o += lineStart + data[i][0] + lineMiddle + $.kes('prettyNumber', data[i][1][0]) + ' (' + ((data[i][1][0]/data[i][1][1])*100).toFixed(2) + '%)';
+								var divider = (data[i][1][1] == 0) ? 100 : data[i][1][1],
+									percentage = data[i][1][0] / divider ) * 100;
+
+								o += lineStart + data[i][0] + lineMiddle + $.kes('prettyNumber', data[i][1][0]) + ' (' + ((percentage).toFixed(2) + '%)';
 								if (i != len-1) { o += lineEnd; }
 							}
 							return o;
 						}
+
 						var o = arrow + ' <span class="click" id="kes_createBB">(kes) ' + l.bbCode + '</span><table class="borderlist" style="width: 420px;">';
 							o += '<tr><th>' + l.player + '</th><th>' + l.trooppoints + '</th></tr>';
 							o += getDataReady('<tr><td>', '</td><td>', '</td></tr>', allyTroopPoints);
