@@ -93,16 +93,15 @@ css += '.kes_progressInner { width: 0px; height: 10px; background: #FFCC6E; }';
 						};
 
 						function getDataReady(lineStart, lineMiddle, lineEnd, data) {
-							var o = '';
-							var len = data.length;
-							for(var i = 0; i < len; i++) {
-								var divider = (data[i][1][1] == 0) ? 100 : data[i][1][1],
-									percentage = data[i][1][0] / divider ) * 100;
+							var o = '', i, percentage, divider,
+								len = data.length;
+							for(i = 0; i < len; i++) {
+								divider = (data[i][1][1] == 0) ? 100 : data[i][1][1],
+								percentage = (data[i][1][0] / divider ) * 100;
 
-								o += lineStart + data[i][0] + lineMiddle + $.kes('prettyNumber', data[i][1][0]) + ' (' + ((percentage).toFixed(2) + '%)';
-								if (i != len-1) { o += lineEnd; }
+								o += lineStart + data[i][0] + lineMiddle + $.kes('prettyNumber', data[i][1][0]) + ' (' + percentage.toFixed(2) + '%)';
 							}
-							return o;
+							return o + lineEnd;
 						}
 
 						var o = arrow + ' <span class="click" id="kes_createBB">(kes) ' + l.bbCode + '</span><table class="borderlist" style="width: 420px;">';
