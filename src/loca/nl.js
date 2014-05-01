@@ -27,7 +27,7 @@ var nl = {
 	marketSettings: 'Marktplaats instellingen',
 	linkspy: 'Link spion aanval',
 	contentTrebuchet: 'Standaard doel voor trebuchet aanvallen',
-	contentSpy: 'Creëer link voor spion aanval met &s spionnen ',
+	contentSpy: 'Creëer link voor spion aanval met %s spionnen ',
 	marketDefault: 'Standaard',
 
 	//kingsage_terminology
