@@ -5,7 +5,6 @@
 			/* FUNCTIONALITY
 			 * properly unescape urls in the redirect.php script
 			 */
-			alert('dick');
 			var link = $('.contentpane').find('a'),
 				href = link.attr('href');
 				href = $('<div/>').html(href).text();
