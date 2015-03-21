@@ -40,17 +40,16 @@ gulp.task('markdown', function() {
 	return gulp.src(md.files)
 		.pipe(markdown())
 		.pipe(gulp.dest(md.dest));
-})
+});
 
 gulp.task('js', function() {
 	return gulp.src(js.files)
 		.pipe(gulpif(js.isHeader, uglify({ mangle: false })))
 		.pipe(concat(js.name))
-/*
-		.pipe(concat(js.name))
-	/*	.pipe(uglify({ 
+		/*.pipe(concat(js.name))
+		.pipe(uglify({ 
 			global_defs: { 
-				DEBUG: false 
+				DEBUG: true 
 			},
 		}))*/
 		.pipe(gulp.dest(js.dest));
