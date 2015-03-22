@@ -23,12 +23,12 @@ var fr = {
 	resetSettings: 'Reinitialiser les paramètres',
 	adoptSettings: 'Vos paramètres n\'ont pas pu être sauvegardé et ont été remis à zéro',
 	enableDisableModules: 'Activer/désactiver les modules',
-	buildingTrebuchet: 'Cible par défaut des trebuchets',
+	buildingTrebuchet: 'Cible par défaut des trébuchets',
 	marketSettings: 'Options du marché',
 	linkspy: 'Lien pour espionnage',
 	contentTrebuchet: 'Cible par défaut des trébuchets',
 	contentSpy: 'Créer un lien pour espionner avec %s éclaireurs',
-	 marketDefault: 'Par défaut',
+	marketDefault: 'Par défaut',
 
 	//kingsage_terminology
 	player: 'Joueur',
@@ -83,19 +83,19 @@ var fr = {
 	resetSavedAttacks: 'Supprimer les attaques enregistrées',
 
 	//troops
-	highlighttroops: 'Highlight troops',
-	highlighttroopsLabel: 'Select troops to be highlighted',
-	highlighttroopsError: 'You can only use the "highlight troops" functionality after it has been researched with the alchemist.',
-	highlighttroopsActivate: 'Please activate the "Show troops" functionality below the map. This is required to highlight troops on the map',
-	trooplinks: 'Troop quicklinks',
-	troopFilter: 'Filter troops',
+	highlighttroops: 'Marquer des troupes',
+	highlighttroopsLabel: 'Sélectionner les troupes à marquer',
+	highlighttroopsError: 'Vous ne pouvez utiliser la fonction de marquage des troupes seulement après l\'avoir recherché dans le laboratoire',
+	highlighttroopsActivate: 'Activer l\'option "Afficher les troupes" dans les paramètres de la carte. Ceci est nécessaire pour marquer les troupes sur la carte',
+	trooplinks: 'Raccourcis d\'ordre',
+	troopFilter: 'Filtrer les troupes',
 
 	//group
 	group: 'Groupe',
 	setGroup: 'Créer groupe',
 	switchGroup: 'Cliquer sur "OK" pour passer au groupe "Tous"',
-	highlightgroups: 'Highlight groups',
-	highlightGroupslabel: 'Selectionner les groupes à mettre en valeur',
+	highlightgroups: 'Marquer des groupes',
+	highlightGroupslabel: 'Selectionner les groupes à marquer',
 	highlightGroupsReplacementError: 'Non disponible lors du sitting',
 
 	//bbcode
@@ -122,12 +122,12 @@ var fr = {
 	goChooseThread: 'Sélectionner un sujet sur le forum de l\'alliance',
 	summary: 'Résumé',
 	postIn: 'Ce sera posté dans',
-	amountOfSetts: 'Amount of selected settlements',
-	postsToBeCreated: '%s posts will be created',
+	amountOfSetts: 'Nombre de villages sélectionnés',
+	postsToBeCreated: '%s sujets vont être créés',
 	chooseThreadFirst: 'Vous devez sélectionner un sujet sur le forum de l\'alliance d\'abord',
-	formatting: 'Choose formatting',
+	formatting: 'Choisir la formation',
 	header: 'Titre',
-	settlementDisplay: 'Settlementpresentation',
+	settlementDisplay: 'Présentation du village',
 	footer: 'bas de page',
 
 	//links
@@ -140,7 +140,7 @@ var fr = {
 	attacks: 'Attaques',
 	moreAttacks: 'Plus d\'attaques',
 	nextAttacks: '%s prochaines attaques',
-	noMatch: 'No matching settlements available',
+	noMatch: 'Pas de village correspondant disponible',
 	runtimecalc: 'Impact dans',
 	loadAllAttacks: 'Charger toutes les attaques',
 	loadingFinished: 'Chargement terminé',
@@ -151,30 +151,30 @@ var fr = {
 	hours: 'Heures',
 	minutes: 'Minutes',
 	seconds: 'Secondes',
-	withoutRuntime: 'Without runtime',
+	withoutRuntime: 'Sans temps de trajet',
 
 	//modules
 	modul: {
 		marketOptions: 'Options du marché',
-		troopsOnMap: 'Highlight troops on map',
+		troopsOnMap: 'Marquage des troupes sur la carte',
 		showAttacksOnMap: 'Sauvegarder attaque/afficher les attaques sur la carte',
 		insertIntoRuntimeCalc: 'Insérer les attaques dans le calculateur de temps de trajet',
-		highlightgroups: 'Groupe mis en valeur',
-		massdisband: 'Demobilation de masse amélioré',
+		highlightgroups: 'Marquage des groupes',
+		massdisband: 'Démobilisation massive améliorée',
 		simulator: 'Simulateur amélioré',
 		filterOverview: 'Filtrer les troupes par heures d\'arrivée',
 		bbCodeExport: 'Exporter les villages en BB-code',
 		massforward: 'Transfère en masse des messages et rapports',
-		trooplinks: 'Troop quicklinks in barracks',
+		trooplinks: 'Raccourcis d\'ordre dans la caserne',
 		targetExport: 'Exporter les cibles depuis la carte',
 		massbuild: 'Construction en masse',
 		setGroupsOnMap: 'Créer les groupes à partir de la carte',
-		sortOwnAttacks: 'Sort own attacks'
+		sortOwnAttacks: 'Trier vos propres attaques'
 	},
 
 	//units
 	units: {
-		 militia: 'Milice de paysans',
+		militia: 'Milice de paysans',
 		sword: 'Templier',
 		spear: 'Ecuyer',
 		axe: 'Sauvage',
@@ -183,7 +183,7 @@ var fr = {
 		light: 'Croisé',
 		heavy: 'Chevalier noir',
 		ram: 'Bélier',
-		kata: 'Trebuchet',
+		kata: 'Trébuchet',
 		snob: 'Comte'
 	},
 
