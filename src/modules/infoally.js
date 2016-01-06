@@ -99,7 +99,7 @@ css += '.kes_progressInner { width: 0px; height: 10px; background: #FFCC6E; }';
 								divider = (data[i][1][1] == 0) ? 100 : data[i][1][1],
 								percentage = (data[i][1][0] / divider ) * 100;
 
-								o += lineStart + data[i][0] + lineMiddle + $.kes('prettyNumber', data[i][1][0]) + ' (' + percentage.toFixed(2) + '%)';
+								o += lineStart + data[i][0] + lineMiddle + $.kes('prettyNumber', data[i][1][0]) + ' (' + percentage.toFixed(2) + '%)' + lineEnd;
 							}
 							return o + lineEnd;
 						}
@@ -113,7 +113,7 @@ css += '.kes_progressInner { width: 0px; height: 10px; background: #FFCC6E; }';
 						$('#kes_createBB').bind('click', function () {
 
 							$('body').append('<div id="kes_box"><textarea style="width: 99%; resize: none;" id="kes_data"></textarea></div><div id="kes_overlay" class="kes-backlight"></div>');
-							$('#kes_data').text(getDataReady('[player]', '[/player] ', '\n', allyTroopPoints)).select();
+							$('#kes_data').text(getDataReady('[player]', '[/player]', "\n", allyTroopPoints)).select();
 							$('#kes_overlay').fadeIn().bind('click',function () {
 								$('#kes_overlay, #kes_box').kes('fadeOutRemove');
 							});

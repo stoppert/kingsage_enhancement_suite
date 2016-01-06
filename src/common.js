@@ -1,7 +1,7 @@
 	// TODO: test in chrome, opera, update-reminder,  show cost for 1 level, save everything apart from user settings in another obj?
 
 	//* global variables
-	var version = '1.3.0.5';
+	var version = '1.3.0.6';
 	var host	= location.host; // like "s1.kingsage.de"
 	var server  = location.host.split('.')[0].substr(1); // like "1" for s1.kingsage.de
 
