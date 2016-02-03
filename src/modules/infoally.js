@@ -113,7 +113,7 @@ css += '.kes_progressInner { width: 0px; height: 10px; background: #FFCC6E; }';
 						$('#kes_createBB').bind('click', function () {
 
 							$('body').append('<div id="kes_box"><textarea style="width: 99%; resize: none;" id="kes_data"></textarea></div><div id="kes_overlay" class="kes-backlight"></div>');
-							$('#kes_data').text(getDataReady('[player]', '[/player]', "\n", allyTroopPoints)).select();
+							$('#kes_data').text(getDataReady('[player]', '[/player] ; ', "\n", allyTroopPoints)).select();
 							$('#kes_overlay').fadeIn().bind('click',function () {
 								$('#kes_overlay, #kes_box').kes('fadeOutRemove');
 							});
