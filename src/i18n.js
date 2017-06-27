@@ -14,6 +14,9 @@ var selectLanguage = function(lang){
 		case 'kingsage.fr':
 		case 'fr.kingsage.gameforge.com':
 			return fr; break;
+		case 'kingsage.tr':
+		case 'tr.kingsage.gameforge.com':
+			return tr; break;
 		case 'kingsage.com':
 		case 'kingsage.org':
 		case 'en.kingsage.gameforge.com':
