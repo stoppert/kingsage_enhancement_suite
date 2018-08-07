@@ -1,9 +1,8 @@
 	// TODO: test in chrome, opera, update-reminder,  show cost for 1 level, save everything apart from user settings in another obj?
 
 	//* global variables
-	var version = '1.3.0.7';
+	var version = '1.3.1.0';
 	var host	= location.host; // like "s1.kingsage.de"
-	var server  = location.host.split('.')[0].substr(1); // like "1" for s1.kingsage.de
 
 	var page	= document.URL;
 	var self	= document.title.substring(document.title.indexOf('- ') + 2);
@@ -18,7 +17,7 @@
 	//* got premium?
 	var premium	 = ($('div.buff[style*="premium-account"]').length > 0) ? true : false;
 	//* are we playing as av?
-	var av = (Query['av']) ? '&av=' + Query['av'] : '';
+	var av = (Query.av) ? '&av=' + Query.av : '';
 
 	//#################################### GLOBAL CSS ####################################//
 
@@ -87,7 +86,7 @@
 				return '<span class="kes-color-validation"><span class="kes-icons kes-icon-valid"></span><span class="kes-icons kes-icon-invalid"></span></span>';
 			},
 			returnOptionsForObject: function (obj) {
-				out   = '';
+				var out   = '';
 				for(var i in obj) {
 					if (obj.hasOwnProperty(i)) {
 						out += '<option value="' + i + '">' + obj[i] + '</option>';
@@ -118,9 +117,9 @@
 				var g = k.highlightgroups[no].group;
 				if (av != '') {
 					//only show groups that we already saved
-					for(var i in g) {
-						if (g.hasOwnProperty(i)) {
-							groups.push(i);
+					for(var j in g) {
+						if (g.hasOwnProperty(j)) {
+							groups.push(j);
 						}
 					}
 				} else {
@@ -153,7 +152,7 @@
 			return o;
 		},
 		highlightgroups: function (highlightgroups) {
-			var o = (av != '') ? '<h2 id="groups_av" style="color:red; text-align: center;">' + highlightGroupsReplacementError + '</h2>' : '', no = 1;
+			var o = (av != '') ? '<h2 id="groups_av" style="color:red; text-align: center;">' + l.highlightGroupsReplacementError + '</h2>' : '', no = 1;
 			for(var i in highlightgroups) {
 				if (highlightgroups.hasOwnProperty(i)) {
 					o += '<div class="kes-paragraph" style="float: left; min-width: 250px; width: 25%">';
@@ -171,7 +170,7 @@
 			for(var modul in unitsettings) {
 				if (unitsettings.hasOwnProperty(modul)) {
 					var checked = (unitsettings[modul]) ? 'checked="checked"' : '', hidden = '',
-						listOne = unitlist, listTwo = unitlist + '<option value="12">' + none +'</option>', hidden = '';
+						listOne = unitlist, listTwo = unitlist + '<option value="12">' + none +'</option>';
 					if (['spy', 'count'].indexOf(modul) > -1) {
 						// modul is count or spy
 						hidden = 'display: none;';
@@ -314,12 +313,12 @@
 		switch_tabs($('.kes-menu a[rel="' + start_tab + '"]'));
 
 		//* finally fades in the settings
-		setTimeout(initSettings, 50) // setTimeout is a fix for a strange DOM related bug that wouldnt fadeIn the settings on first usage
+		setTimeout(initSettings, 50); // setTimeout is a fix for a strange DOM related bug that wouldnt fadeIn the settings on first usage
 		//* fades out the settings
 		$('#kes_overlay, #kes_close').bind('click', exitSettings);
 		//* reset settings
 		$('#kes_reset_settings').bind('click', function () {
-			q = confirm(l.resetSettings + '?');
+			var q = confirm(l.resetSettings + '?');
 			if (q) {
 				$.kes('saveKey', 'kes_user_settings', presets);
 				exitSettings();
@@ -338,12 +337,12 @@
 		});
 	}
 
-	function initSettings() {
+	var initSettings = function() {
 		$('.kes-backlight').fadeIn(200);
 		$('.kes-user-settings').slideDown(600);
 	};
 
-	function exitSettings() {
+	var exitSettings = function() {
 		$('.kes-backlight').fadeOut(600);
 		$('.kes-user-settings').slideUp(600);
 		setTimeout(function (){ $(".kes-backlight, .kes-user-settings").remove(); }, 700);

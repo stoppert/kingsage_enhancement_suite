@@ -31,10 +31,11 @@
 
 			function calculateRes(avail_donkeys, avail_res, wanted_res) {
 				var out = [], sum = parseInt10(wanted_res[0]) + parseInt10(wanted_res[1]) + parseInt10(wanted_res[2]);
+                var i;
 				//* check if enough donkeys are there
 				if (sum <= (parseInt10(avail_donkeys) * 1000)) {
 					//* just send res when there are enough
-					for (var i = 0; i < 3; i++) {
+					for (i = 0; i < 3; i++) {
 						if (parseInt10(avail_res[i]) > parseInt10(wanted_res[i])) {
 							out.push(wanted_res[i]);
 						} else {
@@ -44,7 +45,7 @@
 				} else {
 					//* check how to divide res
 					var donkeys = parseInt10(avail_donkeys) * 1000, scale = donkeys / sum;
-					for(var i = 0; i < 3; i++) {
+					for(i = 0; i < 3; i++) {
 						if (parseInt10(avail_res[i]) > parseInt10(parseInt10(wanted_res[i]) * scale)) {
 							out.push(parseInt10(parseInt10(wanted_res[i]) * scale));
 						} else {
@@ -57,7 +58,7 @@
 			calculateRes(avail_donkeys, avail_res, [k.market[k.market.d3fault].stone, k.market[k.market.d3fault].wood, k.market[k.market.d3fault].iron]);
 
 			//* append marketoptions
-			function createOptions(market) {
+			var createOptions = function(market) {
 				var o = '';
 				for(var opt in market) {
 					if (market.hasOwnProperty(opt) && opt != 'd3fault') {

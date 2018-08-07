@@ -1,7 +1,7 @@
 //* if it is a newer version update user settings inserting new settings with default values
 if (isNewerVersion($.kes('loadKey', 'kes_version'), version)) {
 	//* update settings
-	function iterateSettings(presets, settings) {
+	var iterateSettings = function (presets, settings) {
 		//* sanitiy check for empty prefix objects
 		if(Object.getOwnPropertyNames(presets).length == 0) return settings;
 
@@ -18,12 +18,12 @@ if (isNewerVersion($.kes('loadKey', 'kes_version'), version)) {
 			}
 		}
 		return new_settings;
-	}
+	};
 	var updated_settings = {};
 	if ($.kes('isKey', 'kes_user_settings')) {
 
 		try {
-			settings = $.kes('loadKey', 'kes_user_settings');
+			var settings = $.kes('loadKey', 'kes_user_settings');
 			updated_settings = iterateSettings(presets, settings);
 		} catch(e) {
 			window.alert(l.adoptSettings);

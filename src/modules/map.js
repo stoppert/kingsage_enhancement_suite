@@ -54,7 +54,7 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 					var isThisMe = (self.match(playerName) && playerName != '');
 					//* mark troops if enabled
 					if (k.modul.troopsOnMap && isThisMe && mapOptionActivated) {
-						function hasTroops(troops, units, amount) {
+						var hasTroops = function(troops, units, amount) {
 							var result = false, unit_1 = units[0], unit_2 = units[1];
 							//troops are displayed with [.] so the dots have to be replaced
 							if (parseInt10(unit_2) == 12) {
@@ -63,14 +63,14 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 								if (parseInt10(troops[unit_1].replace(/\./g, '')) > amount[0]-1 && parseInt10(troops[unit_2].replace(/\./g, '')) > amount[1]-1) { result = true; }
 							}
 							return result;
-						}
+						};
 						//* extract troops
 						var troops = metaSplit[metaSplit.length - 4];
 						//* sanitize troop string
 						troops = troops.substring(2, troops.length -1 );
 						troops = troops.split(':');
 
-						function drawTroops(elem, troops, modules, pos) {
+						var drawTroops = function(elem, troops, modules, pos) {
 							for(var m in modules) {
 								if(modules.hasOwnProperty(m)) {
 									if(modules[m] && hasTroops(troops, [k.units[m].one.unit, k.units[m].two.unit], [k.units[m].one.amount, k.units[m].two.amount])) {
@@ -78,13 +78,14 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 									}
 								}
 							}
-						}
+						};
+
 						drawTroops($(this), troops, k.units.modul, {def: {top: '2px', right: '2px'}, off: {top: '2px', right: '15px'}, count: {top: '14px', right: '2px'}, spy: {top: '14px', right: '15px'}});
 					}
 					//* check for groups to be highlighted if enabled
 					if (k.modul.highlightgroups && isThisMe) {
 						//* is one group of the grouparray in meta?
-						function isSettlementInGroup(meta, groups) {
+						var isSettlementInGroup = function(meta, groups) {
 							var result = false;
 							if (Object.getOwnPropertyNames(groups).length != 0) {
 								for(var item in groups) {
@@ -95,7 +96,7 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 								}
 							}
 							return result;
-						}
+						};
 						//* is this a group that we want to highlight?
 						if (isSettlementInGroup(meta, k.highlightgroups.one.group)) {
 							$(this).attr('kes_g_one', k.highlightgroups.one.name);
@@ -139,7 +140,7 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 							<tr><td>' + l.moreAttacks + ': </td><td id="m"></td></tr><tr><td id="s" colspan="2"></td></tr>\
 						</table></div>');
 
-					function showAttackInformation(villageId) {
+					var showAttackInformation = function(villageId) {
 						var village_attacks = attacks[villageId], len = village_attacks.length;
 						var attack_single = village_attacks[0];
 
@@ -147,7 +148,7 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 						time = $.kes('prettyTime', parseInt10(time) - (Date.parse(new Date()) / 1000));
 						// Alle Angriffe oder nur 20 Angrife anzeigen
 						var size = Math.min(len, 20);
-						function moreAttacks() { return (len == 0) ? l.none : len; };
+						var moreAttacks = function() { return (len == 0) ? l.none : len; };
 
 						$('#kes_show_attack_info').find('td[id*="n"]').html('<b>' + n + '</b>')
 							.end().find('td[id*="p"]').html('<a href="/game.php?s=info_player&id=' + attack_single[1] + av +'" target="_blank">' + attack_single[0] + '</a>')
@@ -175,12 +176,12 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 								return o;
 							}
 						}
-					}
+					};
 
-					function pulse(element) {
+					var pulse = function(element) {
 						$(element).fadeOut(700).fadeIn(700);
 						setTimeout(function () { pulse(element); }, 800);
-					}
+					};
 					pulse('td[attacked*="true"]');
 
 					$('td[attacked*="true"]').live('mouseover', function () {
@@ -229,7 +230,7 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 						var displayDataAsBBCode = function (data) {
 							var r = data.length + ' ' + l.entries + ' \n';
 							for(var i in data) {
-								if(data.hasOwnProperty(i)) {	
+								if(data.hasOwnProperty(i)) {
 									r += '[village]' + data[i] + '[/village] \n';
 								}
 							}
@@ -239,7 +240,7 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 						var displayDataAsList = function (data) {
 							var r = data.length + ' ' + l.entries + ' \n';
 							for(var i in data) {
-								if(data.hasOwnProperty(i)) {	
+								if(data.hasOwnProperty(i)) {
 									r += '"' + data[i] + '",' + '\n';
 								}
 							}
@@ -286,7 +287,7 @@ css += '#kes_box { background-color: #fff; display: none; border-radius: 5px; po
 								};
 
 							$.when(getVillagesOfGroup(groupID)).then(function(raw) {
-								selectedSetts = $(raw).find('input:checked');
+								var selectedSetts = $(raw).find('input:checked');
 								selectedSetts.each(function() {
 									settlements.push($(this).val());
 								});

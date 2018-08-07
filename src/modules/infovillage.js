@@ -6,9 +6,9 @@
 			 * add shortcuts to barracks and main building to every village info page
 			 * add shortcuts to attack (with spies or without)
 			 */
-			
+
 			var target  = $('a[href*="&s=build_barracks&m=command&target="]').attr('href'),
-				id 		= Query['id'],
+				id 		= Query.id,
 				player  = $('a[href*="info_player&"]').text();
 
 			if (self.match(player) && player != "") {

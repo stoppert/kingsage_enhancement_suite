@@ -36,7 +36,7 @@ css += '.kes_multiselect_open { display: block !important; }';
 
 				$('table.borderlist').eq(3).before(ui);
 
-				function getWorldRuntime() {
+				var getWorldRuntime = function() {
 					$.ajax({
 						type: 'post',
 						url: '/help.php?m=worldinfo',
@@ -46,49 +46,49 @@ css += '.kes_multiselect_open { display: block !important; }';
 							$.kes('saveKey', 'kes_worldRuntime', runtime);
 						}
 					});
-				}
+				};
 
 				if (!$.kes('isKey', 'kes_worldRuntime')) {
 					getWorldRuntime();
 				}
 
-				function getInput() {
+				var getInput  = function() {
 					var t = {};
 					$('#filterTroops_table').find('input:gt(0):not(:last)').each(function (i) {
 						if (i != 16) {
-							($(this).val() == '') ? t[i] = 0 : t[i] = $(this).val();
+                            t[i] = ($(this).val() == '') ? 0 : $(this).val();
 						} else {
-							($('#kes_filterTroops_onlyTroops:checked').length == 1) ? t[i] = true : t[i] = false;
+                            t[i] = ($('#kes_filterTroops_onlyTroops:checked').length == 1) ? true : false;
 						}
 					});
 					return t;
-				}
+				};
 
-				function calculateDistance(source, target) {
+				var calculateDistance = function(source, target) {
 					var distance = Math.sqrt(Math.pow(Math.abs(parseInt10(source[0]) - parseInt10(target[0])), 2) + Math.pow(Math.abs(parseInt10(source[1]) - parseInt10(target[1])), 2));
 					return Math.round(distance*100)/100;
-				}
+				};
 
-				function checkForTroops(wanted, available) {
+				var checkForTroops = function(wanted, available) {
 					var r = false, count_match = 0;
 					for(var i = 0;i < wanted.length; i++) { if (parseInt10(wanted[i]) <= parseInt10(available[i])) { count_match++; }}
 					r = (count_match == wanted.length);
 					return r;
-				}
+				};
 
-				function createBarracksString(troops) {
+				var createBarracksString = function(troops) {
 					var output = '', labels = ['farmer', 'sword', 'spear', 'axe', 'bow', 'spy', 'light', 'heavy', 'ram', 'kata', 'snob'];
 					for(var i = 0; i < labels.length; i++) { output += '&' + labels[i] + '=' + troops[i]; }
 					return output;
-				}
+				};
 
-				function getSlowestUnit(troops) {
+				var getSlowestUnit = function(troops) {
 					var units = [20, 22, 22, 18, 18, 9, 10, 11, 30, 30, 35];
 					for(var i = 0; i < units.length; i++) {
 						if (troops[i] == 0) { units[i] = 0; }
 					}
 					return Math.max.apply(Math, units);
-				}
+				};
 
 				//* load settings
 				var filterTroopsInput = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: '000|000', 12: 0, 13: 0, 14: 0, 15:0, 16: false};
@@ -203,7 +203,7 @@ css += '.kes_multiselect_open { display: block !important; }';
 				 * one-click easyness
 				 */
 
-				function getResearchSession(villageId) {
+				var getResearchSession = function(villageId) {
 					var session;
 					$.ajax({
 						type: 'get',
@@ -217,7 +217,7 @@ css += '.kes_multiselect_open { display: block !important; }';
 						}
 					});
 					return session;
-				}
+				};
 
 				//* add UI
 				$('.contentpane .borderlist').eq(1).find('th').parent().before('<tr><td colspan="13"><span id="kes_research" class="click">' + l.researchMissingTroops + '</span></td></tr>');
@@ -267,7 +267,7 @@ css += '.kes_multiselect_open { display: block !important; }';
 									if(queue.length > 0) {
 										makeResearch(queue);
 									} else {
-										var page = Query['start'];
+										var page = Query.start;
 										page = (typeof page === 'undefined') ? '' : '&start=' + page;
 										//* reload when finished
 										$.ajax({
@@ -303,7 +303,7 @@ css += '.kes_multiselect_open { display: block !important; }';
 				});
 				if ($.kes('isKey', 'kes_selection')) {
 					$('td[colspan*="14"]').append(' <span id="kes_loadSelection" class="click kes_mark">' + l.markSelection + '</span>');
-					var selection = $.kes('loadKey', 'kes_selection');
+					selection = $.kes('loadKey', 'kes_selection');
 
 					$('#kes_loadSelection').bind('click', function () {
 						for (var i in selection) {
@@ -352,7 +352,7 @@ css += '.kes_multiselect_open { display: block !important; }';
 					var isPaginated = (table.find('tr:first > td').prop('colspan') == 14),
 						bounds 		= (isPaginated) ? 2 : 1,
 						head		= table.find('th:first').parent();
-						rows  		= table.find('tr:gt(' + (bounds - 1) +')');
+					var rows  		= table.find('tr:gt(' + (bounds - 1) +')');
 						rows 		= rows.slice(0, -(bounds));
 
 					rows.map(function(i, element) {
@@ -370,8 +370,9 @@ css += '.kes_multiselect_open { display: block !important; }';
 						var xya = make_a.split('|'), xyb = make_b.split('|');
 
 						return (xya[0]+xya[1]) - (xyb[0]+xyb[1]);
-					}
-	// TODO figure out why sorting doesnt work in chrome seems to do too much ... ?
+					};
+
+                    // TODO figure out why sorting doesnt work in chrome seems to do too much ... ?
 					var sorted = rows.sort(sort_by_coordinates);
 
 					rows.remove();
@@ -383,11 +384,13 @@ css += '.kes_multiselect_open { display: block !important; }';
 							var td 			= $(this).find('td');
 							var target  	= td.eq(1).find('a').eq(1).html(),
 								link		= td.eq(1).html(),
-								barracks 	= td.eq(2).find('a').prop('href');
-								arrival 	= td.eq(3).text(),
-								jump 		= '#' + $(this).prop('id');
+								barracks 	= td.eq(2).find('a').prop('href'),
+								arrival 	= td.eq(3).text();
+
+							var	jump 		= '#' + $(this).prop('id'),
 								isSnob		= (td.eq(14).text() != 0);
-							if(!object[target]) {
+
+                            if(!object[target]) {
 								object[target] = {
 									'count' : 1,
 									'snob'	: (isSnob) ? 1 : 0,
@@ -439,7 +442,7 @@ css += '.kes_multiselect_open { display: block !important; }';
 						.on('click', '.jump', function() {
 
 							var row 	= $(this).closest('tr'),
-								first 	= row.find('.jump:last').data('href');
+								first 	= row.find('.jump:last').data('href'),
 								amount  = row.find('.count').text();
 
 							table.find('td.kes_used').removeClass('kes_used');
@@ -546,7 +549,7 @@ css += '.kes_multiselect_open { display: block !important; }';
 				 * i.e without having to load the popup
 				 */
 
-				function formGenerator(markedGroups, groups, villageId) {
+				var formGenerator = function(markedGroups, groups, villageId) {
 					var formAction = 'popup.php?s=groups&m=village&inta=modifyVillageGroups&village_id='+ villageId + av,
 						html = arrow + ' <span class="click kes_multiselect_opener"><span class="kes_multiselect_count">' + markedGroups.length + '</span> ' + l.selectedGroups + '</span> <span class="kes_multiselect_status" style="display: none"></span><br />';
 
@@ -561,7 +564,7 @@ css += '.kes_multiselect_open { display: block !important; }';
 					return html += '</form></div>';
 				};
 
-				function submitForm(div) {
+				var submitForm = function(div) {
 					$.ajax({
 						type: 'post',
 						url: div.find('form').attr('action'),
@@ -578,7 +581,7 @@ css += '.kes_multiselect_open { display: block !important; }';
 
 					$('div.kes_multiselect_open').each(function () {
 						$(this).removeClass('kes_multiselect_open');
-					})
+					});
 					div.toggleClass('kes_multiselect_open');
 				});
 
@@ -593,7 +596,7 @@ css += '.kes_multiselect_open { display: block !important; }';
 					form.parent().siblings('span.click').find('.kes_multiselect_count').text(count);
 					siblings.eq(1).text(count);
 					//alter group display
-					siblings.eq(2).html('<div style="width: 200px;">' + $.map(form.find('.checkbox:checked').next('span'), function (element) { return $(element).text() }).join('; ') + '</div>');
+					siblings.eq(2).html('<div style="width: 200px;">' + $.map(form.find('.checkbox:checked').next('span'), function (element) { return $(element).text(); }).join('; ') + '</div>');
 				});
 
 				$(document).ready(function () {
@@ -615,17 +618,19 @@ css += '.kes_multiselect_open { display: block !important; }';
 						// depending on the amount of settlements it can be very expensive to manipulate all cells "at once" so I built a buffer that delays the manipulation
 						doubleCache.slice(step, step + stepSize).each(function () {
 							var parent 		 = $(this).parent(),
-								markedGroups = parent.find('td:eq(2)'),
+								markedGroups = parent.find('td:eq(2)');
 								markedGroups = (markedGroups.find('span.notice').length == 1) ? [] : $(this).parent().find('td:eq(2)').text().trim().split("; ");
-								villageId 	 = parent.find('td:eq(0)').find('a').attr('href');
+
+							var villageId 	 = parent.find('td:eq(0)').find('a').attr('href');
 								villageId 	 = villageId.substring(villageId.indexOf('village=') + 8, villageId.indexOf('&s=overview'));
+
 							$(this).replaceWith('<td>' + formGenerator(markedGroups, groups, villageId) + '</td>');
 						});
 
 						step = step + stepSize;
 						steps--;
 						if (steps > 0) {
-							setTimeout(function () { lazyManipulate(doubleCache) }, 50);
+							setTimeout(function () { lazyManipulate(doubleCache); }, 50);
 						}
 					}
 					lazyManipulate(doubleCache);

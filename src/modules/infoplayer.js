@@ -36,7 +36,7 @@ css += '#kes_showSelectedSetts { position: fixed; background: #FFF; font-size: 1
 					$('table.borderlist').eq(3).addClass('unselectable');
 					//* write msg whether thread was selected or not
 					if ($.kes('isKey', 'kes_thread')) {
-						var thread 		= $.kes('loadKey', 'kes_thread');
+						var thread 		= $.kes('loadKey', 'kes_thread'),
 							threadName  = thread.name;
 						$('#kes_threadId_avail').html('<span style="color: green; font-weight: bold;">' + l.thread + ' "' + threadName + '" ' + l.selected + '.</span>');
 					} else {
@@ -48,7 +48,7 @@ css += '#kes_showSelectedSetts { position: fixed; background: #FFF; font-size: 1
 							if (!$(this).hasClass('kes_selected')) {
 								$(this).addClass('kes_selected').find('td:first').find('a, img').css('float', 'left').end().append('<div class="kes_remove_selection"><div style="position: absolute; right: 0;">' + l.deselect + '</div></div>');
 							}
-						}
+						};
 						var selectable = false;
 						// handle selecting
 						$('table.borderlist').eq(3).find('tr:gt(5)')
@@ -84,17 +84,17 @@ css += '#kes_showSelectedSetts { position: fixed; background: #FFF; font-size: 1
 								setts.push({pos: x + '|' + y, continent: k, points: p, sett: settlementName, nick: playerName});
 							});
 
-							function formatOutput(sett, r) {
+							var formatOutput = function(sett, r) {
 								var o = r;
-								o = o.replace(new RegExp('{' + post_details.nick		   + '}', 'g'), ' ' + sett['nick']);
-								o = o.replace(new RegExp('{' + post_details.settlementName + '}', 'g'), ' ' + sett['sett']);
-								o = o.replace(new RegExp('{' + post_details.village		+ '}', 'g'), ' [village]' + sett['pos'] + '[/village]');
-								o = o.replace(new RegExp('{' + post_details.continent	  + '}', 'g'), ' K' + sett['continent']);
-								o = o.replace(new RegExp('{' + post_details.points		 + '}', 'g'), ' ' + sett['points']);
+								o = o.replace(new RegExp('{' + post_details.nick		   + '}', 'g'), ' ' + sett.nick);
+								o = o.replace(new RegExp('{' + post_details.settlementName + '}', 'g'), ' ' + sett.sett);
+								o = o.replace(new RegExp('{' + post_details.village		+ '}', 'g'), ' [village]' + sett.pos + '[/village]');
+								o = o.replace(new RegExp('{' + post_details.continent	  + '}', 'g'), ' K' + sett.continent);
+								o = o.replace(new RegExp('{' + post_details.points		 + '}', 'g'), ' ' + sett.points);
 								return o;
-							}
+							};
 
-							function confirmPost(setts, playerName, threadName, threadId, settsPerPosts) {
+							var confirmPost = function(setts, playerName, threadName, threadId, settsPerPosts) {
 								var postCount = Math.ceil(setts.length/parseInt(settsPerPosts, 10));
 								//* settlement count, post count, playername, threadname, threadId submit button to click
 								$('body').append('<div id="kes_overlay" class="kes-backlight" style="display: block !important;"><h3 style="color: white; text-align:left; opacity: 1; margin: 1em;">' + l.close + '</h3></div>\
@@ -158,28 +158,35 @@ css += '#kes_showSelectedSetts { position: fixed; background: #FFF; font-size: 1
 									makePost(threadId);
 									$('.kes_overlay').click();
 								});
-							}
+							};
 
-							function sortKoords(a, b) {
-								var xya = a.pos.split('|'), xyb = b.pos.split('|'),
-								a = xya[0]+xya[1], b = xyb[0]+xyb[1];
+							var sortKoords = function(a, b) {
+								var xya = a.pos.split('|'), xyb = b.pos.split('|');
+
+								a = xya[0]+xya[1];
+								b = xyb[0]+xyb[1];
+
 								return a-b;
-							}
+							};
 
-							function sortKontinents(a, b) {
-								var xya = a.pos.split('|'), xyb = b.pos.split('|'),
-								a = (a.continent * 1000) + (xya[0]+xya[1]), b = (b.continent * 1000)+ (xyb[0]+xyb[1]);
+							var sortKontinents = function(a, b) {
+								var xya = a.pos.split('|'), xyb = b.pos.split('|');
+
+								a = (a.continent * 1000) + (xya[0]+xya[1]);
+								b = (b.continent * 1000)+ (xyb[0]+xyb[1]);
+
 								return a-b;
-							}
+							};
 
-							function sortSetts(setts, mode) {
+							var sortSetts = function(setts, mode) {
 								switch(mode) {
-									case 'kontinent': return setts.sort(sortKontinents); break;
-									case 'points'   : return setts.sort(function (a, b) { return a.points-b.points; }); break;
-									case 'koords'   : return setts.sort(sortKoords); break;
-									default		 : return setts;
+									case 'kontinent': return setts.sort(sortKontinents);
+									case 'points'   : return setts.sort(function (a, b) { return a.points-b.points; });
+									case 'koords'   : return setts.sort(sortKoords);
+									default		    : return setts;
 								}
-							}
+							};
+
 							confirmPost(sortSetts(setts, mode), playerName, threadName, threadId, 200);
 						} else {
 							window.alert(l.chooseThreadFirst + '.');

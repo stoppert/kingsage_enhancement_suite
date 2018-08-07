@@ -19,20 +19,20 @@ css += '.kes_toggle_sim { cursor: pointer; width: 25px; text-align: center; }';
 
 				} else {
 
-					function fillInUnits(troops) {
+					var fillInUnits = function(troops) {
 						for(var unit in unit_runtime) {
 							if (unit_runtime.hasOwnProperty(unit)) {
 								var avail = $('input[name="' + unit +'"]').siblings('span').html().replace(/[\(\)\.]/g, "");
 								$('input[name="' + unit + '"]').val((parseInt10(troops[unit]) < parseInt10(avail)) ? troops[unit] : avail);
 							}
 						}
-					}
+					};
 
-					function insertAll(elem) {
+					var insertAll = function(elem) {
 						elem.each(function() {
 							$(this).prev('input').val( $(this).text().replace(/[\(\)\.]/g, "") );
 						});
-					}
+					};
 
 					//* empty send fields when zero, fill in zeros on focusout
 					$('input[id*="send_"]').focusin(function () {

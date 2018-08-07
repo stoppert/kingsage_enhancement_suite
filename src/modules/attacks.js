@@ -44,8 +44,8 @@
 				}
 			}
 
-			function createQueue(pages) {
-				var pages	= pages/50 + 1,
+			function createQueue(pagesRaw) {
+				var pages	= pagesRaw/50 + 1,
 					step	= 50,
 					url 	= '/game.php?s=ally&m=attacks&start=' + av,
 					queue 	= [];
@@ -56,14 +56,14 @@
 			}
 
 			var pages 		= getPages(lastPage, display),
-				pageQueue 	= createQueue(pages);
+				pageQueue 	= createQueue(pages),
 				queueLength = pageQueue.length;
 
 			$('#kes_allAttacks').bind('click', function () {
 
 				$(this).replaceWith('<span id="kes_allAttacks">' + l.loading + '... (' + (queueLength - pageQueue.length) + '/' + queueLength + ')<br /><br /></span>');
 				// queueloader
-				table.find('tr > td').parent().remove()
+				table.find('tr > td').parent().remove();
 				var getAttacks = function (page) {
 					$.ajax({
 						type: 'POST',
@@ -72,7 +72,7 @@
 							var attacks = $(data).find('table.borderlist').eq(2).find('img').parent().parent();
 							$('table.borderlist').eq(2).append(attacks);
 							if (page.length > 0) {
-								$('#kes_allAttacks').replaceWith('<span id="kes_allAttacks">' + l.loading + '... (' + (queueLength - pageQueue.length) + '/' + queueLength + ')<br /><br /></span>')
+								$('#kes_allAttacks').replaceWith('<span id="kes_allAttacks">' + l.loading + '... (' + (queueLength - pageQueue.length) + '/' + queueLength + ')<br /><br /></span>');
 								getAttacks(page);
 							} else {
 								$('#kes_allAttacks').replaceWith('<span id="kes_allAttacks">' + l.loadingFinished + '<br /><br /></span>');
@@ -103,7 +103,9 @@
 										filterInput  = $('#kes_filterInput').val();
 									if (filterInput == "") {
 										// we need more input
-										if(event.keyCode != 8) $('#kes_filterInput').css('border', '1px solid red').effect('pulsate', 300, function () { $(this).css('border', '1px solid #CFAB65'); })
+										if(event.keyCode != 8) {
+											$('#kes_filterInput').css('border', '1px solid red').effect('pulsate', 300, function () { $(this).css('border', '1px solid #CFAB65'); });
+										}
 									} else {
 										//save input
 										$.kes('saveKey', 'kes_lastAttackFilterInput', filterInput);
@@ -115,7 +117,7 @@
 
 										var attackRowCount = $('table.borderlist').eq(2).find('tr:gt(1)').filter(function () { return ($(this).css('display') != 'none'); }).length;
 
-										suffix = (attackRowCount != 1) ? ' ' + l.attacks : ' ' + l.attack;
+										var suffix = (attackRowCount != 1) ? ' ' + l.attacks : ' ' + l.attack;
 										$('#kes_attackRowCount').text(attackRowCount + suffix);
 									}
 								};
@@ -128,7 +130,7 @@
 							}
 						}
 					});
-				}
+				};
 				getAttacks(pageQueue);
 			});
 
@@ -174,7 +176,7 @@
 						}
 						var attack_timeleft = attack.eq(4).find('span').attr('time');
 						attack_timeleft	 = (Date.parse(new Date()) / 1000) + parseInt10(attack_timeleft);
-						single_attack 		= {0: off_player, 1: off_playerId, 2: off_village, 3: off_villageId, 4: off_ally, 5: off_allyId, 6: attack_timeleft, 7: def_attack_name};
+						var single_attack = {0: off_player, 1: off_playerId, 2: off_village, 3: off_villageId, 4: off_ally, 5: off_allyId, 6: attack_timeleft, 7: def_attack_name};
 						if (kes_attacks.hasOwnProperty(def_villageId)) {
 							kes_attacks[def_villageId].length = kes_attacks[def_villageId].length+1;
 							kes_attacks[def_villageId][kes_attacks[def_villageId].length] = single_attack;
@@ -191,7 +193,7 @@
 					$(this).fadeOut('slow');
 					$.kes('deleteKey', 'kes_save_attacks');
 				});
-			}	
+			}
 		}
 	};
 }(kes));

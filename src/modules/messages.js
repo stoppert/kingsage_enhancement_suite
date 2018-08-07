@@ -35,7 +35,7 @@ css += '#bb_code { word-wrap: break-word; overflow-wrap: break-word; }';
 				$bbCode.prevAll('.borderlist:first').find('tr:last > td').append(' ' + arrow + ' <span id="kes_report_as_bb_code" class="click">(kes) ' + l.report_as_bb_code + '</span>');
 
 				$('#kes_report_as_bb_code').click(function() {
-						bb = $bbCode.html();
+						var bb = $bbCode.html();
 						bb = bb.replace(regex, returnBBCodeForImage);
 
 					$bbCode.html(bb).show();
@@ -57,15 +57,15 @@ css += '#bb_code { word-wrap: break-word; overflow-wrap: break-word; }';
 				$('.kes_mark').click(function () {
 					function selector(rel) {
 						switch(rel) {
-							case 'reports' 	: return 'img[src*="red"], img[src*="green"],img[src*="blue"],img[src*="yellow"]'; break;
-							case 'mail'		: return 'img[src*="mail"]'; break;
-							case 'misc'		: return 'img[src*="misc"]'; break;
-							case 'red'	 	: return 'img[src*="red"]'; break;
-							case 'yellow'  	: return 'img[src*="yellow"]'; break;
-							case 'blue'		: return 'img[src*="blue"]'; break;
-							case 'green'	: return 'img[src*="green"]'; break;
-							case 'support' 	: return 'img[src*="support"]'; break;
-							case 'trade'   	: return 'img[src*="trade"]'; break;
+							case 'reports' 	: return 'img[src*="red"], img[src*="green"],img[src*="blue"],img[src*="yellow"]';
+							case 'mail'		: return 'img[src*="mail"]';
+							case 'misc'		: return 'img[src*="misc"]';
+							case 'red'	 	: return 'img[src*="red"]';
+							case 'yellow'  	: return 'img[src*="yellow"]';
+							case 'blue'		: return 'img[src*="blue"]';
+							case 'green'	: return 'img[src*="green"]';
+							case 'support' 	: return 'img[src*="support"]';
+							case 'trade'   	: return 'img[src*="trade"]';
 						}
 					}
 
@@ -82,7 +82,7 @@ css += '#bb_code { word-wrap: break-word; overflow-wrap: break-word; }';
 				});
 				if (k.modul.massforward) {
 
-					function forward(type, details, nick) {
+					var forward = function(type, details, nick) {
 						var url, data;
 						switch(type) {
 							case 'report':
@@ -95,7 +95,7 @@ css += '#bb_code { word-wrap: break-word; overflow-wrap: break-word; }';
 								break;
 						}
 						$.ajax({ type: 'post', url: url + av, data: data	});
-					}
+					};
 
 					var messageDetails = function(id) {
 						return $.ajax({
@@ -117,10 +117,10 @@ css += '#bb_code { word-wrap: break-word; overflow-wrap: break-word; }';
 					//* input handling
 					$('#kes_massforward').bind('click', function (event) {
 						event.preventDefault();
-						var table 		= $('table.borderlist').eq(5);
-							reports 	= table.find('img[src*="red"], img[src*="green"],img[src*="blue"],img[src*="yellow"]').siblings('input:checked');
-							messages 	= table.find('img[src*="mail"]').siblings('input:checked');
-							nick 		= $('#kes_massforward_nick').val();
+						var table 		= $('table.borderlist').eq(5),
+							reports 	= table.find('img[src*="red"], img[src*="green"],img[src*="blue"],img[src*="yellow"]').siblings('input:checked'),
+							messages 	= table.find('img[src*="mail"]').siblings('input:checked'),
+							nick 		= $('#kes_massforward_nick').val(),
 							session		= '';
 
 						if ((reports.length != 0 || messages.length != 0)&& nick != '') {
@@ -145,7 +145,7 @@ css += '#bb_code { word-wrap: break-word; overflow-wrap: break-word; }';
 
 									details.url  = form.prop('action');
 									details.data = form.find('input[type="checkbox"][name="mid[]"]').serialize();
-									forward('message', details, nick)
+									forward('message', details, nick);
 								});
 							});
 

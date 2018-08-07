@@ -8,7 +8,7 @@ css += '.kes_group_element { display: inline-block; }';
 			var place = $('span[onclick*="groups"]').parent(),
 				label = $('span[onclick*="groups"]').text() + ': ',
 				insert = place.closest('table:not(.noborder)'),
-				villageId = Query['village'],
+				villageId = Query.village,
 				groups = $.kes('getGroups', villageId),
 				saveurl = 'popup.php?s=groups&m=village&inta=modifyVillageGroups&village_id=' + villageId + av;
 

@@ -17,7 +17,7 @@
 					$('#kes_cancelAllDestroy').bind('click', function() {
 						$(this).kes('fadeOutRemove');
 
-						function cancelDestroy(destroyList, callback) {
+						var cancelDestroy = function(destroyList, callback) {
 							var that = $(destroyList.shift()), link = that.find('a[href*="cancelBuilding"]').attr('href');
 							$.ajax({
 								type: 'post',
@@ -58,9 +58,9 @@
 					cost: function(building, level) {
 						var stone = 0, wood = 0, ore = 0, workers = 0;
 						if(typeof level == "number" && level <= building.max && level >= building.min) {
-							stone	= Math.round(building.stone.b 	* Math.pow(building.stone.f, level-1)),
-							wood	= Math.round(building.wood.b 	* Math.pow(building.wood.f, level-1)),
-							ore		= Math.round(building.ore.b		* Math.pow(building.ore.f, level-1)),
+							stone	= Math.round(building.stone.b 	* Math.pow(building.stone.f, level-1));
+							wood	= Math.round(building.wood.b 	* Math.pow(building.wood.f, level-1));
+							ore		= Math.round(building.ore.b		* Math.pow(building.ore.f, level-1));
 							workers	= Math.round(building.workers.b * Math.pow(building.workers.f, level-1));
 						}
 						return [stone, wood, ore, workers];
@@ -68,7 +68,7 @@
 					cumulatedCost: function(building, min, max) {
 						var stone = 0, wood = 0, ore = 0, workersLow = this.cost(building, min)[3], workersHigh = this.cost(building, max)[3];
 						for(var i = min + 1; i <= max; i++) {
-							cost = this.cost(building, i);
+							var cost = this.cost(building, i);
 							stone 	+= cost[0];
 							wood	+= cost[1];
 							ore		+= cost[2];
@@ -118,13 +118,27 @@
 						maximumLevel  = buildCosts.getMaximumLevel( /* building stone wood iron workers */
 							buildCosts[building], level, $('#stone').text().replace(".", ""), $('#wood').text().replace(".", ""), $('#iron').text().replace(".", ""), $('a[href*="&s=build_farm"]:first').parent().find('span').text().replace(".", ""));
 
-					var data	= row.find('td'), stone, wood, ore, workers, link;
+					var data = row.find('td'),
+						stone,
+						wood,
+						ore,
+						workers,
+						link;
+
 					if(data.length == 0) {
 						// modern views
-						stone 	= row.find('.res2'), wood = row.find('.res1'), ore = row.find('.res3'),	workers = row.find('.workers'), link = row.find('.button');
+						stone 	= row.find('.res2');
+						wood    = row.find('.res1');
+						ore     = row.find('.res3');
+						workers = row.find('.workers');
+						link    = row.find('.button');
 					} else {
 						// classic views
-						stone 	= data.eq(1), wood = data.eq(2), ore = data.eq(3), workers = data.eq(4), link = data.eq(6);
+						stone 	= data.eq(1);
+						wood    = data.eq(2);
+						ore     = data.eq(3);
+						workers = data.eq(4);
+						link    = data.eq(6);
 					}
 
 					stone 	= stone.find('span').text($.kes('prettyNumber', maximumLevel[1]));
@@ -140,10 +154,11 @@
 				});
 
 				$('.contentpane').on('click', '.kes_massbuild', function() {
-					var url		= $(this).data('url');
-						max		= $(this).siblings('input').data('max'),
-						levels 	= $(this).siblings('input').val();
+					var url		= $(this).data('url'),
+						max		= $(this).siblings('input').data('max');
+					var levels 	= $(this).siblings('input').val();
 						levels 	= (levels > max) ? max : levels;
+
 					for(var i = 0; i < levels; i++) {
 						$.kes('queue', {
 							type: 'post',
@@ -155,7 +170,7 @@
 						});
 					}
 				});
-			}	
+			}
 		}
 	};
 }(kes));

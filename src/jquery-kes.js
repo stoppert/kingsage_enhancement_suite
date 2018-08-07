@@ -21,7 +21,7 @@
 		},
 		fadeOutfadeIn: function() {
 			return this.each(function() {
-				$(this).fadeOut(function() { $(this).fadeIn(); })
+				$(this).fadeOut(function() { $(this).fadeIn(); });
 			});
 		},
 		multiCheckBoxes: function(values) {
@@ -121,7 +121,7 @@
 						bow: 0,	spy: 0,	light: 0, heavy: 0, ram: 0, kata: 0, snob: 0
 					}
 				}
-			}
+			};
 		},
 		saveSettings: function(prefix, obj) {
 			var save = {};
@@ -173,7 +173,7 @@
 				success: function(data) {
 					$(data).find('table.borderlist').eq(0).find('tr > td').each(function () {
 						var tmpIn = $(this);
-						groups.push({ name: tmpIn.text().trim(), id: tmpIn.find('input').attr('value'), checked: (tmpIn.find('input:checked').length == 1) ? true : false })
+						groups.push({ name: tmpIn.text().trim(), id: tmpIn.find('input').attr('value'), checked: (tmpIn.find('input:checked').length == 1) ? true : false });
 					});
 				}
 			});
@@ -224,7 +224,9 @@
 				callQueue.shift();
 
 				// Run the original callback
-				if(originalCompleteCallback) originalCompleteCallback(request, status);
+				if(originalCompleteCallback) {
+					originalCompleteCallback(request, status);
+				}
 
 				// Run the next request from the queue
 				if(callQueue.length > 0) {

@@ -1,9 +1,9 @@
-var $ = (typeof(unsafeWindow) != 'undefined') ? unsafeWindow.jQuery : jQuery || $;
+var $ = (typeof(unsafeWindow) != 'undefined') ? unsafeWindow.jQuery : window.jQuery || window.$;
 
 var location = window.location;
 
 var languageSelector = location.host; // e.g. s1.kingsage.de
-languageSelector = languageSelector.substring(languageSelector.indexOf('.')+1,languageSelector.length); // e.g. kingsage.de
+languageSelector = languageSelector.substring(languageSelector.indexOf('-')+1,languageSelector.length); // e.g. kingsage.de
 var loca = selectLanguage(languageSelector);
 
 //* Extract uri parameters
@@ -20,5 +20,5 @@ var Query = (function () {
 
 var kes = {},
 	l = loca;
-	
+
 	kes.module = {};

@@ -23,8 +23,8 @@ function printf(string, s) {
 }
 
 // calculate trooppoints for every player
-function calculateTroopScore(playerPage) {
-	var playerPage 	  = $(playerPage);
+function calculateTroopScore(playerPageElem) {
+	var playerPage 	  = $(playerPageElem);
 	var cachedTable   = playerPage.find('table.borderlist').eq(2);
 	var totalScore	= cachedTable.find('tr:nth-child(3) > td:last').html().replace(/\./g, "");
 	var cities		= cachedTable.find('tr:nth-child(5) > td:last').html().replace(/\./g, "");
@@ -82,7 +82,7 @@ function displayAttacksWithSeconds(element) { // TODO: fix for multipage attacks
 function filterOverdueAttacks(attacks) {
 	var tmp_attacks = {};
 	$.each(attacks, function (villageId) {
-		village_attacks = attacks[villageId];
+		var village_attacks = attacks[villageId];
 		tmp_attacks[villageId] = {};
 		tmp_attacks[villageId].length = 0;
 		for(var index in village_attacks) {

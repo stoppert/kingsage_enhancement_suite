@@ -14,14 +14,14 @@
 					$(frame).find('div.smallButton:first').before('<div id="kes_save_thread" class="smallButton"><span style="cursor: pointer;">(kes) ' + l.saveThread + '</span></div>');
 					$(frame).find('#kes_save_thread').bind('click', function () {
 						$(this).fadeOut().fadeIn();
-						var uri = $('iframe[src*="forum.php"]').contents().find('td.headerInfo > a').attr('href')
+						var uri = $('iframe[src*="forum.php"]').contents().find('td.headerInfo > a').attr('href');
 						var threadId = uri.substring(uri.indexOf('thread_id=') + 10);
 						var threadName = $('iframe[src*="forum.php"]').contents().find('td.headerInfo > a').html();
 						// sanitize thread id
 						if (av != '') {
 							threadId = threadId.replace(av, '');
 						}
-						var obj = { id: threadId, name: threadName }
+						var obj = { id: threadId, name: threadName };
 						$.kes('saveKey', 'kes_thread', obj);
 					});
 				}
